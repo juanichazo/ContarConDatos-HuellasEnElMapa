@@ -428,6 +428,11 @@ class Component extends DCLogic {
     return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join('');
   }
   fmt(n) { return Number(n).toLocaleString('es-AR'); }
+  rampaAP(C) {
+    const AZ = C.B;
+    return { az: [this.mix(C.papel, AZ, 0.28), this.mix(C.papel, AZ, 0.6), AZ, this.mix(AZ, C.tinta, 0.5)],
+      fu: [this.mix(C.papel, C.A, 0.22), this.mix(C.papel, C.A, 0.5), this.mix(C.papel, C.A, 0.85), this.mix(C.A, C.tinta, 0.55)] };
+  }
   escala(C) {
     if (this.props.escalaDosTonos ?? false) return [this.mix(C.papel, C.B, 0.4), C.B, this.mix(C.B, C.A, 0.55), C.A];
     return [this.mix(C.papel, C.tinta, 0.22), this.mix(C.papel, C.A, 0.5), this.mix(C.papel, C.A, 0.85), this.mix(C.A, C.tinta, 0.55)];
@@ -668,16 +673,22 @@ class Component extends DCLogic {
     const AZ = C.B /*AZUL*/;
     if (!m.getLayer('hex-in')) {
       m.addLayer({ id: 'hex-in', type: 'fill', source: 'hex', layout: { visibility: 'none' }, paint: { 'fill-color': AZ, 'fill-opacity': 0 } }, 'hex-v');
-      m.on('mousemove', 'hex-in', (e) => { const f = e.features && e.features[0]; if (!f || !this.pop) return; const q = (m.getFeatureState({ source: 'hex', id: f.id }) || {}).q; if (!q) { this.pop.remove(); return; } this.pop.setLngLat(e.lngLat).setText(q === 2 ? 'Hay registros dentro de un área protegida' : 'Registros solo fuera de áreas protegidas').addTo(m); });
+      m.on('mousemove', 'hex-in', (e) => { const f = e.features && e.features[0]; if (!f || !this.pop) return; const fs = m.getFeatureState({ source: 'hex', id: f.id }) || {}, q = fs.q, n = fs.n || 0; if (!q) { this.pop.remove(); return; } const nT = this.fmt(n) + (n === 1 ? ' registro' : ' registros'); this.pop.setLngLat(e.lngLat).setText((q === 2 ? nT + ' dentro de áreas protegidas' : nT + ', todos fuera de áreas protegidas') + ' · ' + this.ventanaTxt()).addTo(m); });
       m.on('mouseleave', 'hex-in', () => { if (this.pop) this.pop.remove(); });
     }
     const dn = s.pres === 'dentro' && this.vals && (this.vals.tipo === 'rich' || this.vals.tipo === 'sp') && !!this.PR.occAP;
     if (dn) {
-      const w = this.ventana() || this.Y.map((_, k) => k), q = {};
-      Object.keys(this.vals.v).forEach((k) => { if (this.vals.v[k] > 0) q[k] = 1; });
-      (s.sp ? [s.sp] : this.filtradas().map((e) => e.id)).forEach((id) => { const o = this.PR.occAP[id] || {}; Object.keys(o).forEach((cell) => { let t = 0; w.forEach((i) => { t += o[cell][i]; }); if (t > 0 && this.cellId[cell] !== undefined) q[this.cellId[cell]] = 2; }); });
-      Object.keys(q).forEach((k) => m.setFeatureState({ source: 'hex', id: +k }, { q: q[k] }));
-      m.setPaintProperty('hex-in', 'fill-color', ['match', ['coalesce', ['feature-state', 'q'], 0], 2, AZ, 1, this.mix(C.papel, C.A, 0.5), 'rgba(0,0,0,0)']);
+      // cantidad de registros por celda: dentro de AP (azul) o, si todos están fuera, el total (rojo)
+      const w = this.ventana() || this.Y.map((_, k) => k), tot = {}, den = {};
+      (s.sp ? [s.sp] : this.filtradas().map((e) => e.id)).forEach((id) => {
+        const o = this.D.occ[id] || {}; Object.keys(o).forEach((cell) => { const k = this.cellId[cell]; if (k === undefined) return; const t = this.presente(id, cell, w); if (t > 0) tot[k] = (tot[k] || 0) + t; });
+        const a = this.PR.occAP[id] || {}; Object.keys(a).forEach((cell) => { const k = this.cellId[cell]; if (k === undefined) return; let t = 0; w.forEach((i) => { t += a[cell][i]; }); if (t > 0) den[k] = (den[k] || 0) + t; });
+      });
+      Object.keys(Object.assign({}, tot, den)).forEach((k) => { const d = den[k] || 0; m.setFeatureState({ source: 'hex', id: +k }, d > 0 ? { q: 2, n: d } : { q: 1, n: tot[k] }); });
+      const rA = this.rampaAP(C), lg = ['log10', ['max', 1, ['coalesce', ['feature-state', 'n'], 1]]];
+      m.setPaintProperty('hex-in', 'fill-color', ['match', ['coalesce', ['feature-state', 'q'], 0],
+        2, ['interpolate', ['linear'], lg, 0, rA.az[0], 1, rA.az[1], 2, rA.az[2], 3, rA.az[3]],
+        1, ['interpolate', ['linear'], lg, 0, rA.fu[0], 1, rA.fu[1], 2, rA.fu[2], 3, rA.fu[3]], 'rgba(0,0,0,0)']);
       m.setPaintProperty('hex-in', 'fill-opacity', ['case', ['>', ['coalesce', ['feature-state', 'q'], 0], 0], 0.85, 0]);
       m.setLayoutProperty('ap-f', 'visibility', 'visible'); m.setLayoutProperty('ap-l', 'visibility', 'visible');
       m.setPaintProperty('ap-f', 'fill-color', AZ); m.setPaintProperty('ap-f', 'fill-opacity', 0.1);
@@ -838,7 +849,7 @@ class Component extends DCLogic {
     const AZ_ = C.B /*AZUL*/;
     const presUI = [['ninguna', 'Ninguna'], ['ap', 'Áreas protegidas'], ['dentro', 'Registros dentro de AP'], ['quemado', 'Superficie quemada'], ['fuego', 'Focos de calor']].map(([v, l]) => ({ label: l, on: s.pres === v, estilo: this.pill(s.pres === v, C), pick: () => this.setState({ pres: v }) }));
     const apTipoUI = [['nom', 'Cualquier categoría'], ['est', 'Estricta (UICN I–IV)']].map(([v, l]) => ({ label: l, on: s.apTipo === v, estilo: this.pill(s.apTipo === v, C), pick: () => this.setState({ apTipo: v }) }));
-    const presNota = !PR ? 'Cargando láminas de presión…' : s.pres === 'dentro' ? 'Hexágonos azules: hay registros dentro de un área protegida (límites Tomba 2025, estado 2022). Hexágonos claros: los registros de esa celda están todos fuera. Un registro es «dentro» si su punto (≈1 km) cae en el polígono.' : s.pres === 'ap' ? 'Polígonos verdes: áreas protegidas creadas hasta el año elegido (Tomba 2025). Puntos llenos: celdas con especies y menos del ' + s.apUmbral + ' % protegido. Anillos: celdas protegidas.' : s.pres === 'fuego' ? 'Focos de calor VIIRS por 1.000 km² y por año (NASA FIRMS). Detecta fuego activo, no superficie quemada.' : s.pres === 'quemado' ? 'Hectáreas quemadas por año en incendios reportados, por provincia (Servicio Nacional de Manejo del Fuego). Es el dato oficial; no tiene detalle dentro de cada provincia.' : 'Elegí una presión para pintarla debajo de los registros.';
+    const presNota = !PR ? 'Cargando láminas de presión…' : s.pres === 'dentro' ? 'Hexágonos azules: hay registros dentro de un área protegida (límites Tomba 2025, estado 2022); más oscuro, más registros dentro. Hexágonos rojos: los registros de esa celda están todos fuera; más oscuro, más registros. Un registro es «dentro» si su punto (≈1 km) cae en el polígono.' : s.pres === 'ap' ? 'Polígonos verdes: áreas protegidas creadas hasta el año elegido (Tomba 2025). Puntos llenos: celdas con especies y menos del ' + s.apUmbral + ' % protegido. Anillos: celdas protegidas.' : s.pres === 'fuego' ? 'Focos de calor VIIRS por 1.000 km² y por año (NASA FIRMS). Detecta fuego activo, no superficie quemada.' : s.pres === 'quemado' ? 'Hectáreas quemadas por año en incendios reportados, por provincia (Servicio Nacional de Manejo del Fuego). Es el dato oficial; no tiene detalle dentro de cada provincia.' : 'Elegí una presión para pintarla debajo de los registros.';
     let leyP = { on: false, items: [] }, gap = null;
     const rF = [this.mix(C.papel, C.F, 0.12), this.mix(C.papel, C.F, 0.32), this.mix(C.papel, C.F, 0.55), this.mix(C.papel, C.F, 0.8), C.F];
     const barra = (c) => 'display: block; height: 12px; background: ' + c + ';';
@@ -850,7 +861,7 @@ class Component extends DCLogic {
       leyP = { on: true, titulo: 'Protección de las celdas con especies', items: [{ muestra: 'display: block; height: 12px; background: ' + this.mix(C.papel, C.V, 0.45) + '; border: 1px solid ' + this.mix(C.V, C.tinta, 0.3) + ';', label: 'área protegida' }, { muestra: dot(true), label: 'vacío (<' + s.apUmbral + ' %)' }, { muestra: dot(false), label: 'protegida' }],
         nota: gap.n ? this.fmt(gap.vac) + ' de ' + this.fmt(gap.n) + ' celdas con especies (' + Math.round(gap.vac / gap.n * 100) + ' %) quedan fuera de la protección. ' + gap.nunca + (gap.nunca === 1 ? ' especie nunca fue registrada' : ' especies nunca fueron registradas') + ' en una celda protegida.' : 'Sin registros con los filtros actuales.' };
     }
-    if (s.pres === 'dentro' && PR) leyP = { on: true, titulo: 'Registros GBIF y áreas protegidas', items: [{ muestra: 'display: block; height: 12px; background: ' + AZ_ + ';', label: 'Hay registros dentro de un AP' }, { muestra: 'display: block; height: 12px; background: ' + this.mix(C.papel, C.A, 0.5) + ';', label: 'Registros solo fuera' }], nota: 'Una celda cuenta como «dentro» si al menos un registro de la ventana cae en un área protegida.' };
+    if (s.pres === 'dentro' && PR) { const rA = this.rampaAP(C); leyP = { on: true, titulo: 'Registros por celda · arriba: dentro de AP · abajo: todos fuera', items: ['1', '10', '100', '1.000+'].map((l, i) => ({ muestra: 'display: block; height: 16px; background: linear-gradient(' + rA.az[i] + ' 50%, ' + rA.fu[i] + ' 50%);', label: l })), nota: 'Una celda es azul si al menos un registro de la ventana cae en un área protegida; el tono indica cuántos caen dentro.' }; }
     const ventN = (this.ventana() || [0, 0]).length;
     const ia = Math.min(13, (s.modo === 'comparar' ? s.anioB : s.anio) - 2012);
     if (ficha.esEco && PR) {
