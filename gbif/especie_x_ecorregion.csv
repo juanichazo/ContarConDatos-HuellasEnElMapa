@@ -1,0 +1,113 @@
+eco_id,nombre,nombre_es,especie_id,nombre_cientifico,nombre_comun,categoria_nacional,n_registros,anio_min,anio_max,n_anios,anios,presencia
+E01,Patagonian steppe,Estepa patagónica,MAM045,Balaenoptera borealis,Ballena Sei,EN,2,2024,2025,2,2024;2025,1
+E01,Patagonian steppe,Estepa patagónica,MAM048,Cephalorhynchus eutropia,Delfín chileno,VU,1,2016,2016,1,2016,1
+E01,Patagonian steppe,Estepa patagónica,MAM078,Ctenomys magellanicus,Tuco-tuco magallánico,VU,9,2022,2025,4,2022;2023;2024;2025,1
+E01,Patagonian steppe,Estepa patagónica,MAM070,Dolichotis patagonum,Mara,VU,180,2012,2025,14,2012;2013;2014;2015;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025,1
+E01,Patagonian steppe,Estepa patagónica,MAM001,Dromiciops gliroides,Monito de monte,VU,1,2015,2015,1,2015,1
+E01,Patagonian steppe,Estepa patagónica,MAM050,Physeter macrocephalus,Cachalote,VU,8,2022,2025,4,2022;2023;2024;2025,1
+E01,Patagonian steppe,Estepa patagónica,MAM049,Tursiops truncatus,Delfín nariz de botella,VU,1,2022,2022,1,2022,1
+E02,Dry Chaco,Chaco seco,MAM080,Ctenomys osvaldoreigi,Tuco–tuco de Reig,EN,3,2013,2023,3,2013;2019;2023,1
+E02,Dry Chaco,Chaco seco,MAM020,Alouatta caraya,Carayá negro y dorado,VU,10,2012,2023,6,2012;2013;2015;2018;2022;2023,1
+E02,Dry Chaco,Chaco seco,MAM025,Chrysocyon brachyurus,Aguará guazú,VU,17,2021,2025,5,2021;2022;2023;2024;2025,1
+E02,Dry Chaco,Chaco seco,MAM073,Ctenomys bergi,Tuco-tuco cordobés,VU,7,2017,2024,4,2017;2018;2021;2024,1
+E02,Dry Chaco,Chaco seco,MAM088,Ctenomys talarum,Tuco-tuco de los talares,VU,1,2018,2018,1,2018,1
+E02,Dry Chaco,Chaco seco,MAM070,Dolichotis patagonum,Mara,VU,30,2012,2025,11,2012;2014;2015;2016;2017;2018;2019;2021;2022;2024;2025,1
+E02,Dry Chaco,Chaco seco,MAM031,Leopardus pardalis,Ocelote,VU,1,2024,2024,1,2024,1
+E02,Dry Chaco,Chaco seco,MAM009,Myrmecophaga tridactyla,Oso hormiguero,VU,44,2017,2025,8,2017;2018;2020;2021;2022;2023;2024;2025,1
+E02,Dry Chaco,Chaco seco,MAM052,Tapirus terrestris,Tapir,VU,10,2017,2025,4,2017;2023;2024;2025,1
+E03,Humid Pampas,Pampa húmeda,MAM072,Ctenomys australis,Tuco-tuco de las dunas,EN,4,2016,2023,3,2016;2022;2023,1
+E03,Humid Pampas,Pampa húmeda,MAM085,Ctenomys rionegrensis,Tuco-tuco de Río Negro,EN,1,2025,2025,1,2025,1
+E03,Humid Pampas,Pampa húmeda,MAM043,Ozotoceros bezoarticus,Venado de las pampas,EN,40,2012,2025,7,2012;2018;2021;2022;2023;2024;2025,1
+E03,Humid Pampas,Pampa húmeda,MAM020,Alouatta caraya,Carayá negro y dorado,VU,16,2022,2025,4,2022;2023;2024;2025,1
+E03,Humid Pampas,Pampa húmeda,MAM039,Blastocerus dichotomus,Ciervo de los pantanos,VU,13,2015,2024,7,2015;2016;2020;2021;2022;2023;2024,1
+E03,Humid Pampas,Pampa húmeda,MAM025,Chrysocyon brachyurus,Aguará guazú,VU,11,2019,2025,5,2019;2021;2022;2023;2025,1
+E03,Humid Pampas,Pampa húmeda,MAM088,Ctenomys talarum,Tuco-tuco de los talares,VU,17,2015,2025,7,2015;2017;2021;2022;2023;2024;2025,1
+E03,Humid Pampas,Pampa húmeda,MAM070,Dolichotis patagonum,Mara,VU,2,2019,2023,2,2019;2023,1
+E03,Humid Pampas,Pampa húmeda,MAM051,Pontoporia blainvillei,Franciscana,VU,46,2015,2025,8,2015;2016;2017;2021;2022;2023;2024;2025,1
+E04,Low Monte,Monte de llanuras,MAM070,Dolichotis patagonum,Mara,VU,115,2012,2025,14,2012;2013;2014;2015;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025,1
+E04,Low Monte,Monte de llanuras,MAM049,Tursiops truncatus,Delfín nariz de botella,VU,8,2015,2024,5,2015;2016;2019;2022;2024,1
+E05,Espinal,Espinal,MAM043,Ozotoceros bezoarticus,Venado de las pampas,EN,12,2015,2023,5,2015;2016;2020;2022;2023,1
+E05,Espinal,Espinal,MAM039,Blastocerus dichotomus,Ciervo de los pantanos,VU,4,2015,2023,3,2015;2022;2023,1
+E05,Espinal,Espinal,MAM025,Chrysocyon brachyurus,Aguará guazú,VU,72,2012,2025,12,2012;2013;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025,1
+E05,Espinal,Espinal,MAM088,Ctenomys talarum,Tuco-tuco de los talares,VU,2,2023,2023,1,2023,1
+E05,Espinal,Espinal,MAM070,Dolichotis patagonum,Mara,VU,117,2012,2025,11,2012;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025,1
+E05,Espinal,Espinal,MAM027,Leopardus colocolo,Gato de los pajonales,VU,2,2021,2023,2,2021;2023,1
+E05,Espinal,Espinal,MAM051,Pontoporia blainvillei,Franciscana,VU,2,2020,2025,2,2020;2025,1
+E05,Espinal,Espinal,MAM049,Tursiops truncatus,Delfín nariz de botella,VU,4,2018,2018,1,2018,1
+E06,Humid Chaco,Chaco húmedo,MAM034,Panthera onca,Yaguareté,CR,6,2022,2024,2,2022;2024,1
+E06,Humid Chaco,Chaco húmedo,MAM043,Ozotoceros bezoarticus,Venado de las pampas,EN,16,2016,2025,7,2016;2017;2021;2022;2023;2024;2025,1
+E06,Humid Chaco,Chaco húmedo,MAM038,Tayassu pecari,Pecarí labiado,EN,5,2012,2023,4,2012;2013;2021;2023,1
+E06,Humid Chaco,Chaco húmedo,MAM020,Alouatta caraya,Carayá negro y dorado,VU,342,2012,2025,14,2012;2013;2014;2015;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025,1
+E06,Humid Chaco,Chaco húmedo,MAM022,Aotus azarae,Mirikiná,VU,19,2012,2025,9,2012;2015;2016;2018;2020;2022;2023;2024;2025,1
+E06,Humid Chaco,Chaco húmedo,MAM039,Blastocerus dichotomus,Ciervo de los pantanos,VU,409,2012,2025,14,2012;2013;2014;2015;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025,1
+E06,Humid Chaco,Chaco húmedo,MAM025,Chrysocyon brachyurus,Aguará guazú,VU,45,2012,2025,11,2012;2015;2017;2018;2019;2020;2021;2022;2023;2024;2025,1
+E06,Humid Chaco,Chaco húmedo,MAM031,Leopardus pardalis,Ocelote,VU,7,2015,2024,4,2015;2021;2022;2024,1
+E06,Humid Chaco,Chaco húmedo,MAM009,Myrmecophaga tridactyla,Oso hormiguero,VU,22,2016,2025,6,2016;2020;2021;2022;2023;2025,1
+E06,Humid Chaco,Chaco húmedo,MAM052,Tapirus terrestris,Tapir,VU,12,2012,2024,8,2012;2015;2017;2018;2020;2022;2023;2024,1
+E07,High Monte,Monte de sierras,MAM040,Hippocamelus antisensis,Taruca,EN,3,2023,2023,1,2023,1
+E07,High Monte,Monte de sierras,MAM090,Ctenomys tucumanus,Tuco-tuco tucumano,VU,1,2024,2024,1,2024,1
+E07,High Monte,Monte de sierras,MAM070,Dolichotis patagonum,Mara,VU,25,2012,2025,9,2012;2016;2017;2018;2019;2022;2023;2024;2025,1
+E08,Southern Andean steppe,Estepa andina del sur,MAM070,Dolichotis patagonum,Mara,VU,1,2019,2019,1,2019,1
+E09,Central Andean puna,Puna,MAM089,Ctenomys tuconax,Tuco-tuco robusto,EN,1,2019,2019,1,2019,1
+E09,Central Andean puna,Puna,MAM040,Hippocamelus antisensis,Taruca,EN,1,2022,2022,1,2022,1
+E09,Central Andean puna,Puna,MAM090,Ctenomys tucumanus,Tuco-tuco tucumano,VU,1,2024,2024,1,2024,1
+E09,Central Andean puna,Puna,MAM070,Dolichotis patagonum,Mara,VU,1,2023,2023,1,2023,1
+E10,Southern Andean Yungas,Yungas,MAM089,Ctenomys tuconax,Tuco-tuco robusto,EN,1,2019,2019,1,2019,1
+E10,Southern Andean Yungas,Yungas,MAM040,Hippocamelus antisensis,Taruca,EN,1,2025,2025,1,2025,1
+E10,Southern Andean Yungas,Yungas,MAM038,Tayassu pecari,Pecarí labiado,EN,23,2017,2019,2,2017;2019,1
+E10,Southern Andean Yungas,Yungas,MAM090,Ctenomys tucumanus,Tuco-tuco tucumano,VU,1,2021,2021,1,2021,1
+E10,Southern Andean Yungas,Yungas,MAM031,Leopardus pardalis,Ocelote,VU,24,2017,2020,3,2017;2019;2020,1
+E10,Southern Andean Yungas,Yungas,MAM009,Myrmecophaga tridactyla,Oso hormiguero,VU,3,2017,2019,2,2017;2019,1
+E10,Southern Andean Yungas,Yungas,MAM023,Sapajus cay,Caí de las Yungas,VU,1,2018,2018,1,2018,1
+E10,Southern Andean Yungas,Yungas,MAM052,Tapirus terrestris,Tapir,VU,22,2017,2019,2,2017;2019,1
+E11,Valdivian temperate forests,Bosques templados valdivianos,MAM035,Lontra provocax,Huillín,EN,2,2019,2025,2,2019;2025,1
+E11,Valdivian temperate forests,Bosques templados valdivianos,MAM001,Dromiciops gliroides,Monito de monte,VU,24,2016,2025,7,2016;2017;2019;2021;2023;2024;2025,1
+E11,Valdivian temperate forests,Bosques templados valdivianos,MAM044,Pudu puda,Pudú,VU,7,2012,2024,4,2012;2022;2023;2024,1
+E11,Valdivian temperate forests,Bosques templados valdivianos,MAM002,Rhyncholestes raphanurus,Comadrejita trompuda,VU,1,2019,2019,1,2019,1
+E12,Paraná flooded savanna,Delta e islas del Paraná,MAM085,Ctenomys rionegrensis,Tuco-tuco de Río Negro,EN,3,2021,2025,3,2021;2024;2025,1
+E12,Paraná flooded savanna,Delta e islas del Paraná,MAM020,Alouatta caraya,Carayá negro y dorado,VU,172,2014,2025,12,2014;2015;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025,1
+E12,Paraná flooded savanna,Delta e islas del Paraná,MAM022,Aotus azarae,Mirikiná,VU,3,2014,2017,3,2014;2015;2017,1
+E12,Paraná flooded savanna,Delta e islas del Paraná,MAM039,Blastocerus dichotomus,Ciervo de los pantanos,VU,30,2015,2025,9,2015;2016;2017;2018;2020;2022;2023;2024;2025,1
+E12,Paraná flooded savanna,Delta e islas del Paraná,MAM025,Chrysocyon brachyurus,Aguará guazú,VU,10,2019,2025,5,2019;2021;2022;2023;2025,1
+E12,Paraná flooded savanna,Delta e islas del Paraná,MAM073,Ctenomys bergi,Tuco-tuco cordobés,VU,2,2022,2022,1,2022,1
+E14,Magellanic subpolar forests,Bosques subpolares magallánicos,MAM045,Balaenoptera borealis,Ballena Sei,EN,17,2021,2025,3,2021;2024;2025,1
+E14,Magellanic subpolar forests,Bosques subpolares magallánicos,MAM047,Balaenoptera physalus,Ballena fin,EN,1,2019,2019,1,2019,1
+E14,Magellanic subpolar forests,Bosques subpolares magallánicos,MAM041,Hippocamelus bisulcus,Huemul,EN,27,2015,2025,9,2015;2017;2018;2019;2020;2021;2022;2023;2025,1
+E14,Magellanic subpolar forests,Bosques subpolares magallánicos,MAM035,Lontra provocax,Huillín,EN,5,2019,2024,3,2019;2020;2024,1
+E14,Magellanic subpolar forests,Bosques subpolares magallánicos,MAM078,Ctenomys magellanicus,Tuco-tuco magallánico,VU,5,2019,2024,2,2019;2024,1
+E15,Southern Cone Mesopotamian savanna,Sabana mesopotámica (Esteros del Iberá),MAM034,Panthera onca,Yaguareté,CR,1,2025,2025,1,2025,1
+E15,Southern Cone Mesopotamian savanna,Sabana mesopotámica (Esteros del Iberá),MAM043,Ozotoceros bezoarticus,Venado de las pampas,EN,50,2014,2025,7,2014;2019;2021;2022;2023;2024;2025,1
+E15,Southern Cone Mesopotamian savanna,Sabana mesopotámica (Esteros del Iberá),MAM020,Alouatta caraya,Carayá negro y dorado,VU,76,2013,2025,12,2013;2014;2015;2016;2018;2019;2020;2021;2022;2023;2024;2025,1
+E15,Southern Cone Mesopotamian savanna,Sabana mesopotámica (Esteros del Iberá),MAM039,Blastocerus dichotomus,Ciervo de los pantanos,VU,169,2012,2025,14,2012;2013;2014;2015;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025,1
+E15,Southern Cone Mesopotamian savanna,Sabana mesopotámica (Esteros del Iberá),MAM025,Chrysocyon brachyurus,Aguará guazú,VU,9,2013,2024,4,2013;2018;2020;2024,1
+E15,Southern Cone Mesopotamian savanna,Sabana mesopotámica (Esteros del Iberá),MAM031,Leopardus pardalis,Ocelote,VU,1,2023,2023,1,2023,1
+E15,Southern Cone Mesopotamian savanna,Sabana mesopotámica (Esteros del Iberá),MAM052,Tapirus terrestris,Tapir,VU,1,2018,2018,1,2018,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM021,Alouatta guariba,Aullador rojo,CR,1,2025,2025,1,2025,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM034,Panthera onca,Yaguareté,CR,337,2012,2025,8,2012;2013;2014;2020;2021;2022;2023;2025,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM038,Tayassu pecari,Pecarí labiado,EN,4,2012,2025,4,2012;2014;2024;2025,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM020,Alouatta caraya,Carayá negro y dorado,VU,21,2012,2025,9,2012;2013;2018;2019;2021;2022;2023;2024;2025,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM003,Caluromys lanatus,Cuica lanosa,VU,1,2019,2019,1,2019,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM012,Carollia perspicillata,Murciélago frutero,VU,3,2016,2021,3,2016;2017;2021,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM013,Glossophaga soricina,Murciélago nectarívoro,VU,1,2022,2022,1,2022,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM029,Leopardus guttulus,Tirica,VU,3,2014,2025,3,2014;2022;2025,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM031,Leopardus pardalis,Ocelote,VU,15,2018,2025,6,2018;2021;2022;2023;2024;2025,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM033,Leopardus wiedii,Margay,VU,8,2014,2025,4,2014;2022;2024;2025,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM042,Mazama americana,Corzuela colorada,VU,1,2014,2014,1,2014,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM007,Monodelphis scalops,Colicorto cabeza roja,VU,2,2022,2025,2,2022;2025,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM009,Myrmecophaga tridactyla,Oso hormiguero,VU,1,2016,2016,1,2016,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM016,Pygoderma bilabiatum,Murciélago de hombros blancos,VU,1,2014,2014,1,2014,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM023,Sapajus cay,Caí de las Yungas,VU,1,2023,2023,1,2023,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM024,Sapajus nigritus,Mono caí negro,VU,316,2012,2025,14,2012;2013;2014;2015;2016;2017;2018;2019;2020;2021;2022;2023;2024;2025,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM026,Speothos venaticus,Zorro vinagre,VU,1,2016,2016,1,2016,1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),MAM052,Tapirus terrestris,Tapir,VU,60,2012,2025,11,2012;2013;2014;2017;2019;2020;2021;2022;2023;2024;2025,1
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),MAM021,Alouatta guariba,Aullador rojo,CR,5,2015,2024,4,2015;2017;2022;2024,1
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),MAM034,Panthera onca,Yaguareté,CR,1,2022,2022,1,2022,1
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),MAM038,Tayassu pecari,Pecarí labiado,EN,4,2015,2022,2,2015;2022,1
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),MAM020,Alouatta caraya,Carayá negro y dorado,VU,1,2019,2019,1,2019,1
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),MAM003,Caluromys lanatus,Cuica lanosa,VU,1,2020,2020,1,2020,1
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),MAM029,Leopardus guttulus,Tirica,VU,1,2024,2024,1,2024,1
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),MAM031,Leopardus pardalis,Ocelote,VU,1,2015,2015,1,2015,1
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),MAM016,Pygoderma bilabiatum,Murciélago de hombros blancos,VU,1,2020,2020,1,2020,1
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),MAM024,Sapajus nigritus,Mono caí negro,VU,14,2012,2025,8,2012;2015;2016;2019;2022;2023;2024;2025,1
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),MAM052,Tapirus terrestris,Tapir,VU,4,2021,2024,3,2021;2023;2024,1
+E19,Uruguayan savanna,Sabana uruguaya,MAM020,Alouatta caraya,Carayá negro y dorado,VU,1,2021,2021,1,2021,1

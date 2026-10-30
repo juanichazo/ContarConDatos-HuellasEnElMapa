@@ -1,0 +1,36 @@
+dataset_idx,datasetKey,titulo,doi,licencia,n_registros
+0,50c9509d-22c7-4a22-a47d-8c48425ef4a7,iNaturalist Research-grade Observations,10.15468/ab3s5x,CC BY-NC 4.0,3731
+1,65908f95-5ab6-48d9-bf6d-6da274ed730e,Global Roadkill Data: a dataset on terrestrial vertebrate mortality caused by collision with vehicles (Opportunistic Records),10.1038/s41597-024-04207-x,CC BY 4.0,3
+2,14e777a0-1359-4b47-818f-f1e386dc407f,"Muestreo de mamíferos terrestres en la Finca La Moraleja, Salta, Argentina.",10.15468/pxvw56,CC BY-NC 4.0,84
+3,7f6dd0f7-9ed4-49c0-bb71-b2a9c7fed9f1,Macaulay Library Audio and Video Collection,10.15468/ckcdpy,CC0 1.0,3
+4,6ac3f774-d9fb-4796-b3e9-92bf6c81c084,NABU|naturgucker,10.15468/uc1apo,CC BY 4.0,16
+5,8a863029-f435-446a-821e-275f4f641165,"Observation.org, Nature data from around the World",10.15468/5nilie,CC BY-NC 4.0,87
+6,80f94317-a61f-477f-af06-037632ad6e3b,Xeno-canto - Land mammal sounds from around the world,10.15468/b7k9t4,CC BY-NC 4.0,3
+7,06e98c3e-2801-4d29-8e81-943a13bb3785,Jaguar Movement Database: a GPS-based movement dataset of the apex predator in Neotropics,10.71819/lr0yrg,CC BY 4.0,322
+8,eca45514-e78d-45d6-bf65-21effa2c6478,Mammal collection of Museo de Zoología (MZUC),10.15468/dsjpsk,CC BY 4.0,10
+9,72576e57-9a9d-4c05-9c5b-8b035ee44a49,Mammal diversity in remote and harsh habitats: validating the power of environmental DNA metabarcoding at the southernmost tip of South America,10.15468/k5w45h,CC BY 4.0,10
+10,e2483380-16f7-11df-b5b3-b8a03c50a862,VERTEBRADOS DE VALOR ESPECIAL EN ÁREAS PROTEGIDAS DE LA ARGENTINA,10.15468/s5t7po,CC BY 4.0,5
+11,8b289003-92f9-43e0-9bd0-175a5e010bb6,UNESCO eDNA expedition in Península Valdés (Argentina): July 2023,10.25607/2kx2h8,CC0 1.0,2
+12,24e553dc-33f9-419f-8f08-7230f696e3da,Acoustic detections in Northeast and South Atlantic,10.82144/bb6602ee,CC BY-NC 4.0,8
+13,79e731ed-fe9b-4d50-93f7-ab1f01636385,Sightings of marine mammals carried out during oceanographic surveys in the Argentine continental shelf,10.15468/sauctt,CC0 1.0,27
+14,a7305f85-1edc-4fcb-9508-4f85bd180813,"Biodiversidad asociada a principales pesquerias de recursos demersales del Programa Asesoría Integral para la Toma de Decisiones en Pesca y Acuicultura, Subsecretaria de Pesca y Acuicultura",10.15468/5zpesc,CC BY-NC 4.0,1
+15,81253722-b084-4380-9b6f-d24cdcb074a3,Happywhale - Fin whale in Southern Ocean,10.82144/d8806c0b,CC BY-NC 4.0,1
+16,dac7ede0-8b98-4b85-8825-cd72ea07ae62,Happywhale - Fin whale in South Atlantic Ocean,10.82144/f0641094,CC BY-NC 4.0,3
+17,8c7fc320-c6df-4136-b414-6778d682f905,Happywhale - Common bottlenose dolphin in South Atlantic Ocean,10.82144/1906243b,CC BY-NC 4.0,27
+18,d8cd16ba-bb74-4420-821e-083f2bac17c2,INSDC Sequences,10.15468/sbmztx,CC BY 4.0,3
+19,e6c97f6e-e952-11e2-961f-00145eb45e9a,Anymals+plants - Citizen Science Data,10.15468/ee6ps6,CC BY-NC 4.0,2
+20,2e13fd45-8e7a-4165-abac-77b3d3c759a1,Happywhale - Sei whale in South Atlantic Ocean,10.82144/6bf5a929,CC BY-NC 4.0,112
+21,77f808b1-1692-464f-a9fd-080ac3b8b570,Happywhale - Sei whale in South Pacific Ocean,10.82144/cdbce078,CC BY-NC 4.0,11
+22,c3066561-736b-4473-b85a-91cf5d29165e,Happywhale - Sei whale in Southern Ocean,10.82144/d95f2139,CC BY-NC 4.0,1
+23,040c5662-da76-4782-a48e-cdea1892d14c,International Barcode of Life project (iBOL),10.15468/inygc6,CC BY 4.0,6
+24,4b05f4e0-4604-4cc2-a8c0-64fcace02517,"Seasonal Monitoring Biodiversity Surveys in La Escalonada, Añelo, Neuquén, Argentina – 2023/2024 – TotalEnergies E&P Austral B.V.",10.15468/ekbwa7,CC BY-NC 4.0,2
+25,0c3fe10b-a4cd-409a-aac0-4069885befd5,"Seasonal Monitoring Biodiversity Surveys:  Rincón La Ceniza, Añelo, Neuquén, Argentina – 2023/2024 – TotalEnergies E&P Austral B.V.",10.15468/vmurqp,CC BY-NC 4.0,1
+26,7824b526-7aa7-4c15-98b9-9dc53155c70d,"Mammals Biodiversity Surveys: Aguada Pichana Este, Añelo, Neuquén, Argentina – 2022/2023/2024 – TotalEnergies E&P Austral B.V.",10.15468/aqjp87,CC BY-NC 4.0,4
+27,140c4608-c93b-4a42-b4ed-57ef9061c063,"Autumn-winter Seasonal Mammal Monitoring Survey in Aguada Pichana Este,Añelo, Neuquén, Argentina – 2024 – TotalEnergies E&P Austral B.V.",10.15468/py53mf,CC BY-NC 4.0,4
+28,3c0930e8-527c-4690-bf5c-5eae02496e5a,"High Season Bird Monitoring Survey in Aguada Pichana Este, Añelo, Neuquén, Argentina, 2025",10.15468/y8npxe,CC BY-NC 4.0,1
+29,6fe39f59-9585-4a74-814e-0191ac04742d,"Specific Herpetofauna monitoring: Key, endemic and conservation status species occurences in Rincón La Ceniza and La Escalonada, Añelo, Neuquén, Argentina, 2025,",10.15468/suy5zp,CC BY-NC 4.0,1
+30,d3b6cb30-0a64-4f82-91ea-0bb14637ee17,Global Roadkill Data: a dataset on terrestrial vertebrate mortality caused by collision with vehicles (Systematic Records),10.1038/s41597-024-04207-x,CC BY 4.0,9
+31,651fff87-880c-4d22-a564-a8fbdb62cbca,"Biodiversity Observations in San Roque North Block, Neuquén, Argentina 2021-2022",10.15468/9ryvuz,CC BY-NC 4.0,1
+32,59b11f1e-425e-49d1-9b9a-bde5fbaf0219,"Biodiversity Observations in San Roque South Block, Añelo, Neuquén, Argentina 2020-2022",10.15468/k36k3p,CC BY-NC 4.0,2
+33,6d03bc1e-1893-48ee-8d47-fc9f95dba7dc,Selected observations from various biodiversity surveys in Aguada Pichana Este & San Roque South Blocks between 2019 & 2021 - Total Austral,10.15468/dz26gj,CC BY-NC 4.0,2
+34,49d9b031-89c7-4436-b6e6-0431f47a58b4,"Biodiversity Observations in Aguada Pichana Este 2019-2020, Neuquén, Argentina",10.15468/2ugpsw,CC BY-NC 4.0,1

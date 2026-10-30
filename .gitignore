@@ -1,0 +1,12 @@
+# Descargas crudas grandes (se obtienen desde la fuente)
+raw/gbif_descarga/*.csv
+raw/resolve2017_rgeodata/*.rda
+
+# Exportaciones para la entrega
+entregables/
+
+# Python / Node
+__pycache__/
+*.pyc
+.venv/
+node_modules/

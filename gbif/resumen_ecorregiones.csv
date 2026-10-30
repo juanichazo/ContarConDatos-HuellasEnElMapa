@@ -1,0 +1,21 @@
+eco_id,nombre,nombre_es,area_km2,n_especies,n_registros,n_CR,n_EN,n_VU,registros_por_1000km2
+E01,Patagonian steppe,Estepa patagónica,546602.7,7,202,0,1,6,0.37
+E02,Dry Chaco,Chaco seco,489230.4,9,123,0,1,8,0.25
+E03,Humid Pampas,Pampa húmeda,398301.6,9,150,0,3,6,0.38
+E04,Low Monte,Monte de llanuras,353545.0,2,123,0,0,2,0.35
+E05,Espinal,Espinal,298513.6,8,215,0,1,7,0.72
+E06,Humid Chaco,Chaco húmedo,161876.7,10,883,1,2,7,5.45
+E07,High Monte,Monte de sierras,116566.1,3,29,0,1,2,0.25
+E08,Southern Andean steppe,Estepa andina del sur,96366.1,1,1,0,0,1,0.01
+E09,Central Andean puna,Puna,87491.3,4,4,0,2,2,0.05
+E10,Southern Andean Yungas,Yungas,47595.9,8,76,0,3,5,1.6
+E11,Valdivian temperate forests,Bosques templados valdivianos,44896.7,4,34,0,1,3,0.76
+E12,Paraná flooded savanna,Delta e islas del Paraná,36983.4,6,220,0,1,5,5.95
+E13,Central Andean dry puna,Puna seca,30955.1,0,0,0,0,0,0.0
+E14,Magellanic subpolar forests,Bosques subpolares magallánicos,28724.9,5,55,0,4,1,1.91
+E15,Southern Cone Mesopotamian savanna,Sabana mesopotámica (Esteros del Iberá),26754.1,7,307,1,1,5,11.47
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),22363.9,18,777,2,1,15,34.74
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),4535.8,10,33,2,1,7,7.28
+E18,Rock and Ice,Roca y hielo,2017.2,0,0,0,0,0,0.0
+E19,Uruguayan savanna,Sabana uruguaya,272.4,1,1,0,0,1,3.67
+E20,Chilean Matorral,Matorral chileno,9.0,0,0,0,0,0,0.0

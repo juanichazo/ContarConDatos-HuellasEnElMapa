@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Huellas en el mapa</title>
+<link rel="stylesheet" href="assets/maplibre-gl.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Caveat:wght@500;600&amp;family=Kalam:wght@400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Courier+Prime&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#7a2e1f}a:hover{color:#4a1a10}
+select,button,input{font:inherit;color:inherit}
+.maplibregl-popup-content{background:#fbf8f1;color:#2b241d;border:1px solid #b9a98f;border-radius:2px;box-shadow:0 2px 0 rgba(43,36,29,.15);font-size:13px;line-height:1.35;padding:8px 10px}
+.maplibregl-popup-tip{border-top-color:#b9a98f !important}
+.maplibregl-ctrl-attrib{background:rgba(251,248,241,.85) !important;font-size:10px}
+.maplibregl-ctrl-group{background:#fbf8f1;border:1px solid #b9a98f;border-radius:2px;box-shadow:none}
+input[type=range]{accent-color:#7a2e1f}
+</style>
+
+</head>
+<body>
+<div id="dc-root"></div>
+<template id="dc-tpl">
+
+
+<div style="min-height: 100vh; background: {{papel}}; color: {{tinta}}; font-family: {{fTexto}}; font-size: 16px; line-height: 1.45">
+<div style="max-width: 1560px; margin: 0 auto; padding: 28px 32px 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 22px; position: relative">
+<header style="position: relative; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid {{linea}}; padding-bottom: 14px">
+
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: {{tinta2}}">Atlas de huellas · Argentina · 2012–2025</div>
+<h1 style="position: relative; margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 52px; line-height: 1.0; letter-spacing: -0.01em">Huellas <span style="font-style: italic; color: {{tintaA}}">en el mapa</span></h1>
+<p style="margin: 4px 0 0; font-size: 19px; max-width: 760px">¿Dónde viven las especies amenazadas de Argentina y qué le pasa al territorio que habitan?</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<div style="border-left: 2px solid {{tinta}}; padding: 2px 12px"><div style="font-family: {{fTitulo}}; font-size: 30px; line-height: 1">{{k.especies}}</div><div style="font-size: 12px; color: {{tinta2}}">especies amenazadas</div></div>
+<div style="border-left: 2px solid {{tinta}}; padding: 2px 12px"><div style="font-family: {{fTitulo}}; font-size: 30px; line-height: 1">{{k.registros}}</div><div style="font-size: 12px; color: {{tinta2}}">registros 2012–2025</div></div>
+<div style="border-left: 2px dashed {{tintaA}}; padding: 2px 12px"><div style="font-family: {{fTitulo}}; font-size: 30px; line-height: 1; color: {{tintaA}}">{{k.vacias}}</div><div style="font-size: 12px; color: {{tinta2}}">sin ningún registro</div></div>
+</div>
+</header>
+<nav aria-label="Índice" style="position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 4px; padding: 6px 0; background: {{papel}}; border-bottom: 1px solid {{linea}}">
+<span style="font-family: {{fDatos}}; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: {{tinta2}}; margin-right: 8px">Índice</span>
+<template data-sc="for" list="{{indice}}" as="i" hint-placeholder-count="8"><button type="button" onClick="{{i.pick}}" style="background: none; border: 0; padding: 6px 8px; min-height: 34px; cursor: pointer; font-size: 14px; color: {{tinta}}"><span style="font-family: {{fDatos}}; font-size: 11px; color: {{tintaA}}; margin-right: 4px">{{i.n}}</span>{{i.label}}</button></template>
+</nav>
+<section id="sec-mensaje" style="scroll-margin-top: 56px; display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: center; padding: 16px 20px; border-left: 3px solid {{tintaA}}; background: {{papel2}}">
+<span style="font-family: {{fDatos}}; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: {{tinta2}}">El mensaje</span>
+<p style="margin: 0; flex: 1 1 560px; font-family: {{fTitulo}}; font-size: 25px; line-height: 1.25">{{msg.texto}}</p>
+<button type="button" onClick="{{msg.ver}}" style="min-height: 40px; padding: 6px 14px; border: 1px solid {{tinta}}; background: {{tinta}}; color: {{papel2}}; border-radius: 2px; cursor: pointer; font-size: 14px">Ver los vacíos en el mapa</button>
+</section>
+<div id="sec-mapa" style="display: flex; align-items: center; gap: 12px; margin-top: 8px; scroll-margin-top: 56px; font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: {{tinta2}}"><span style="color: {{tintaA}}">01</span><span>El mapa</span><span style="flex: 1; height: 1px; background: {{linea}}"></span></div><div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+<aside style="flex: 1 1 260px; max-width: 300px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<section style="display: flex; flex-direction: column; gap: 8px">
+<label for="sel-sp" style="font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: {{tinta2}}">Buscar especie</label>
+<select id="sel-sp" value="{{sp}}" onChange="{{onSp}}" style="width: 100%; padding: 8px; background: {{papel2}}; border: 1px solid {{linea}}; border-radius: 2px; min-height: 42px">
+<option value="">Todas las especies (filtradas)</option>
+<template data-sc="for" list="{{opciones}}" as="o" hint-placeholder-count="6"><option value="{{o.id}}">{{o.label}}</option></template>
+</select>
+<select id="sel-sp2" aria-label="Comparar con otra especie" value="{{sp2}}" onChange="{{onSp2}}" style="width: 100%; padding: 8px; background: {{papel2}}; border: 1px solid {{linea}}; border-radius: 2px; min-height: 42px">
+<option value="">Comparar con… (opcional)</option>
+<template data-sc="for" list="{{opciones}}" as="o" hint-placeholder-count="6"><option value="{{o.id}}">{{o.label}}</option></template>
+</select>
+</section>
+<section style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: {{tinta2}}">Filtrar</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{grupos}}" as="g" hint-placeholder-count="3"><button type="button" onClick="{{g.pick}}" aria-pressed="{{g.on}}" style="{{g.estilo}}">{{g.label}}</button></template></div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{catsUI}}" as="c" hint-placeholder-count="3"><button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="{{c.estilo}}">{{c.label}}</button></template></div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: {{tinta2}}">Tiempo</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{modos}}" as="m" hint-placeholder-count="3"><button type="button" onClick="{{m.pick}}" aria-pressed="{{m.on}}" style="{{m.estilo}}">{{m.label}}</button></template></div>
+<template data-sc="if" value="{{noComparar}}" hint-placeholder-val="{{ true }}">
+<label for="rng-anio" style="font-size: 14px">{{textoAnio}}</label>
+<div style="display: flex; gap: 8px; align-items: center">
+<button type="button" onClick="{{togglePlay}}" aria-label="{{playLabel}}" style="min-width: 40px; min-height: 40px; border: 1px solid {{linea}}; background: {{papel2}}; border-radius: 2px; cursor: pointer">
+<template data-sc="if" value="{{playing}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" fill="currentColor"></rect><rect x="9.5" y="2" width="3.5" height="12" fill="currentColor"></rect></svg></template>
+<template data-sc="if" value="{{noPlaying}}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2 L13 8 L4 14 Z" fill="currentColor"></path></svg></template>
+</button>
+<input id="rng-anio" type="range" min="2012" max="2025" step="1" value="{{anio}}" onChange="{{onAnio}}" style="flex: 1; min-width: 0">
+</div>
+</template>
+<template data-sc="if" value="{{esComparar}}" hint-placeholder-val="{{ false }}">
+<label for="rng-a" style="font-size: 14px">Año A: <b>{{anioA}}</b> <span style="color: {{tintaA}}">●</span></label>
+<input id="rng-a" type="range" min="2012" max="2025" step="1" value="{{anioA}}" onChange="{{onAnioA}}">
+<label for="rng-b" style="font-size: 14px">Año B: <b>{{anioB}}</b> <span style="color: {{tintaB}}">●</span></label>
+<input id="rng-b" type="range" min="2012" max="2025" step="1" value="{{anioB}}" onChange="{{onAnioB}}">
+</template>
+<div style="font-family: {{fNotas}}; font-size: 16px; color: {{tintaA}}; line-height: 1.2">Más registros = más gente mirando, no más animales. 2025 está incompleto.</div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: {{tinta2}}">Presión de fondo</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{presUI}}" as="b" hint-placeholder-count="3"><button type="button" onClick="{{b.pick}}" aria-pressed="{{b.on}}" style="{{b.estilo}}">{{b.label}}</button></template></div>
+<template data-sc="if" value="{{presEsAP}}" hint-placeholder-val="{{ false }}"><div style="display: flex; flex-direction: column; gap: 8px; border-left: 2px solid {{linea}}; padding-left: 10px">
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{apTipoUI}}" as="b" hint-placeholder-count="2"><button type="button" onClick="{{b.pick}}" aria-pressed="{{b.on}}" style="{{b.estilo}}">{{b.label}}</button></template></div>
+<div style="font-size: 13px; color: {{tinta2}}">Una celda cuenta como protegida si tiene:</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{umbralUI}}" as="b" hint-placeholder-count="3"><button type="button" onClick="{{b.pick}}" aria-pressed="{{b.on}}" style="{{b.estilo}}">{{b.label}}</button></template></div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{vaciosUI}}" as="b" hint-placeholder-count="2"><button type="button" onClick="{{b.pick}}" aria-pressed="{{b.on}}" style="{{b.estilo}}">{{b.label}}</button></template></div>
+<template data-sc="if" value="{{hayGap}}" hint-placeholder-val="{{ false }}"><details style="font-size: 14px"><summary style="cursor: pointer; color: {{tintaA}}">{{gapTitulo}}</summary>
+<div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; max-height: 200px; overflow: auto"><template data-sc="for" list="{{gapLista}}" as="g" hint-placeholder-count="6"><button type="button" onClick="{{g.pick}}" style="font-size: 12px; padding: 3px 7px; border: 1px solid {{linea}}; background: {{papel}}; border-radius: 2px; cursor: pointer">{{g.t}}</button></template></div>
+</details></template>
+</div></template>
+<div style="font-size: 13px; color: {{tinta2}}">{{presNota}}</div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 6px">
+<div style="font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: {{tinta2}}">Celdas</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{formaUI}}" as="b" hint-placeholder-count="2"><button type="button" onClick="{{b.pick}}" aria-pressed="{{b.on}}" style="{{b.estilo}}">{{b.label}}</button></template></div>
+<div style="font-size: 13px; color: {{tinta2}}">{{formaNota}}</div>
+<div style="font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: {{tinta2}}; margin-top: 6px">Láminas</div>
+<template data-sc="for" list="{{capasUI}}" as="c" hint-placeholder-count="6">
+<label style="display: flex; gap: 8px; align-items: center; min-height: 30px; font-size: 14px"><input type="checkbox" checked="{{c.on}}" onChange="{{c.toggle}}" style="width: 17px; height: 17px"><span>{{c.label}}</span></label>
+</template>
+<template data-sc="for" list="{{pendientes}}" as="c" hint-placeholder-count="2">
+<div style="display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: {{tinta2}}"><input type="checkbox" disabled="{{ true }}" aria-label="{{c.label}} (en preparación)" style="width: 17px; height: 17px; margin-top: 2px"><div><div>{{c.label}}</div><div style="font-family: {{fDatos}}; font-size: 11px">en preparación · {{c.fuente}}</div></div></div>
+</template>
+</section>
+</aside>
+<main style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column">
+<div style="position: relative; border: 1px solid {{linea}}; background: {{papel2}}; height: 760px">
+<div ref="{{mapRef}}" style="position: absolute; inset: 0"></div>
+<template data-sc="if" value="{{cargando}}" hint-placeholder-val="{{ true }}"><div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: {{fNotas}}; font-size: 24px; color: {{tinta2}}">Siguiendo huellas…</div></template>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 14px 36px; align-items: flex-start; border: 1px solid {{linea}}; border-top: 0; background: {{papel2}}; padding: 10px 14px; font-size: 13px">
+<div style="display: flex; flex-direction: column; gap: 5px; min-width: 220px">
+<div style="font-family: {{fDatos}}; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: {{tinta2}}">{{leyenda.titulo}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center"><template data-sc="for" list="{{leyenda.items}}" as="it" hint-placeholder-count="4"><span style="display: flex; gap: 6px; align-items: center"><span style="{{it.muestra}}"></span><span>{{it.label}}</span></span></template></div>
+<div style="color: {{tinta2}}">{{leyenda.nota}}</div>
+</div>
+<template data-sc="if" value="{{leyP.on}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 5px; min-width: 240px">
+<div style="font-family: {{fDatos}}; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: {{tinta2}}">{{leyP.titulo}}</div>
+<div style="display: flex; gap: 2px; width: 260px"><template data-sc="for" list="{{leyP.items}}" as="it" hint-placeholder-count="5"><div style="flex: 1; display: flex; flex-direction: column; gap: 2px; font-size: 11px; font-family: {{fDatos}}"><span style="{{it.muestra}}"></span><span>{{it.label}}</span></div></template></div>
+<div style="color: {{tinta2}}">Debajo de los puntos de especies.</div>
+</div>
+</template>
+<div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 4px; text-align: right; color: {{tinta2}}">
+<span style="font-size: 14px; color: {{tinta}}">{{estado}}</span>
+<span>Clic en una ecorregión: su ficha · cursor: detalle · rueda o pellizco: zoom</span>
+</div>
+</div>
+</main>
+</div>
+<div id="sec-ficha" style="display: flex; align-items: center; gap: 12px; margin-top: 8px; scroll-margin-top: 56px; font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: {{tinta2}}"><span style="color: {{tintaA}}">02</span><span>Ficha y años</span><span style="flex: 1; height: 1px; background: {{linea}}"></span></div><div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+<div style="flex: 1 1 340px; max-width: 440px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 14px">
+<template data-sc="if" value="{{ficha.esEspecie}}" hint-placeholder-val="{{ false }}">
+<article style="background: {{papel2}}; border: 1px solid {{tinta}}; outline: 1px solid {{linea}}; outline-offset: 3px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}"><span>LISTA ROJA · ARGENTINA</span><span>{{ficha.catalogo}}</span></div>
+<h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 30px; line-height: 1.05">{{ficha.comun}}</h2>
+<div style="font-style: italic; font-size: 18px">{{ficha.cientifico}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="{{ficha.selloNac}}">{{ficha.nacTxt}}</span>
+<span style="{{ficha.selloUicn}}">{{ficha.uicnTxt}}</span>
+</div>
+<div style="font-size: 14px; color: {{tinta2}}">{{ficha.grupo}}{{ficha.marino}}</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; border-top: 1px dotted {{linea}}; padding-top: 8px">
+<div><div style="font-family: {{fTitulo}}; font-size: 26px">{{ficha.n}}</div><div style="font-size: 12px; color: {{tinta2}}">registros 2012–2025</div></div>
+<div><div style="font-family: {{fTitulo}}; font-size: 26px">{{ficha.nh}}</div><div style="font-size: 12px; color: {{tinta2}}">hexágonos con registro</div></div>
+</div>
+<div>
+<div style="font-size: 12px; color: {{tinta2}}; margin-bottom: 4px">Detectada por año (2012 → 2025)</div>
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 2px; height: 26px">
+<template data-sc="for" list="{{ficha.barras}}" as="b" hint-placeholder-count="14">
+<span title="{{b.t}}" style="{{b.estilo}}"></span>
+</template>
+</div>
+</div>
+<div style="font-size: 14px"><b>Ecorregiones:</b> {{ficha.ecos}}</div>
+<div style="font-size: 13px; color: {{tinta2}}">{{ficha.rango}}</div>
+<div style="font-family: {{fNotas}}; font-size: 18px; color: {{tintaA}}; line-height: 1.2">{{ficha.nota}}</div>
+<button type="button" onClick="{{limpiarSp}}" style="align-self: flex-start; min-height: 40px; padding: 6px 12px; border: 1px solid {{linea}}; background: {{papel}}; border-radius: 2px; cursor: pointer">Volver al conjunto</button>
+</article>
+</template>
+<template data-sc="if" value="{{ficha.esEco}}" hint-placeholder-val="{{ false }}">
+<article style="background: {{papel2}}; border: 1px solid {{tinta}}; outline: 1px solid {{linea}}; outline-offset: 3px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}">ECORREGIÓN · {{ficha.ecoId}}</div>
+<h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 28px; line-height: 1.05">{{ficha.ecoNombre}}</h2>
+<div style="font-size: 14px; color: {{tinta2}}">{{ficha.ecoArea}} km² · RESOLVE: {{ficha.ecoOrig}}</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; border-top: 1px dotted {{linea}}; padding-top: 8px; text-align: center">
+<div><div style="font-family: {{fTitulo}}; font-size: 26px">{{ficha.ecoCR}}</div><div style="font-size: 12px">en peligro crítico</div></div>
+<div><div style="font-family: {{fTitulo}}; font-size: 26px">{{ficha.ecoEN}}</div><div style="font-size: 12px">en peligro</div></div>
+<div><div style="font-family: {{fTitulo}}; font-size: 26px">{{ficha.ecoVU}}</div><div style="font-size: 12px">amenazadas</div></div>
+</div>
+<div style="font-size: 12px; color: {{tinta2}}">Especies detectadas cada año (todas las amenazadas)</div>
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 3px; align-items: end; height: 70px">
+<template data-sc="for" list="{{ficha.ecoSerie}}" as="b" hint-placeholder-count="14">
+<span title="{{b.t}}" style="{{b.estilo}}"></span>
+</template>
+</div>
+<div style="font-size: 14px; max-height: 180px; overflow: auto"><b>Con registros (según filtros):</b> {{ficha.ecoEspecies}}</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; border-top: 1px dotted {{linea}}; padding-top: 8px">
+<div><div style="font-family: {{fTitulo}}; font-size: 24px">{{ficha.ecoAP}}</div><div style="font-size: 12px; color: {{tinta2}}">bajo área protegida en {{ficha.ecoAnio}} ({{ficha.ecoAPe}} estricta)</div></div>
+<div><div style="font-family: {{fTitulo}}; font-size: 24px">{{ficha.ecoFu}}</div><div style="font-size: 12px; color: {{tinta2}}">focos de calor VIIRS por 1.000 km² y año ({{ficha.ecoVent}})</div></div>
+</div>
+<div style="font-size: 12px; color: {{tinta2}}">Focos de calor por año, 2012 → 2025</div>
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 3px; align-items: end; height: 48px">
+<template data-sc="for" list="{{ficha.ecoFuSerie}}" as="b" hint-placeholder-count="14">
+<span title="{{b.t}}" style="{{b.estilo}}"></span>
+</template>
+</div>
+<div style="font-size: 12px; color: {{tinta2}}">Desmonte (MapBiomas) usa otro mapa de ecorregiones (Burkart): ver la pestaña «Presiones».</div>
+<button type="button" onClick="{{limpiarEco}}" style="align-self: flex-start; min-height: 40px; padding: 6px 12px; border: 1px solid {{linea}}; background: {{papel}}; border-radius: 2px; cursor: pointer">Cerrar ficha</button>
+</article>
+</template>
+<template data-sc="if" value="{{ficha.esGuia}}" hint-placeholder-val="{{ true }}">
+<article style="border: 1px solid {{linea}}; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: {{papel2}}">
+<h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 26px">Cómo leer este mapa</h2>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 15px">
+<li>Cada hexágono es una celda del territorio. Su tinta indica cuántas especies amenazadas fueron registradas ahí en la ventana de tiempo elegida.</li>
+<li>Elegí una especie para ver su ficha y dónde fue registrada; sumá una segunda para comparar en dos tintas.</li>
+<li>En «Comparar años», cada celda dice si hubo registros solo en el año A, solo en el B o en ambos.</li>
+<li>Los registros miden dónde se miró, no cuántos animales hay. Las hojas vacías también son un dato.</li>
+<li>En «Presión de fondo» pintá áreas protegidas o focos de calor debajo: las celdas con especies quedan con contorno rojo.</li>
+</ol>
+
+</article>
+</template>
+</div></div>
+<div style="flex: 3 1 560px; min-width: 0"><section style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline">
+<h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 28px">{{serie.titulo}}</h2>
+<span style="font-size: 13px; color: {{tinta2}}">Barras: registros únicos por año · número: especies detectadas · 2025 parcial</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 6px; align-items: end; height: 150px">
+<template data-sc="for" list="{{serie.barras}}" as="b" hint-placeholder-count="14">
+<div style="display: flex; flex-direction: column; justify-content: flex-end; height: 100%; gap: 3px">
+<div style="font-family: {{fDatos}}; font-size: 11px; text-align: center; color: {{tinta2}}">{{b.n}}</div>
+<div title="{{b.t}}" style="{{b.estilo}}"></div>
+</div>
+</template>
+</div>
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 6px">
+<template data-sc="for" list="{{serie.barras}}" as="b" hint-placeholder-count="14">
+<button type="button" onClick="{{b.pick}}" style="{{b.etq}}">{{b.anio}}<br><span style="font-size: 11px">{{b.sp}}</span></button>
+</template>
+</div>
+</section></div>
+</div>
+<div id="sec-tablas" style="display: flex; align-items: center; gap: 12px; margin-top: 8px; scroll-margin-top: 56px; font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: {{tinta2}}"><span style="color: {{tintaA}}">03</span><span>Tablas, presiones y fuentes</span><span style="flex: 1; height: 1px; background: {{linea}}"></span></div>
+<section style="border-top: 1px solid {{linea}}; padding-top: 14px; display: flex; flex-direction: column; gap: 14px">
+<div role="tablist" style="display: flex; flex-wrap: wrap; gap: 6px">
+<template data-sc="for" list="{{tabs}}" as="t" hint-placeholder-count="4">
+<button type="button" role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.estilo}}">{{t.label}}</button>
+</template>
+</div>
+
+<template data-sc="if" value="{{tab.catalogo}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 14px">
+<span style="color: {{tinta2}}">Ordenar por:</span>
+<template data-sc="for" list="{{ordenes}}" as="o" hint-placeholder-count="3">
+<button type="button" onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="{{o.estilo}}">{{o.label}}</button>
+</template>
+<span style="color: {{tinta2}}">· {{catalogoN}} especies con los filtros actuales · clic en una fila para abrir su ficha</span>
+</div>
+<div style="max-height: 460px; overflow: auto; border: 1px solid {{linea}}">
+<table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 760px">
+<thead><tr style="position: sticky; top: 0; background: {{papel2}}; text-align: left; font-family: {{fDatos}}; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase">
+<th style="padding: 8px">N.º</th><th style="padding: 8px">Especie</th><th style="padding: 8px">Grupo</th><th style="padding: 8px">Nacional</th><th style="padding: 8px">UICN global</th><th style="padding: 8px; text-align: right">Registros</th><th style="padding: 8px; text-align: right">Ecorregiones</th><th style="padding: 8px">2012 → 2025</th>
+</tr></thead>
+<tbody>
+<template data-sc="for" list="{{catalogo}}" as="r" hint-placeholder-count="8">
+<tr onClick="{{r.pick}}" style="{{r.estilo}}">
+<td style="padding: 6px 8px; font-family: {{fDatos}}; font-size: 12px">{{r.cat}}</td>
+<td style="padding: 6px 8px"><button type="button" onClick="{{r.pick}}" style="background: none; border: 0; padding: 0; text-align: left; cursor: pointer">{{r.com}} <i style="color: {{tinta2}}">{{r.cie}}</i></button></td>
+<td style="padding: 6px 8px">{{r.gru}}</td>
+<td style="padding: 6px 8px"><span style="{{r.sello}}">{{r.nac}}</span></td>
+<td style="padding: 6px 8px; font-family: {{fDatos}}">{{r.uicn}}</td>
+<td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.n}}</td>
+<td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.ne}}</td>
+<td style="padding: 6px 8px"><div style="display: grid; grid-template-columns: repeat(14, 6px); gap: 1px; height: 14px"><template data-sc="for" list="{{r.code}}" as="c" hint-placeholder-count="14"><span style="{{c.estilo}}"></span></template></div></td>
+</tr>
+</template>
+</tbody>
+</table>
+</div>
+</template>
+
+<template data-sc="if" value="{{tab.vacias}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; max-width: 820px">Estas {{vaciasN}} especies están en la lista roja nacional pero no tienen ningún registro georreferenciado en GBIF entre 2012 y 2025 (con los filtros actuales). No significa que no existan: significa que no sabemos dónde están.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px">
+<template data-sc="for" list="{{vacias}}" as="v" hint-placeholder-count="8">
+<button type="button" onClick="{{v.pick}}" style="aspect-ratio: 3 / 4; background: {{papel2}}; border: 1px solid {{linea}}; outline: 1px dashed {{linea}}; outline-offset: -8px; padding: 14px; display: flex; flex-direction: column; justify-content: flex-end; text-align: left; gap: 4px; cursor: pointer">
+<span style="font-family: {{fDatos}}; font-size: 10px; color: {{tinta2}}">{{v.cat}}</span>
+<span style="font-family: {{fTitulo}}; font-size: 18px; line-height: 1.1">{{v.com}}</span>
+<span style="font-style: italic; font-size: 13px; color: {{tinta2}}">{{v.cie}}</span>
+<span style="{{v.sello}}">{{v.nac}}</span>
+<span style="font-size: 11px; color: {{tinta2}}">{{v.rg}}</span>
+</button>
+</template>
+</div>
+</template>
+
+<template data-sc="if" value="{{tab.matriz}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; max-width: 820px">Cajones de colección: cada celda cruza la categoría nacional (filas) con la categoría UICN global que publica GBIF (columnas). Muchas especies amenazadas en Argentina no lo están a escala mundial: la responsabilidad de conservarlas es local.</p>
+<div style="overflow-x: auto">
+<table style="border-collapse: separate; border-spacing: 4px; font-size: 14px; min-width: 640px">
+<thead><tr><th></th><template data-sc="for" list="{{matriz.cols}}" as="c" hint-placeholder-count="8"><th style="font-family: {{fDatos}}; font-size: 11px; padding: 4px 6px">{{c}}</th></template></tr></thead>
+<tbody>
+<template data-sc="for" list="{{matriz.filas}}" as="f" hint-placeholder-count="3">
+<tr><th style="text-align: left; padding-right: 10px; font-weight: 400">{{f.label}}</th>
+<template data-sc="for" list="{{f.celdas}}" as="c" hint-placeholder-count="8"><td title="{{c.t}}" style="{{c.estilo}}">{{c.n}}</td></template>
+</tr>
+</template>
+</tbody>
+</table>
+</div>
+<div style="font-size: 13px; color: {{tinta2}}">Categoría UICN tomada de GBIF (/species/…/iucnRedListCategory, consulta 29/10/2026). Verificar en iucnredlist.org antes de publicar.</div>
+</template>
+
+<template data-sc="if" value="{{tab.presiones}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; max-width: 900px">Tres presiones medidas con fuentes abiertas. Las dos primeras usan las mismas ecorregiones que el mapa (RESOLVE); la pérdida de vegetación nativa viene ya agregada por MapBiomas sobre las ecorregiones de Burkart, que no coinciden una a una con las RESOLVE.</p>
+<div style="overflow-x: auto; border: 1px solid {{linea}}">
+<table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 760px">
+<thead><tr style="background: {{papel2}}; text-align: left; font-family: {{fDatos}}; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase">
+<th style="padding: 8px">Ecorregión (RESOLVE)</th><th style="padding: 8px; text-align: right">km²</th><th style="padding: 8px; text-align: right">Especies con registro</th><th style="padding: 8px; text-align: right">% bajo AP 2025</th><th style="padding: 8px; text-align: right">% estricta</th><th style="padding: 8px; text-align: right">Focos / 1.000 km² / año</th><th style="padding: 8px">Focos 2012 → 2025</th>
+</tr></thead>
+<tbody>
+<template data-sc="for" list="{{presTabla}}" as="r" hint-placeholder-count="8">
+<tr onClick="{{r.pick}}" style="border-top: 1px dotted {{linea}}; cursor: pointer">
+<td style="padding: 6px 8px">{{r.nom}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.km2}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.sp}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.ap}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.ape}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.fu}}</td>
+<td style="padding: 6px 8px"><div style="display: grid; grid-template-columns: repeat(14, 6px); gap: 1px; height: 18px; align-items: end"><template data-sc="for" list="{{r.serie}}" as="c" hint-placeholder-count="14"><span style="{{c.estilo}}"></span></template></div></td>
+</tr>
+</template>
+</tbody>
+</table>
+</div>
+<h3 style="margin: 8px 0 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 22px">Vegetación nativa perdida, 2012 → 2025 (MapBiomas, ecorregiones de Burkart)</h3>
+<div style="overflow-x: auto; border: 1px solid {{linea}}">
+<table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 760px">
+<thead><tr style="background: {{papel2}}; text-align: left; font-family: {{fDatos}}; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase">
+<th style="padding: 8px">Ecorregión (Burkart)</th><th style="padding: 8px; text-align: right">Bosque 2012 (mil ha)</th><th style="padding: 8px; text-align: right">Cambio bosque</th><th style="padding: 8px; text-align: right">Cambio veg. natural</th><th style="padding: 8px; text-align: right">Cambio uso agropecuario</th><th style="padding: 8px">Bosque 2012 → 2025</th>
+</tr></thead>
+<tbody>
+<template data-sc="for" list="{{mbTabla}}" as="r" hint-placeholder-count="8">
+<tr style="border-top: 1px dotted {{linea}}">
+<td style="padding: 6px 8px">{{r.nom}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.b0}}</td><td style="{{r.estB}}">{{r.db}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.dn}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.da}}</td>
+<td style="padding: 6px 8px"><div style="display: grid; grid-template-columns: repeat(14, 6px); gap: 1px; height: 18px; align-items: end"><template data-sc="for" list="{{r.serie}}" as="c" hint-placeholder-count="14"><span style="{{c.estilo}}"></span></template></div></td>
+</tr>
+</template>
+</tbody>
+</table>
+</div>
+<h3 style="margin: 8px 0 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 22px">Superficie quemada reportada por provincia, 2012 → 2025 (Servicio Nacional de Manejo del Fuego)</h3>
+<div style="overflow-x: auto; border: 1px solid {{linea}}">
+<table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 700px">
+<thead><tr style="background: {{papel2}}; text-align: left; font-family: {{fDatos}}; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase"><th style="padding: 8px">Provincia</th><th style="padding: 8px; text-align: right">Total 2012–2025 (ha)</th><th style="padding: 8px; text-align: right">2025 (ha)</th><th style="padding: 8px; text-align: right">Peor año</th><th style="padding: 8px">2012 → 2025</th></tr></thead>
+<tbody><template data-sc="for" list="{{snTabla}}" as="r" hint-placeholder-count="8"><tr style="border-top: 1px dotted {{linea}}"><td style="padding: 6px 8px">{{r.nom}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.tot}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.u25}}</td><td style="padding: 6px 8px; text-align: right; font-family: {{fDatos}}">{{r.pico}}</td><td style="padding: 6px 8px"><div style="display: grid; grid-template-columns: repeat(14, 6px); gap: 1px; height: 18px; align-items: end"><template data-sc="for" list="{{r.serie}}" as="c" hint-placeholder-count="14"><span style="{{c.estilo}}"></span></template></div></td></tr></template></tbody>
+</table>
+</div>
+<div style="font-size: 13px; color: {{tinta2}}; max-width: 900px">Un foco de calor es una detección satelital de una anomalía térmica, no un incendio ni una superficie quemada; los incendios de bosque andino-patagónico ocupan poca superficie y casi no se notan en focos por km². La superficie quemada del SNMF es el dato oficial, pero 2012–2016 y 2017–2025 vienen de dos tablas que no siempre coinciden en los años en común; gris = sin dato. MapBiomas: el salto 2024→2025 y la ganancia de vegetación «natural» en la Pampa pueden reflejar cambios de clasificación entre pasturas y pastizales; leer con cautela. Áreas protegidas: Tomba (2025) no incluye áreas creadas después de 2022.</div>
+</template>
+
+<template data-sc="if" value="{{tab.fuentes}}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; font-size: 14px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 22px">Fuentes de esta versión</h3>
+<p style="margin: 0">Mamíferos: Ministerio de Ambiente y Desarrollo Sostenible (2021). Res. 316/2021, Anexo I. <a href="https://www.argentina.gob.ar/normativa/nacional/norma-354496/texto">argentina.gob.ar</a></p>
+<p style="margin: 0">Aves: Ministerio de Ambiente y Desarrollo Sustentable (2017). Res. 795/2017, Anexos I y II. <a href="https://www.argentina.gob.ar/normativa/nacional/norma-287278/texto">argentina.gob.ar</a></p>
+<p style="margin: 0">Registros: GBIF.org (29/10/2026) GBIF Occurrence Download <a href="https://doi.org/10.15468/dl.t87f4d">doi:10.15468/dl.t87f4d</a> · 51 conjuntos de datos, CC BY-NC 4.0.</p>
+<p style="margin: 0">Categoría UICN global: UICN, Lista Roja, vía API de GBIF (29/10/2026).</p>
+<p style="margin: 0">Ecorregiones: Dinerstein, E. et al. (2017) <i>BioScience</i> 67(6) <a href="https://doi.org/10.1093/biosci/bix014">doi:10.1093/biosci/bix014</a>, CC BY 4.0.</p>
+<p style="margin: 0">Provincias: INDEC, Códigos geográficos, vía geoAr (Ruiz Nicolini, MIT).</p>
+<p style="margin: 0">Relieve (provisorio): imagen de relieve sombreado del paquete basemap-data 2.0.0; se reemplazará por AWS Terrain Tiles.</p>
+<p style="margin: 0">Áreas protegidas: Tomba, A. (2025). <i>Georeferenced database of Argentina's protected areas system</i>. Mendeley Data, V1. <a href="https://doi.org/10.17632/wggsh3dszp.1">doi:10.17632/wggsh3dszp.1</a>, CC BY 4.0.</p>
+<p style="margin: 0">Focos de calor: NASA FIRMS, VIIRS S-NPP 375 m, resúmenes anuales por país (procesamiento estándar). <a href="https://firms.modaps.eosdis.nasa.gov/country/">firms.modaps.eosdis.nasa.gov/country</a>.</p>
+<p style="margin: 0">Vegetación nativa: MapBiomas Argentina, Colección 3, estadísticas por ecorregión. <a href="https://argentina.mapbiomas.org/descargas/estadisticas/">argentina.mapbiomas.org</a>, CC BY 4.0.</p>
+<p style="margin: 0">Rangos expertos de mamíferos: Marsh, C. J. et al. (2022). <i>Journal of Biogeography</i> 49(5): 979–992, <a href="https://doi.org/10.1111/jbi.14330">doi:10.1111/jbi.14330</a>; mapas MDD v1.2 en <a href="https://zenodo.org/records/6644198">Zenodo 6644198</a>, CC BY 4.0. Procesados: Cingulata, Pilosa, Perissodactyla, Didelphimorphia, Microbiotheria, Paucituberculata y Primates.</p>
+<p style="margin: 0">Superficie quemada: Servicio Nacional de Manejo del Fuego, vía Subsecretaría de Ambiente, dataset «Incendios forestales» de <a href="https://datos.gob.ar/dataset/ambiente-incendios-forestales">datos.gob.ar</a> (tablas 510 y 416 de ciam.ambiente.gob.ar).</p>
+<p style="margin: 0">Mapa: MapLibre GL JS 5.24.0 (BSD-3).</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 22px">Todavía en preparación</h3>
+<template data-sc="for" list="{{pendientes}}" as="c" hint-placeholder-count="4">
+<p style="margin: 0"><b>{{c.label}}</b> — {{c.fuente}}. {{c.detalle}}</p>
+</template>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 22px">Método, en corto</h3>
+<p style="margin: 0">205 especies amenazadas según las listas nacionales: en peligro crítico, en peligro y «amenazada» (equivale a VU de UICN). La «vulnerable» nacional (≈ NT) no se incluye.</p>
+<p style="margin: 0">Registros GBIF 2012–2025 con coordenadas, sin problemas geoespaciales, con incertidumbre ≤ 30 km. Se quitan duplicados (misma especie, punto y fecha): quedan {{k.registros}}.</p>
+<p style="margin: 0">Agregación en hexágonos H3 de resolución 4 y en ecorregiones RESOLVE recortadas a Argentina.</p>
+<p style="margin: 0">Un registro es una detección, no un individuo. El crecimiento anual refleja más observadores (eBird aporta ~92 %). 2025 está incompleto.</p>
+</div>
+</div>
+</template>
+</section>
+<footer style="border-top: 1px solid {{linea}}; padding-top: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: {{tinta2}}">
+<span>Huellas en el mapa · Contar con Datos 2026</span>
+<span style="font-family: {{fDatos}}">Datos: GBIF doi:10.15468/dl.t87f4d · Res. 316/2021 · Res. 795/2017 · RESOLVE 2017 · INDEC · Tomba 2025 · NASA FIRMS · MapBiomas Col. 3</span>
+</footer>
+<svg aria-hidden="true" viewBox="0 0 600 120" style="position: absolute; top: -3px; width: 844px; height: 137px; opacity: 0.3; pointer-events: none; color: {{tinta}}; left: 467px" fill="currentColor"><g transform="translate(40.0 63.0) rotate(80)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(105.0 65.2) rotate(80)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(170.0 40.9) rotate(82)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(235.0 47.3) rotate(85)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(300.0 29.4) rotate(88)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(365.0 43.7) rotate(92)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(430.0 34.0) rotate(96)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(495.0 56.0) rotate(98)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(560.0 52.5) rotate(100)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(210.0 104.0) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(253.3 96.7) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(296.7 73.3) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(340.0 66.0) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(383.3 42.7) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(426.7 35.3) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(470.0 12.0) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g></svg></div>
+</div>
+</template>
+<script src="assets/maplibre-gl.js"></script>
+<script src="assets/morphdom-umd.min.js"></script>
+<script src="assets/dc-mini.js"></script>
+<script>
+
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.D = null; this.map = null; this.mapEl = null; this.timer = null; this.vals = {};
+    this.state = { listo: false, sp: '', sp2: '', grupo: 'todos', cats: { CR: true, EN: true, VU: true }, modo: 'acum', anio: 2024, anioA: 2016, anioB: 2024, playing: false, capas: { relieve: true, ecor: true, prov: false, hex: true, pts: true, apl: false, rango: true }, pres: 'ninguna', apTipo: 'nom', forma: 'punto', panel: 'buscar', apUmbral: 10, soloVacios: true, eco: null, tab: 'catalogo', orden: 'cat' };
+    this.mapRef = (el) => { this.mapEl = el; if (el && this.D && !this.map) this.initMap(); };
+    this.Y = [2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+  }
+  componentDidMount() {
+    fetch('data/puntos.json').then((r) => r.json()).then((pt) => { this.P = pt; this._k = null; this.forceUpdate(); });
+    fetch('data/presiones.json').then((r) => r.json()).then((pr) => { this.PR = pr; this.presId = {}; pr.hexP.features.forEach((f) => { this.presId[f.properties.h] = f.id; }); this.addPresiones(); this._k = null; this.forceUpdate(); });
+    fetch('data/datos.json').then((r) => r.json()).then((d) => {
+      this.D = d;
+      this.sp = {}; d.especies.forEach((s) => { this.sp[s.id] = s; });
+      this.cellId = {}; d.hex.features.forEach((f) => { this.cellId[f.properties.h] = f.id; });
+      this.hexc = { type: 'FeatureCollection', features: d.hex.features.map((f) => { const r = f.geometry.coordinates[0].slice(0, -1); return { type: 'Feature', id: f.id, properties: { h: f.properties.h }, geometry: { type: 'Point', coordinates: [r.reduce((a, q) => a + q[0], 0) / r.length, r.reduce((a, q) => a + q[1], 0) / r.length] } }; }) };
+      this.ecoNom = {}; this.ecoOrig = {}; this.ecoArea = {};
+      d.ecor.features.forEach((f) => { const p = f.properties; this.ecoNom[p.eco_id] = p.nombre_es; this.ecoOrig[p.eco_id] = p.nombre; this.ecoArea[p.eco_id] = p.area_km2; });
+      this.setState({ listo: true });
+      if (this.mapEl && !this.map) this.initMap();
+    });
+  }
+  componentWillUnmount() { if (this.timer) clearInterval(this.timer); if (this.map) this.map.remove(); }
+  col() {
+    const p = this.props;
+    return { papel: p.papel ?? '#F3EDE0', papel2: p.papel2 ?? '#FBF8F1', tinta: p.tinta ?? '#2B241D', tinta2: p.tinta2 ?? '#6B5A48', linea: p.linea ?? '#B9A98F', A: p.tintaA ?? '#9B3522', B: p.tintaB ?? '#2F5A7E', F: p.tintaFuego ?? '#B0642A', V: p.tintaAP ?? '#5E7D4B', R: p.tintaRiesgo ?? p.tintaA ?? '#9B3522' };
+  }
+  mix(a, b, t) {
+    const h = (x) => [1,3,5].map((i) => parseInt(x.slice(i, i + 2), 16));
+    const A = h(a), B = h(b);
+    return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join('');
+  }
+  fmt(n) { return Number(n).toLocaleString('es-AR'); }
+  escala(C) {
+    if (this.props.escalaDosTonos ?? false) return [this.mix(C.papel, C.B, 0.4), C.B, this.mix(C.B, C.A, 0.55), C.A];
+    return [this.mix(C.papel, C.tinta, 0.22), this.mix(C.papel, C.A, 0.5), this.mix(C.papel, C.A, 0.85), this.mix(C.A, C.tinta, 0.55)];
+  }
+  apDe(k) {
+    if (!this._apc && this.PR && this.D) { const m = {}; this.PR.hexP.features.forEach((f) => { m[f.properties.h] = [f.properties.ap || 0, f.properties.ape || 0]; }); this._apc = {}; this.D.hex.features.forEach((f) => { this._apc[f.id] = m[f.properties.h] || [0, 0]; }); }
+    const a = (this._apc || {})[k]; return a ? (this.state.apTipo === 'est' ? a[1] : a[0]) : 0;
+  }
+  vacios() {
+    // celdas con especies (según filtros y ventana) y si están protegidas por encima del umbral
+    const s = this.state, D = this.D, w = this.ventana() || this.Y.map((_, k) => k), thr = s.apUmbral;
+    const celdas = {}, dentro = {}, fuera = {};
+    (s.sp ? [this.sp[s.sp]] : this.filtradas()).filter((e) => e.amb !== 'marino').forEach((e) => { const o = D.occ[e.id] || {}; Object.keys(o).forEach((cell) => { if (this.presente(e.id, cell, w) > 0) { const k = this.cellId[cell], pr = this.apDe(k) >= thr; celdas[k] = pr; if (pr) dentro[e.id] = 1; else fuera[e.id] = 1; } }); });
+    const ks = Object.keys(celdas), nP = ks.filter((k) => celdas[k]).length;
+    const nunca = Object.keys(fuera).filter((id) => !dentro[id]);
+    return { n: ks.length, prot: nP, vac: ks.length - nP, spFuera: Object.keys(fuera).length, nunca: nunca.length, nuncaNom: nunca.map((id) => this.sp[id]) };
+  }
+  irA(id, tab) {
+    if (tab) this.setState({ tab });
+    setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 40);
+  }
+  mensaje() {
+    if (this._msg || !this.PR || !this.D) return this._msg || null;
+    const D = this.D, todos = this.Y.map((_, k) => k), celdas = {}, apH = {};
+    D.especies.filter((e) => e.amb !== 'marino').forEach((e) => { const o = D.occ[e.id] || {}; Object.keys(o).forEach((cell) => { if (this.presente(e.id, cell, todos) > 0) celdas[cell] = 1; }); });
+    this.PR.hexP.features.forEach((f) => { apH[f.properties.h] = f.properties.ap || 0; });
+    const ks = Object.keys(celdas), fuera = ks.filter((h) => (apH[h] || 0) < 10).length;
+    const mam = D.especies.filter((e) => e.gru === 'Mamíferos');
+    this._msg = { pct: Math.round(fuera / Math.max(1, ks.length) * 100), mamSin: mam.filter((e) => e.n === 0).length, mamTot: mam.length };
+    return this._msg;
+  }
+  rangoTxt(e) {
+    if (!this.PR || !this.PR.rangoCeldas) return '';
+    const rc = this.PR.rangoCeldas[e.id], f = (this.PR.rangos.features || []).find((x) => x.properties.id === e.id);
+    if (!rc || !f) return e.gru === 'Mamíferos' ? 'Rango experto (MDD): todavía no procesado para este grupo (carnívoros, ungulados, roedores y murciélagos).' : '';
+    const S = new Set(rc), con = Object.keys(this.D.occ[e.id] || {}).filter((h) => S.has(h)).length;
+    return 'Rango experto (MDD) en Argentina: ' + this.fmt(f.properties.km2) + ' km² · hubo registros en ' + con + ' de sus ' + rc.length + ' celdas (' + Math.round(con / rc.length * 100) + ' %).';
+  }
+  rangoCorto(e) { const f = this.PR && (this.PR.rangos.features || []).find((x) => x.properties.id === e.id); return f ? 'rango experto: ' + this.fmt(f.properties.km2) + ' km²' : ''; }
+  usaPuntos() { return this.state.forma === 'punto' || this.state.pres !== 'ninguna'; }
+  ventana() {
+    const s = this.state, i = s.anio - 2012;
+    if (s.modo === 'anio') return [i];
+    if (s.modo === 'acum') return this.Y.slice(0, i + 1).map((_, k) => k);
+    return null;
+  }
+  filtradas() {
+    const s = this.state;
+    return this.D.especies.filter((e) => (s.grupo === 'todos' || e.gru === s.grupo) && s.cats[e.nac]);
+  }
+  presente(id, cell, idx) { const a = (this.D.occ[id] || {})[cell]; if (!a) return 0; let t = 0; idx.forEach((k) => { t += a[k]; }); return t; }
+  calcular() {
+    const s = this.state, D = this.D, v = {}, c = {};
+    const win = this.ventana();
+    if (s.modo === 'comparar' && !s.sp2) {
+      const ids = s.sp ? [s.sp] : this.filtradas().map((e) => e.id);
+      const ia = [s.anioA - 2012], ib = [s.anioB - 2012];
+      ids.forEach((id) => { const o = D.occ[id] || {}; Object.keys(o).forEach((cell) => {
+        const k = this.cellId[cell]; let x = c[k] || 0;
+        if (this.presente(id, cell, ia) > 0) x = x | 1; if (this.presente(id, cell, ib) > 0) x = x | 2; c[k] = x; }); });
+      return { tipo: 'cmp', v, c };
+    }
+    const w = win || this.Y.map((_, k) => k);
+    if (s.sp2 && s.sp) {
+      [[s.sp, 1], [s.sp2, 2]].forEach(([id, bit]) => { const o = D.occ[id] || {}; Object.keys(o).forEach((cell) => { if (this.presente(id, cell, w) > 0) { const k = this.cellId[cell]; c[k] = (c[k] || 0) | bit; } }); });
+      return { tipo: 'cmp2', v, c };
+    }
+    if (s.sp) {
+      const o = D.occ[s.sp] || {};
+      Object.keys(o).forEach((cell) => { const n = this.presente(s.sp, cell, w); if (n > 0) v[this.cellId[cell]] = n; });
+      return { tipo: 'sp', v, c };
+    }
+    this.filtradas().forEach((e) => { const o = D.occ[e.id] || {}; Object.keys(o).forEach((cell) => { if (this.presente(e.id, cell, w) > 0) { const k = this.cellId[cell]; v[k] = (v[k] || 0) + 1; } }); });
+    return { tipo: 'rich', v, c };
+  }
+  pintar() {
+    if (!this.map || !this.map.getSource('hex')) return;
+    const r = this.calcular(); this.vals = r;
+    const m = this.map;
+    m.removeFeatureState({ source: 'hex' }); m.removeFeatureState({ source: 'hexc' });
+    const apOn = this.state.pres === 'ap';
+    const put = (k, o) => { if (apOn) o.ap = this.apDe(+k); m.setFeatureState({ source: 'hex', id: +k }, o); m.setFeatureState({ source: 'hexc', id: +k }, o); };
+    if (r.tipo === 'cmp' || r.tipo === 'cmp2') Object.keys(r.c).forEach((k) => put(k, { c: r.c[k] }));
+    else Object.keys(r.v).forEach((k) => put(k, { v: r.v[k] }));
+    const cmp = r.tipo === 'cmp' || r.tipo === 'cmp2', s = this.state;
+    const vis = s.capas.hex, pts = this.usaPuntos(), crudos = !!s.sp && s.capas.pts;
+    m.setLayoutProperty('hex-v', 'visibility', vis && !pts && !cmp ? 'visible' : 'none');
+    m.setLayoutProperty('hex-c', 'visibility', vis && !pts && cmp ? 'visible' : 'none');
+    m.setLayoutProperty('hex-dot', 'visibility', vis && pts && !crudos ? 'visible' : 'none');
+    this.pinturas();
+  }
+  pinturas() {
+    if (!this.map || !this.map.getLayer('hex-v')) return;
+    const C = this.col(), m = this.map, sp = !!this.state.sp;
+    m.setPaintProperty('fondo', 'background-color', C.papel);
+    m.setPaintProperty('relieve', 'raster-opacity', this.state.capas.relieve ? (this.props.opacidadRelieve ?? 0.6) : 0);
+    m.setPaintProperty('ecor-l', 'line-color', C.tinta2);
+    m.setPaintProperty('prov-l', 'line-color', C.tinta);
+    m.setPaintProperty('eco-sel', 'line-color', C.A);
+    const e = this.escala(C), vS = ['coalesce', ['feature-state', 'v'], 0], cS = ['coalesce', ['feature-state', 'c'], 0];
+    const tipo = (this.vals || {}).tipo; let colE;
+    if (tipo === 'cmp' || tipo === 'cmp2') {
+      colE = ['match', cS, 1, C.A, 2, C.B, 3, C.tinta, 'rgba(0,0,0,0)'];
+      m.setPaintProperty('hex-dot', 'circle-radius', ['interpolate', ['linear'], ['zoom'], 3, ['case', ['>', cS, 0], 2.8, 0], 7, ['case', ['>', cS, 0], 8, 0]]);
+    } else if (sp) {
+      const L = ['ln', ['+', 1, ['min', vS, 200]]];
+      colE = C.A;
+      m.setPaintProperty('hex-dot', 'circle-radius', ['interpolate', ['linear'], ['zoom'], 3, ['case', ['>', vS, 0], ['+', 1.8, ['*', 0.9, L]], 0], 7, ['case', ['>', vS, 0], ['+', 4, ['*', 2.4, L]], 0]]);
+    } else {
+      const Q = ['sqrt', ['min', vS, 40]];
+      colE = ['interpolate', ['linear'], vS, 1, e[0], 4, e[1], 10, e[2], 20, e[3]];
+      m.setPaintProperty('hex-dot', 'circle-radius', ['interpolate', ['linear'], ['zoom'], 3, ['*', 1.05, Q], 7, ['*', 3.4, Q]]);
+    }
+    // con áreas protegidas: celda protegida = anillo; celda sin protección (vacío) = punto lleno
+    const st = this.state, apM = st.pres === 'ap', prot = ['>=', ['coalesce', ['feature-state', 'ap'], 0], st.apUmbral];
+    const ring = this.mix(C.V, C.tinta, 0.25), fondo = st.pres === 'fuego' || st.pres === 'quemado';
+    m.setPaintProperty('hex-dot', 'circle-color', colE);
+    m.setPaintProperty('hex-dot', 'circle-opacity', apM ? ['case', prot, 0, 0.95] : fondo ? 0.85 : 0.9);
+    m.setPaintProperty('hex-dot', 'circle-stroke-color', apM ? ['case', prot, ring, C.papel2] : C.papel2);
+    m.setPaintProperty('hex-dot', 'circle-stroke-width', apM ? ['case', prot, st.soloVacios ? 0 : 1.3, 0.35] : fondo ? 0 : 0.35);
+    m.setPaintProperty('hex-dot', 'circle-stroke-opacity', apM ? ['case', prot, st.soloVacios ? 0 : 0.9, 0.7] : 0.7);
+    if (sp) {
+      m.setPaintProperty('hex-v', 'fill-color', ['interpolate', ['linear'], vS, 1, e[0], 4, e[1], 10, e[2], 20, e[3]]);
+    } else {
+      m.setPaintProperty('hex-v', 'fill-color', ['interpolate', ['linear'], ['coalesce', ['feature-state', 'v'], 0], 1, this.mix(C.papel, C.tinta, 0.18), 4, this.mix(C.papel, C.A, 0.45), 10, this.mix(C.papel, C.A, 0.8), 20, this.mix(C.A, C.tinta, 0.55)]);
+    }
+    m.setPaintProperty('hex-c', 'fill-color', ['match', ['coalesce', ['feature-state', 'c'], 0], 1, C.A, 2, C.B, 3, C.tinta, 'rgba(0,0,0,0)']);
+    const conPts = sp && this.state.capas.pts;
+    m.setPaintProperty('hex-v', 'fill-opacity', ['case', ['>', ['coalesce', ['feature-state', 'v'], 0], 0], conPts ? 0.32 : 0.82, 0]);
+    m.setPaintProperty('hex-c', 'fill-opacity', ['case', ['>', ['coalesce', ['feature-state', 'c'], 0], 0], conPts ? 0.3 : 0.85, 0]);
+    if (m.getLayer('pts')) { m.setPaintProperty('pts', 'circle-color', ['match', ['get', 'k'], 1, C.A, 2, C.B, C.tinta]); m.setPaintProperty('pts', 'circle-stroke-color', C.papel2); }
+  }
+  initMap() {
+    const ml = window.maplibregl; if (!ml || !this.mapEl || !this.D || this.map) return;
+    const C = this.col(), D = this.D;
+    const map = new ml.Map({ container: this.mapEl, style: { version: 8, sources: {}, layers: [{ id: 'fondo', type: 'background', paint: { 'background-color': C.papel } }] }, center: [-64.5, -39.5], zoom: 3.3, minZoom: 2.8, maxZoom: 9, maxBounds: [[-100, -64], [-28, -14]], dragRotate: false, pitchWithRotate: false, attributionControl: false });
+    this.map = map;
+    map.touchZoomRotate.disableRotation();
+    map.addControl(new ml.NavigationControl({ showCompass: false }), 'top-right');
+    map.addControl(new ml.AttributionControl({ compact: true, customAttribution: 'Registros: GBIF.org doi:10.15468/dl.t87f4d · AP: Tomba 2025 · Focos: NASA FIRMS · Ecorregiones: RESOLVE 2017 · Provincias: INDEC · Relieve: basemap-data (provisorio)' }), 'bottom-right');
+    map.on('load', () => {
+      map.addSource('relieve', { type: 'image', url: 'data/relieve_herbario.jpg', coordinates: [[-76, -20], [-50, -20], [-50, -57.5], [-76, -57.5]] });
+      map.addLayer({ id: 'relieve', type: 'raster', source: 'relieve', paint: { 'raster-opacity': this.props.opacidadRelieve ?? 0.6, 'raster-fade-duration': 0 } });
+      map.addSource('ecor', { type: 'geojson', data: D.ecor });
+      map.addSource('prov', { type: 'geojson', data: D.prov, promoteId: 'nombre' });
+      map.addSource('hex', { type: 'geojson', data: D.hex });
+      map.addLayer({ id: 'ecor-f', type: 'fill', source: 'ecor', paint: { 'fill-color': '#000', 'fill-opacity': 0 } });
+      map.addLayer({ id: 'hex-v', type: 'fill', source: 'hex', paint: { 'fill-color': C.A, 'fill-opacity': ['case', ['>', ['coalesce', ['feature-state', 'v'], 0], 0], 0.82, 0], 'fill-outline-color': 'rgba(0,0,0,0)' } });
+      map.addLayer({ id: 'hex-c', type: 'fill', source: 'hex', layout: { visibility: 'none' }, paint: { 'fill-color': C.A, 'fill-opacity': ['case', ['>', ['coalesce', ['feature-state', 'c'], 0], 0], 0.85, 0] } });
+      map.addLayer({ id: 'ecor-l', type: 'line', source: 'ecor', paint: { 'line-color': C.tinta2, 'line-width': 0.7, 'line-dasharray': [3, 2], 'line-opacity': 0.45 } });
+      map.addLayer({ id: 'prov-l', type: 'line', source: 'prov', paint: { 'line-color': C.tinta, 'line-width': 0.5, 'line-opacity': 0.3 } });
+      map.addLayer({ id: 'eco-sel', type: 'line', source: 'ecor', filter: ['==', ['get', 'eco_id'], ''], paint: { 'line-color': C.A, 'line-width': 2.2 } });
+      map.addSource('hexc', { type: 'geojson', data: this.hexc });
+      map.addLayer({ id: 'hex-dot', type: 'circle', source: 'hexc', paint: { 'circle-color': C.A, 'circle-radius': 0, 'circle-opacity': 0.92, 'circle-stroke-color': C.papel2, 'circle-stroke-width': 0.6 } });
+      map.addSource('pts', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+      map.addLayer({ id: 'pts', type: 'circle', source: 'pts', layout: { visibility: 'none' }, paint: { 'circle-radius': ['interpolate', ['linear'], ['zoom'], 3, ['interpolate', ['linear'], ['get', 'n'], 1, 2.2, 20, 4.5], 8, ['interpolate', ['linear'], ['get', 'n'], 1, 5, 20, 10]], 'circle-color': ['match', ['get', 'k'], 1, C.A, 2, C.B, C.tinta], 'circle-opacity': 0.85, 'circle-stroke-color': C.papel2, 'circle-stroke-width': 0.8 } });
+      const pop = new ml.Popup({ closeButton: false, closeOnClick: false, offset: 8 });
+      map.on('mousemove', 'pts', (e) => {
+        const f = e.features && e.features[0]; if (!f) return; const q = f.properties;
+        map.getCanvas().style.cursor = 'pointer';
+        pop.setLngLat(e.lngLat).setText((this.sp[q.sp] || {}).com + ' · ' + q.y + ' · ' + q.n + (q.n === 1 ? ' registro' : ' registros') + ' en este punto (≈1 km)').addTo(map);
+      });
+      map.on('mouseleave', 'pts', () => { pop.remove(); map.getCanvas().style.cursor = ''; });
+      map.on('mousemove', 'hex-v', (e) => this.hover(e, pop));
+      map.on('mousemove', 'hex-c', (e) => this.hover(e, pop));
+      map.on('mousemove', 'hex-dot', (e) => this.hover(e, pop));
+      map.on('mouseleave', 'hex-dot', () => { pop.remove(); map.getCanvas().style.cursor = ''; });
+      map.on('mouseleave', 'hex-v', () => { pop.remove(); map.getCanvas().style.cursor = ''; });
+      map.on('mouseleave', 'hex-c', () => { pop.remove(); map.getCanvas().style.cursor = ''; });
+      map.on('click', (e) => {
+        const f = map.queryRenderedFeatures(e.point, { layers: ['ecor-f'] })[0];
+        this.setState({ eco: f ? f.properties.eco_id : null, panel: f ? 'ficha' : this.state.panel });
+      });
+      this.pop = pop; this.listoMapa = true; this.addPresiones(); this._k = null; this.sync(); this.setState({ mapa: true });
+    });
+  }
+  addPresiones() {
+    const m = this.map, PR = this.PR; if (!m || !PR || !this.listoMapa || m.getSource('hexp')) return;
+    const C = this.col(), pop = this.pop;
+    m.addSource('hexp', { type: 'geojson', data: PR.hexP });
+    m.addLayer({ id: 'pres-f', type: 'fill', source: 'hexp', layout: { visibility: 'none' }, paint: { 'fill-color': C.B, 'fill-opacity': 0 } }, 'hex-v');
+    m.addLayer({ id: 'prov-q', type: 'fill', source: 'prov', layout: { visibility: 'none' }, paint: { 'fill-color': C.F, 'fill-opacity': 0 } }, 'hex-v');
+    m.on('mousemove', 'prov-q', (e) => { const q = e.features[0]; if (!q || this.state.pres !== 'quemado') return; const a = this.PR.snmf[q.properties.nombre]; if (!a) return; const w = this.ventana() || [this.state.anioA - 2012, this.state.anioB - 2012]; const v = w.map((k) => a[k]).filter((x) => x !== null); pop.setLngLat(e.lngLat).setText(q.properties.nombre + ': ' + (v.length ? this.fmt(Math.round(v.reduce((t, x) => t + x, 0) / v.length)) + ' ha quemadas por año (reportadas, SNMF) · ' + this.ventanaTxt() : 'sin dato')).addTo(m); });
+    m.on('mouseleave', 'prov-q', () => pop.remove());
+    m.addSource('rango', { type: 'geojson', data: PR.rangos || { type: 'FeatureCollection', features: [] } });
+    m.addLayer({ id: 'rango-f', type: 'fill', source: 'rango', layout: { visibility: 'none' }, paint: { 'fill-color': C.A, 'fill-opacity': 0.1 } }, 'hex-v');
+    m.addLayer({ id: 'rango-l', type: 'line', source: 'rango', layout: { visibility: 'none' }, paint: { 'line-color': C.A, 'line-width': 1.4, 'line-dasharray': [3, 2] } }, 'hex-dot');
+    m.addSource('apl', { type: 'geojson', data: PR.apFC });
+    m.addLayer({ id: 'ap-f', type: 'fill', source: 'apl', layout: { visibility: 'none' }, paint: { 'fill-color': C.B, 'fill-opacity': 0.12 } }, 'ecor-l');
+    m.addLayer({ id: 'ap-l', type: 'line', source: 'apl', layout: { visibility: 'none' }, paint: { 'line-color': C.V, 'line-width': ['case', ['get', 'e'], 1.6, 0.8] } }, 'ecor-l');
+    m.on('mousemove', 'pres-f', (e) => { if (this.state.sp || !e.features[0]) return; const q = e.features[0].properties; const t = this.presTxt(q); if (!t) { pop.remove(); return; } pop.setLngLat(e.lngLat).setText(t).addTo(m); });
+    m.on('mouseleave', 'pres-f', () => pop.remove());
+    m.on('mousemove', 'ap-f', (e) => { const q = e.features[0] && e.features[0].properties; if (!q || this.state.pres === 'fuego' || this.state.pres === 'quemado') return; pop.setLngLat(e.lngLat).setText(q.nombre + ' · creada en ' + q.y + ' · UICN ' + q.c + ' · ' + q.adm).addTo(m); });
+    m.on('mouseleave', 'ap-f', () => pop.remove());
+    this._k = null;
+  }
+  presVal(q) {
+    const s = this.state;
+    if (s.pres === 'ap') return s.apTipo === 'est' ? q.ape : q.ap;
+    if (s.pres === 'fuego') { const f = typeof q.f === 'string' ? JSON.parse(q.f) : q.f; const w = this.ventana() || [s.anioA - 2012, s.anioB - 2012]; const n = w.reduce((a, k) => a + f[k], 0); return q.km2 > 0 ? n / w.length / q.km2 * 1000 : 0; }
+    return 0;
+  }
+  presTxt(q) {
+    const s = this.state, v = this.presVal(q);
+    if (s.pres === 'ap') return (s.apTipo === 'est' ? 'Protección estricta (UICN I–IV): ' : 'Bajo alguna área protegida: ') + this.fmt(Math.round(v * 10) / 10) + ' % del hexágono' + (q.apy ? ' · primera AP: ' + q.apy : '');
+    if (s.pres === 'fuego') return 'Focos de calor VIIRS: ' + this.fmt(Math.round(v * 10) / 10) + ' por 1.000 km² y por año · ' + this.ventanaTxt();
+    return '';
+  }
+  pintarPres() {
+    const m = this.map; if (!m || !m.getSource('hexp')) return;
+    const s = this.state, C = this.col(), on = s.pres === 'fuego', apM = s.pres === 'ap', qm = s.pres === 'quemado';
+    const rF = [this.mix(C.papel, C.F, 0.12), this.mix(C.papel, C.F, 0.32), this.mix(C.papel, C.F, 0.55), this.mix(C.papel, C.F, 0.8), C.F];
+    m.removeFeatureState({ source: 'hexp' });
+    if (on) this.PR.hexP.features.forEach((f) => { const v = this.presVal(f.properties); if (v > 0) m.setFeatureState({ source: 'hexp', id: f.id }, { p: v }); });
+    m.setPaintProperty('pres-f', 'fill-color', ['interpolate', ['linear'], ['coalesce', ['feature-state', 'p'], 0], 0.5, rF[0], 5, rF[1], 20, rF[2], 60, rF[3], 150, rF[4]]);
+    m.setPaintProperty('pres-f', 'fill-opacity', ['case', ['>', ['coalesce', ['feature-state', 'p'], 0], 0], 0.78, 0]);
+    m.setLayoutProperty('pres-f', 'visibility', on ? 'visible' : 'none');
+    // superficie quemada reportada por provincia (SNMF)
+    m.removeFeatureState({ source: 'prov' });
+    if (qm) { const w = this.ventana() || [s.anioA - 2012, s.anioB - 2012]; Object.keys(this.PR.snmf).forEach((pv) => { const a = this.PR.snmf[pv], vals = w.map((k) => a[k]).filter((x) => x !== null); if (vals.length) m.setFeatureState({ source: 'prov', id: pv }, { q: vals.reduce((t, x) => t + x, 0) / vals.length }); }); }
+    m.setPaintProperty('prov-q', 'fill-color', ['interpolate', ['linear'], ['coalesce', ['feature-state', 'q'], 0], 100, rF[0], 2000, rF[1], 15000, rF[2], 60000, rF[3], 200000, rF[4]]);
+    m.setPaintProperty('prov-q', 'fill-opacity', ['case', ['>', ['coalesce', ['feature-state', 'q'], 0], 0], 0.72, 0]);
+    m.setLayoutProperty('prov-q', 'visibility', qm ? 'visible' : 'none');
+    m.setLayoutProperty('prov-l', 'visibility', qm || s.capas.prov ? 'visible' : 'none');
+    // áreas protegidas: polígonos reales, en verde, debajo de los puntos
+    const apl = apM || s.capas.apl ? 'visible' : 'none';
+    m.setLayoutProperty('ap-f', 'visibility', apl); m.setLayoutProperty('ap-l', 'visibility', apl);
+    m.setPaintProperty('ap-f', 'fill-color', C.V); m.setPaintProperty('ap-f', 'fill-opacity', apM ? 0.5 : 0.18);
+    m.setPaintProperty('ap-l', 'line-color', this.mix(C.V, C.tinta, 0.3)); m.setPaintProperty('ap-l', 'line-width', ['case', ['get', 'e'], 1.1, 0.6]);
+    const ids = [s.sp, s.sp2].filter(Boolean), rv = s.capas.rango !== false && ids.length ? 'visible' : 'none';
+    if (m.getLayer('rango-f')) { m.setLayoutProperty('rango-f', 'visibility', rv); m.setLayoutProperty('rango-l', 'visibility', rv);
+      m.setFilter('rango-f', ['in', ['get', 'id'], ['literal', ids]]); m.setFilter('rango-l', ['in', ['get', 'id'], ['literal', ids]]);
+      const col = ['match', ['get', 'id'], s.sp || '-', C.A, s.sp2 || '--', C.B, C.A]; m.setPaintProperty('rango-f', 'fill-color', col); m.setPaintProperty('rango-l', 'line-color', col); }
+    const fy = ['<=', ['get', 'y'], s.modo === 'comparar' ? s.anioB : s.anio];
+    const fil = apM && s.apTipo === 'est' ? ['all', fy, ['==', ['get', 'e'], true]] : fy;
+    m.setFilter('ap-f', fil); m.setFilter('ap-l', fil);
+    // registros dentro / fuera de áreas protegidas
+    const AZ = C.B /*AZUL*/;
+    if (!m.getLayer('hex-in')) {
+      m.addLayer({ id: 'hex-in', type: 'fill', source: 'hex', layout: { visibility: 'none' }, paint: { 'fill-color': AZ, 'fill-opacity': 0 } }, 'hex-v');
+      m.on('mousemove', 'hex-in', (e) => { const f = e.features && e.features[0]; if (!f || !this.pop) return; const q = (m.getFeatureState({ source: 'hex', id: f.id }) || {}).q; if (!q) { this.pop.remove(); return; } this.pop.setLngLat(e.lngLat).setText(q === 2 ? 'Hay registros dentro de un área protegida' : 'Registros solo fuera de áreas protegidas').addTo(m); });
+      m.on('mouseleave', 'hex-in', () => { if (this.pop) this.pop.remove(); });
+    }
+    const dn = s.pres === 'dentro' && this.vals && (this.vals.tipo === 'rich' || this.vals.tipo === 'sp') && !!this.PR.occAP;
+    if (dn) {
+      const w = this.ventana() || this.Y.map((_, k) => k), q = {};
+      Object.keys(this.vals.v).forEach((k) => { if (this.vals.v[k] > 0) q[k] = 1; });
+      (s.sp ? [s.sp] : this.filtradas().map((e) => e.id)).forEach((id) => { const o = this.PR.occAP[id] || {}; Object.keys(o).forEach((cell) => { let t = 0; w.forEach((i) => { t += o[cell][i]; }); if (t > 0 && this.cellId[cell] !== undefined) q[this.cellId[cell]] = 2; }); });
+      Object.keys(q).forEach((k) => m.setFeatureState({ source: 'hex', id: +k }, { q: q[k] }));
+      m.setPaintProperty('hex-in', 'fill-color', ['match', ['coalesce', ['feature-state', 'q'], 0], 2, AZ, 1, this.mix(C.papel, C.A, 0.5), 'rgba(0,0,0,0)']);
+      m.setPaintProperty('hex-in', 'fill-opacity', ['case', ['>', ['coalesce', ['feature-state', 'q'], 0], 0], 0.85, 0]);
+      m.setLayoutProperty('ap-f', 'visibility', 'visible'); m.setLayoutProperty('ap-l', 'visibility', 'visible');
+      m.setPaintProperty('ap-f', 'fill-color', AZ); m.setPaintProperty('ap-f', 'fill-opacity', 0.1);
+      m.setPaintProperty('ap-l', 'line-color', this.mix(AZ, C.tinta, 0.35)); m.setPaintProperty('ap-l', 'line-width', 0.6);
+      m.setFilter('ap-f', null); m.setFilter('ap-l', null);
+      m.setLayoutProperty('hex-dot', 'visibility', 'none'); m.setLayoutProperty('hex-v', 'visibility', 'none');
+    }
+    m.setLayoutProperty('hex-in', 'visibility', dn ? 'visible' : 'none');
+  }
+  hover(e, pop) {
+    const f = e.features && e.features[0]; if (!f) return;
+    const k = f.id, r = this.vals, s = this.state;
+    let txt = '';
+    if (r.tipo === 'rich') { const n = r.v[k]; if (!n) { pop.remove(); return; } txt = n + (n === 1 ? ' especie amenazada registrada' : ' especies amenazadas registradas'); }
+    else if (r.tipo === 'sp') { const n = r.v[k]; if (!n) { pop.remove(); return; } txt = this.sp[s.sp].com + ': ' + n + (n === 1 ? ' registro' : ' registros'); }
+    else { const c = r.c[k]; if (!c) { pop.remove(); return; }
+      if (r.tipo === 'cmp') txt = c === 3 ? 'Registros en ' + s.anioA + ' y ' + s.anioB : c === 1 ? 'Solo en ' + s.anioA : 'Solo en ' + s.anioB;
+      else txt = c === 3 ? 'Ambas especies' : c === 1 ? 'Solo ' + this.sp[s.sp].com : 'Solo ' + this.sp[s.sp2].com; }
+    this.map.getCanvas().style.cursor = 'pointer';
+    pop.setLngLat(e.lngLat).setText(txt + ' · ' + this.ventanaTxt()).addTo(this.map);
+  }
+  capas() {
+    if (!this.map || !this.map.getLayer('ecor-l')) return;
+    const c = this.state.capas, m = this.map;
+    m.setLayoutProperty('ecor-l', 'visibility', c.ecor ? 'visible' : 'none');
+    m.setLayoutProperty('prov-l', 'visibility', c.prov || this.state.pres === 'quemado' ? 'visible' : 'none');
+    m.setFilter('eco-sel', ['==', ['get', 'eco_id'], this.state.eco || '']);
+  }
+  sync() {
+    if (!this.map || !this.map.getSource('hex')) return;
+    this.capas(); this.pintar(); this.pintarPres(); this.puntos(); this.encuadre();
+  }
+  puntos() {
+    const m = this.map, src = m && m.getSource('pts'); if (!src) return;
+    const s = this.state, P = this.P || {};
+    const feats = [];
+    const add = (id, k, ok) => { (P[id] || []).forEach((q) => { const kk = typeof k === 'function' ? k(q[2]) : k; if (ok(q[2]) && kk) feats.push({ type: 'Feature', properties: { k: kk, y: q[2], n: q[3], sp: id }, geometry: { type: 'Point', coordinates: [q[0], q[1]] } }); }); };
+    const win = this.ventana(); const enWin = (y) => !win || win.includes(y - 2012);
+    if (s.sp && s.sp2) { add(s.sp, 1, enWin); add(s.sp2, 2, enWin); }
+    else if (s.sp && s.modo === 'comparar') { add(s.sp, (y) => (y === s.anioA ? 1 : 0) + (y === s.anioB ? 2 : 0), (y) => y === s.anioA || y === s.anioB); }
+    else if (s.sp) { add(s.sp, 1, enWin); }
+    src.setData({ type: 'FeatureCollection', features: feats });
+    this.nPts = feats.reduce((a, f) => a + f.properties.n, 0);
+    m.setLayoutProperty('pts', 'visibility', s.capas.pts && s.sp ? 'visible' : 'none');
+  }
+  encuadre() {
+    const s = this.state, m = this.map, P = this.P || {};
+    const key = s.sp + '|' + s.sp2 + '|' + s.eco;
+    if (key === this._fit) return; this._fit = key;
+    let pts = [];
+    if (s.sp) { pts = (P[s.sp] || []).concat(s.sp2 ? (P[s.sp2] || []) : []).map((q) => [q[0], q[1]]); if (!pts.length && this.PR) { const f = (this.PR.rangos.features || []).find((x) => x.properties.id === s.sp); if (f) { const walk = (c) => { if (typeof c[0] === 'number') pts.push(c); else c.forEach(walk); }; walk(f.geometry.coordinates); } } }
+    else if (s.eco) { const f = this.D.ecor.features.find((x) => x.properties.eco_id === s.eco); if (f) { const walk = (c) => { if (typeof c[0] === 'number') pts.push(c); else c.forEach(walk); }; walk(f.geometry.coordinates); } }
+    if (!pts.length) { if (!s.sp && !s.eco) m.easeTo({ center: [-64.5, -39.5], zoom: 3.3, duration: 800 }); return; }
+    let a = 180, b = 90, c = -180, d = -90; pts.forEach((q) => { a = Math.min(a, q[0]); b = Math.min(b, q[1]); c = Math.max(c, q[0]); d = Math.max(d, q[1]); });
+    if (c - a < 1) { a -= 1; c += 1; } if (d - b < 1) { b -= 1; d += 1; }
+    m.fitBounds([[a, b], [c, d]], { padding: 60, maxZoom: 7, duration: 900 });
+  }
+  ventanaTxt() {
+    const s = this.state;
+    if (s.modo === 'comparar' && !s.sp2) return s.anioA + ' vs ' + s.anioB;
+    if (s.modo === 'anio') return String(s.anio);
+    return '2012–' + s.anio;
+  }
+  estadoTxt() {
+    const s = this.state, P = this.P || {}, w = this.ventana();
+    const enW = (y) => (w ? w.includes(y - 2012) : (y === s.anioA || y === s.anioB));
+    const cuenta = (id) => (P[id] || []).reduce((a, q) => a + (enW(q[2]) ? q[3] : 0), 0);
+    const nom = (id) => (this.sp[id] || {}).com;
+    if (s.sp && s.sp2) return 'Comparando ' + nom(s.sp) + ' (' + this.fmt(cuenta(s.sp)) + ' registros) y ' + nom(s.sp2) + ' (' + this.fmt(cuenta(s.sp2)) + ') · ' + this.ventanaTxt();
+    if (s.sp) { const n = cuenta(s.sp); return n ? 'Mostrando ' + nom(s.sp) + ': ' + this.fmt(n) + (n === 1 ? ' registro en ' : ' registros en ') + this.ventanaTxt() : nom(s.sp) + ': sin registros en ' + this.ventanaTxt() + (this.sp[s.sp].n ? ' — probá otra ventana de tiempo' : ' — sin huellas'); }
+    const f = this.filtradas();
+    return 'Mostrando ' + f.length + ' especies amenazadas (' + (s.grupo === 'todos' ? 'mamíferos y aves' : s.grupo.toLowerCase()) + ') · ' + this.ventanaTxt();
+  }
+  sello(cat, C, chico) {
+    const base = 'display: inline-block; font-family: ' + (this.props.fDatos ?? 'IBM Plex Mono') + '; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 2px; transform: rotate(-2deg); ';
+    const pad = chico ? 'padding: 1px 6px; font-size: 11px; ' : 'padding: 3px 8px; font-size: 12px; ';
+    if (cat === 'CR') return base + pad + 'background: ' + C.R + '; color: ' + C.papel2 + '; border: 2px solid ' + C.R + ';';
+    if (cat === 'EN') return base + pad + 'color: ' + C.R + '; border: 3px solid ' + C.R + ';';
+    if (cat === 'VU') return base + pad + 'color: ' + C.R + '; border: 1px solid ' + C.R + ';';
+    return base + pad + 'color: ' + C.tinta2 + '; border: 1px dashed ' + C.linea + ';';
+  }
+  pill(on, C) {
+    return 'min-height: 40px; padding: 6px 12px; border-radius: 2px; cursor: pointer; font-size: 14px; border: 1px solid ' + (on ? C.tinta : C.linea) + '; background: ' + (on ? C.tinta : C.papel2) + '; color: ' + (on ? C.papel2 : C.tinta) + ';';
+  }
+  renderVals() {
+    const p = this.props, s = this.state, C = this.col();
+    const fq = (f) => "'" + f + "', Georgia, serif";
+    const base = { papel: C.papel, papel2: C.papel2, tinta: C.tinta, tinta2: C.tinta2, linea: C.linea, tintaA: C.A, tintaB: C.B, fTitulo: fq(p.fTitulo ?? 'IM Fell English'), fTexto: fq(p.fTexto ?? 'EB Garamond'), fNotas: "'" + (p.fNotas ?? 'Caveat') + "', cursive", fDatos: "'" + (p.fDatos ?? 'IBM Plex Mono') + "', monospace", mapRef: this.mapRef };
+    const catTxt = { CR: 'En peligro crítico', EN: 'En peligro', VU: 'Amenazada' };
+    const pend = [
+      { label: 'Luz nocturna (actividad humana)', fuente: 'VIIRS VNL v2.2 anual (EOG), vía Earth Engine', detalle: 'Radiancia media por ecorregión y hexágono, 2012–2024. Requiere una cuenta de Earth Engine.' },
+      { label: 'Área quemada satelital (mapa fino)', fuente: 'MODIS MCD64A1 v6.1 (NASA), vía Earth Engine', detalle: 'Hectáreas quemadas por hexágono y ecorregión, 2012–2025: muestra dónde, dentro de cada provincia.' }
+    ];
+    const vacio = Object.assign({}, base, { indice: [], msg: { texto: 'Cargando…', ver: () => {} }, umbralUI: [], vaciosUI: [], gapLista: [], gapTitulo: '', hayGap: false, snTabla: [], formaUI: [], formaNota: '', panelUI: [], pan: { buscar: true }, presUI: [], apTipoUI: [], presEsAP: false, presNota: '', aplOn: false, aplToggle: () => {}, leyP: { on: false, items: [] }, presTabla: [], mbTabla: [], cargando: true, k: { especies: '205', registros: '—', vacias: '—' }, opciones: [], grupos: [], catsUI: [], modos: [], capasUI: [], pendientes: pend, sp: '', sp2: '', anio: 2024, anioA: 2016, anioB: 2024, noComparar: true, esComparar: false, playing: false, noPlaying: true, playLabel: 'Reproducir', textoAnio: '', leyenda: { titulo: '', items: [], nota: '' }, ventanaTxt: '', ficha: { esGuia: true }, serie: { titulo: 'Registros por año', barras: [] }, tabs: [], tab: { catalogo: true }, ordenes: [], catalogo: [], catalogoN: 0, vacias: [], vaciasN: 0, matriz: { cols: [], filas: [] } });
+    if (!this.D) return vacio;
+    const D = this.D;
+    const clave = JSON.stringify([s.sp, s.sp2, s.grupo, s.cats, s.modo, s.anio, s.anioA, s.anioB, s.capas, s.eco, C, p.opacidadRelieve, s.pres, s.apTipo, s.forma, s.apUmbral, s.soloVacios, p.escalaDosTonos, !!this.P, !!this.PR, !!this.listoMapa]);
+    if (clave !== this._k && this.listoMapa) { this._k = clave; setTimeout(() => this.sync(), 0); }
+    const all = D.especies;
+    const k = { especies: this.fmt(all.length), registros: this.fmt(all.reduce((a, e) => a + e.n, 0)), vacias: this.fmt(all.filter((e) => e.n === 0).length) };
+    const ord = { CR: 0, EN: 1, VU: 2 };
+    const opciones = all.slice().sort((a, b) => ord[a.nac] - ord[b.nac] || a.com.localeCompare(b.com, 'es')).map((e) => ({ id: e.id, label: e.nac + ' · ' + e.com + ' (' + e.cie + ')' + (e.n === 0 ? ' — sin registros' : '') }));
+    const grupos = [['todos', 'Todas'], ['Mamíferos', 'Mamíferos'], ['Aves', 'Aves']].map(([v, l]) => ({ label: l, on: s.grupo === v, estilo: this.pill(s.grupo === v, C), pick: () => this.setState({ grupo: v }) }));
+    const catsUI = ['CR', 'EN', 'VU'].map((c) => ({ label: catTxt[c], on: s.cats[c], estilo: this.sello(c, C, false) + ' min-height: 40px; cursor: pointer; transform: none; opacity: ' + (s.cats[c] ? 1 : 0.35) + '; background-color: ' + (c === 'CR' ? C.R : C.papel2) + ';', pick: () => this.setState({ cats: Object.assign({}, s.cats, { [c]: !s.cats[c] }) }) }));
+    const modos = [['anio', 'Un año'], ['acum', 'Acumulado'], ['comparar', 'Comparar años']].map(([v, l]) => ({ label: l, on: s.modo === v, estilo: this.pill(s.modo === v, C), pick: () => { if (this.timer) { clearInterval(this.timer); this.timer = null; } this.setState({ modo: v, playing: false }); } }));
+    const capasUI = [['pts', 'Registros GBIF de la especie (puntos)'], ['hex', 'Registros GBIF por celda'], ['ecor', 'Ecorregiones (RESOLVE 2017)'], ['prov', 'Provincias (INDEC)'], ['relieve', 'Relieve'], ['apl', 'Contornos de áreas protegidas'], ['rango', 'Rango experto de la especie (MDD)']].map(([key, l]) => ({ label: l, on: s.capas[key], toggle: () => this.setState({ capas: Object.assign({}, s.capas, { [key]: !s.capas[key] }) }) }));
+    const esComparar = s.modo === 'comparar' && !s.sp2;
+    const r = { tipo: (s.modo === 'comparar' && !s.sp2) ? 'cmp' : (s.sp && s.sp2) ? 'cmp2' : s.sp ? 'sp' : 'rich' };
+    let leyenda; const pts = this.usaPuntos();
+    const circ = (c, d) => 'display: inline-block; width: ' + d + 'px; height: ' + d + 'px; border-radius: 50%; background: ' + c + ';';
+    if (r.tipo === 'cmp' || r.tipo === 'cmp2') {
+      const a = r.tipo === 'cmp' ? 'Solo ' + s.anioA : 'Solo ' + (this.sp[s.sp] || {}).com;
+      const b = r.tipo === 'cmp' ? 'Solo ' + s.anioB : 'Solo ' + (this.sp[s.sp2] || {}).com;
+      const sw = (c) => pts ? circ(c, 10) : 'display: inline-block; width: 16px; height: 14px; background: ' + c + ';';
+      leyenda = { titulo: r.tipo === 'cmp' ? 'Comparar años' : 'Comparar especies', items: [{ muestra: sw(C.A), label: a }, { muestra: sw(C.B), label: b }, { muestra: sw(C.tinta), label: 'Ambos' }], nota: r.tipo === 'cmp' ? 'Presencia de registros, no abundancia.' : 'Ventana ' + this.ventanaTxt() + '.' };
+    } else if (r.tipo === 'sp') {
+      const sw = (t, d) => pts ? circ(C.A, d) : 'display: inline-block; width: 16px; height: 14px; background: ' + this.mix(C.papel, C.A, t) + ';';
+      leyenda = { titulo: 'Registros de la especie', items: [{ muestra: sw(0.45, 6), label: '1 registro' }, { muestra: sw(0.75, 10), label: '10' }, { muestra: sw(1, 14), label: '100 o más' }], nota: (s.capas.pts ? 'Puntos: registros individuales (≈1 km). ' : 'Por celda. ') + (this.PR && (this.PR.rangos.features || []).some((x) => x.properties.id === s.sp) ? 'Línea punteada: rango experto (MDD). ' : '') + 'Ventana ' + this.ventanaTxt() + '.' };
+    } else {
+      const e = this.escala(C); const sw = (c, d) => pts ? circ(c, d) : 'display: inline-block; width: 16px; height: 14px; background: ' + c + ';';
+      leyenda = { titulo: 'Especies amenazadas registradas', items: [{ muestra: sw(e[0], 5), label: '1' }, { muestra: sw(e[1], 8), label: '4' }, { muestra: sw(e[2], 12), label: '10' }, { muestra: sw(e[3], 16), label: '20 o más' }], nota: (pts ? 'Un punto por celda (~1.800 km²)' : 'Por hexágono (~1.800 km²)') + ' · ' + this.ventanaTxt() + '.' };
+    }
+    // ficha
+    let ficha = { esGuia: true, esEspecie: false, esEco: false };
+    if (s.sp && this.sp[s.sp]) {
+      const e = this.sp[s.sp];
+      const grupoTxt = e.gru === 'Aves' ? 'Ave' : 'Mamífero';
+      const notas = e.n === 0 ? 'Sin huellas: ningún registro georreferenciado en 14 años.' : e.n < 20 ? 'Muy pocos registros: el mapa muestra dónde se la vio, no su distribución.' : 'Los registros muestran dónde se la observó; su abundancia no se puede leer de acá.';
+      ficha = { esGuia: false, esEco: false, esEspecie: true, catalogo: 'LRA·' + e.id, comun: e.com, cientifico: e.cie, nacTxt: 'Nacional · ' + (e.nact || catTxt[e.nac]), uicnTxt: 'UICN global · ' + (e.uicn || 's/d'), selloNac: this.sello(e.nac, C, false), selloUicn: this.sello(['CR', 'EN', 'VU'].includes(e.uicn) ? e.uicn : 'otro', C, false), grupo: grupoTxt, marino: e.amb === 'marino' ? ' · especie marina (fuera del análisis terrestre)' : '', n: this.fmt(e.n), nh: this.fmt(e.nh), ecos: e.eco.length ? e.eco.map((x) => this.ecoNom[x]).join(', ') : '—', nota: notas,
+        barras: e.y.map((n, i) => ({ t: this.Y[i] + ': ' + n + ' registros', estilo: 'display: block; height: 100%; background: ' + (n > 0 ? C.A : 'transparent') + '; border: 1px solid ' + (n > 0 ? C.A : C.linea) + '; opacity: ' + (i === 13 ? 0.5 : 1) + ';' })) };
+      ficha.rango = this.rangoTxt(e);
+    } else if (s.eco) {
+      const filas = D.ecoAnio.filter((x) => x.eco === s.eco);
+      const mx = Math.max(1, ...filas.map((x) => x.sp));
+      const serie = this.Y.map((y) => { const f = filas.find((x) => x.y === y); const n = f ? f.sp : 0; return { t: y + ': ' + n + ' especies', estilo: 'display: block; height: ' + Math.max(3, Math.round(n / mx * 100)) + '%; background: ' + (y === 2025 ? C.linea : C.A) + ';' }; });
+      const esp = this.filtradas().filter((e) => e.eco.includes(s.eco));
+      ficha = { esGuia: false, esEspecie: false, esEco: true, ecoId: s.eco, ecoNombre: this.ecoNom[s.eco], ecoOrig: this.ecoOrig[s.eco], ecoArea: this.fmt(Math.round(this.ecoArea[s.eco])), ecoCR: esp.filter((e) => e.nac === 'CR').length, ecoEN: esp.filter((e) => e.nac === 'EN').length, ecoVU: esp.filter((e) => e.nac === 'VU').length, ecoSerie: serie, ecoEspecies: esp.length ? esp.sort((a, b) => ord[a.nac] - ord[b.nac] || b.n - a.n).map((e) => e.com + ' (' + e.nac + ')').join(', ') : 'ninguna con los filtros actuales' };
+    }
+    // serie
+    const fl = s.sp ? [this.sp[s.sp]] : this.filtradas();
+    const tot = this.Y.map((_, i) => fl.reduce((a, e) => a + e.y[i], 0));
+    const det = this.Y.map((_, i) => fl.filter((e) => e.y[i] > 0).length);
+    const mx = Math.max(1, ...tot);
+    const activo = (i) => s.modo === 'anio' ? i === s.anio - 2012 : s.modo === 'acum' ? i <= s.anio - 2012 : (i === s.anioA - 2012 || i === s.anioB - 2012);
+    const serie = { titulo: s.sp ? 'Registros por año · ' + this.sp[s.sp].com : 'Registros por año · ' + fl.length + ' especies filtradas', barras: this.Y.map((y, i) => ({ anio: y, n: this.fmt(tot[i]), sp: s.sp ? '' : det[i] + ' sp.', t: y + ': ' + this.fmt(tot[i]) + ' registros, ' + det[i] + ' especies', estilo: 'height: ' + Math.max(2, Math.round(tot[i] / mx * 100)) + '%; background: ' + (y === 2025 ? 'transparent' : activo(i) ? C.A : this.mix(C.papel, C.tinta, 0.25)) + '; border: 1px ' + (y === 2025 ? 'dashed ' + C.tinta2 : 'solid transparent') + ';', etq: 'background: none; border: 0; padding: 4px 0; min-height: 40px; cursor: pointer; font-family: ' + (p.fDatos ?? 'IBM Plex Mono') + ', monospace; font-size: 12px; color: ' + (activo(i) ? C.tinta : C.tinta2) + '; font-weight: ' + (activo(i) ? 600 : 400) + ';', pick: () => this.setState({ anio: y, modo: s.modo === 'comparar' ? 'acum' : s.modo }) })) };
+    // catálogo
+    const ordenes = [['cat', 'Categoría'], ['n', 'Registros'], ['eco', 'Ecorregiones'], ['nom', 'Nombre']].map(([v, l]) => ({ label: l, on: s.orden === v, estilo: this.pill(s.orden === v, C), pick: () => this.setState({ orden: v }) }));
+    const sorters = { cat: (a, b) => ord[a.nac] - ord[b.nac] || b.n - a.n, n: (a, b) => b.n - a.n, eco: (a, b) => b.eco.length - a.eco.length, nom: (a, b) => a.com.localeCompare(b.com, 'es') };
+    const filt = this.filtradas();
+    const catalogo = filt.slice().sort(sorters[s.orden]).map((e) => ({ cat: 'LRA·' + e.id, com: e.com, cie: e.cie, gru: e.gru === 'Aves' ? 'Ave' : 'Mamífero', nac: e.nac, sello: this.sello(e.nac, C, true), uicn: e.uicn || 's/d', n: this.fmt(e.n), ne: e.eco.length, estilo: 'border-top: 1px dotted ' + C.linea + '; cursor: pointer; background: ' + (s.sp === e.id ? C.papel2 : 'transparent') + ';', code: e.y.map((n, i) => ({ estilo: 'display: block; background: ' + (n > 0 ? (i === 13 ? C.linea : C.tinta) : 'transparent') + '; border: 1px solid ' + (n > 0 ? 'transparent' : C.linea) + ';' })), pick: () => { this.setState({ sp: e.id, eco: null, panel: 'ficha' }); } }));
+    const vacias = filt.filter((e) => e.n === 0).sort(sorters.cat).map((e) => ({ cat: 'LRA·' + e.id, com: e.com, cie: e.cie, nac: catTxt[e.nac], rg: this.rangoCorto(e), sello: this.sello(e.nac, C, true) + ' align-self: flex-start;', pick: () => this.setState({ sp: e.id, eco: null }) }));
+    // matriz
+    const cols = ['CR', 'EN', 'VU', 'NT', 'LC', 'DD', 'NE', 's/d'];
+    const mxm = Math.max(1, ...['CR', 'EN', 'VU'].flatMap((r1) => cols.map((c1) => filt.filter((e) => e.nac === r1 && (e.uicn || 's/d') === c1).length)));
+    const matriz = { cols, filas: ['CR', 'EN', 'VU'].map((r1) => ({ label: 'Nacional ' + catTxt[r1].toLowerCase(), celdas: cols.map((c1) => { const n = filt.filter((e) => e.nac === r1 && (e.uicn || 's/d') === c1).length; const t = n / mxm; return { n: n || '·', t: n + ' especies: nacional ' + r1 + ', UICN ' + c1, estilo: 'width: 62px; height: 48px; text-align: center; font-family: ' + (p.fDatos ?? 'IBM Plex Mono') + ', monospace; border: 1px solid ' + C.linea + '; background: ' + (n ? this.mix(C.papel2, C.R, 0.12 + 0.75 * t) : C.papel2) + '; color: ' + (t > 0.55 ? C.papel2 : C.tinta) + ';' }; }) })) };
+    // presiones
+    const PR = this.PR;
+    const AZ_ = C.B /*AZUL*/;
+    const presUI = [['ninguna', 'Ninguna'], ['ap', 'Áreas protegidas'], ['dentro', 'Registros dentro de AP'], ['quemado', 'Superficie quemada'], ['fuego', 'Focos de calor']].map(([v, l]) => ({ label: l, on: s.pres === v, estilo: this.pill(s.pres === v, C), pick: () => this.setState({ pres: v }) }));
+    const apTipoUI = [['nom', 'Cualquier categoría'], ['est', 'Estricta (UICN I–IV)']].map(([v, l]) => ({ label: l, on: s.apTipo === v, estilo: this.pill(s.apTipo === v, C), pick: () => this.setState({ apTipo: v }) }));
+    const presNota = !PR ? 'Cargando láminas de presión…' : s.pres === 'dentro' ? 'Hexágonos azules: hay registros dentro de un área protegida (límites Tomba 2025, estado 2022). Hexágonos claros: los registros de esa celda están todos fuera. Un registro es «dentro» si su punto (≈1 km) cae en el polígono.' : s.pres === 'ap' ? 'Polígonos verdes: áreas protegidas creadas hasta el año elegido (Tomba 2025). Puntos llenos: celdas con especies y menos del ' + s.apUmbral + ' % protegido. Anillos: celdas protegidas.' : s.pres === 'fuego' ? 'Focos de calor VIIRS por 1.000 km² y por año (NASA FIRMS). Detecta fuego activo, no superficie quemada.' : s.pres === 'quemado' ? 'Hectáreas quemadas por año en incendios reportados, por provincia (Servicio Nacional de Manejo del Fuego). Es el dato oficial; no tiene detalle dentro de cada provincia.' : 'Elegí una presión para pintarla debajo de los registros.';
+    let leyP = { on: false, items: [] }, gap = null;
+    const rF = [this.mix(C.papel, C.F, 0.12), this.mix(C.papel, C.F, 0.32), this.mix(C.papel, C.F, 0.55), this.mix(C.papel, C.F, 0.8), C.F];
+    const barra = (c) => 'display: block; height: 12px; background: ' + c + ';';
+    if (s.pres === 'fuego') leyP = { on: true, titulo: 'Focos de calor / 1.000 km² / año', items: rF.map((c, i) => ({ muestra: barra(c), label: ['<5', '5', '20', '60', '150+'][i] })), nota: 'NASA FIRMS · VIIRS 375 m.' };
+    if (s.pres === 'quemado') leyP = { on: true, titulo: 'Hectáreas quemadas por año (provincia)', items: rF.map((c, i) => ({ muestra: barra(c), label: ['100', '2 mil', '15 mil', '60 mil', '200 mil+'][i] })), nota: 'Incendios reportados al SNMF.' };
+    if (s.pres === 'ap' && PR) {
+      gap = this.vacios();
+      const dot = (fill) => 'display: block; width: 12px; height: 12px; border-radius: 50%; margin: 0 auto; box-sizing: border-box; ' + (fill ? 'background: ' + C.A + ';' : 'border: 2px solid ' + this.mix(C.V, C.tinta, 0.25) + ';');
+      leyP = { on: true, titulo: 'Protección de las celdas con especies', items: [{ muestra: 'display: block; height: 12px; background: ' + this.mix(C.papel, C.V, 0.45) + '; border: 1px solid ' + this.mix(C.V, C.tinta, 0.3) + ';', label: 'área protegida' }, { muestra: dot(true), label: 'vacío (<' + s.apUmbral + ' %)' }, { muestra: dot(false), label: 'protegida' }],
+        nota: gap.n ? this.fmt(gap.vac) + ' de ' + this.fmt(gap.n) + ' celdas con especies (' + Math.round(gap.vac / gap.n * 100) + ' %) quedan fuera de la protección. ' + gap.nunca + (gap.nunca === 1 ? ' especie nunca fue registrada' : ' especies nunca fueron registradas') + ' en una celda protegida.' : 'Sin registros con los filtros actuales.' };
+    }
+    if (s.pres === 'dentro' && PR) leyP = { on: true, titulo: 'Registros GBIF y áreas protegidas', items: [{ muestra: 'display: block; height: 12px; background: ' + AZ_ + ';', label: 'Hay registros dentro de un AP' }, { muestra: 'display: block; height: 12px; background: ' + this.mix(C.papel, C.A, 0.5) + ';', label: 'Registros solo fuera' }], nota: 'Una celda cuenta como «dentro» si al menos un registro de la ventana cae en un área protegida.' };
+    const ventN = (this.ventana() || [0, 0]).length;
+    const ia = Math.min(13, (s.modo === 'comparar' ? s.anioB : s.anio) - 2012);
+    if (ficha.esEco && PR) {
+      const a = PR.apEco[s.eco], fu = PR.fuegoEco[s.eco] || [], w = this.ventana() || [s.anioA - 2012, s.anioB - 2012];
+      const km = a ? a.km2 : this.ecoArea[s.eco];
+      const mxf = Math.max(1, ...fu);
+      Object.assign(ficha, { ecoAnio: this.Y[ia], ecoAP: a ? this.fmt(a.nom[ia].toFixed(1)) + ' %' : '—', ecoAPe: a ? this.fmt(a.est[ia].toFixed(1)) + ' %' : '—', ecoVent: this.ventanaTxt(), ecoFu: km ? this.fmt((w.reduce((t, k) => t + (fu[k] || 0), 0) / w.length / km * 1000).toFixed(1)) : '—',
+        ecoFuSerie: this.Y.map((y, i) => ({ t: y + ': ' + this.fmt(fu[i] || 0) + ' focos', estilo: 'display: block; height: ' + Math.max(3, Math.round((fu[i] || 0) / mxf * 100)) + '%; background: ' + C.B + ';' })) });
+    } else if (ficha.esEco) Object.assign(ficha, { ecoAnio: '', ecoAP: '…', ecoAPe: '…', ecoFu: '…', ecoVent: '', ecoFuSerie: [] });
+    const presTabla = !PR ? [] : D.ecor.features.map((f) => f.properties.eco_id).filter((e) => PR.apEco[e] && PR.apEco[e].km2 > 500).map((e) => {
+      const a = PR.apEco[e], fu = PR.fuegoEco[e] || [], mxf = Math.max(1, ...fu), nsp = all.filter((x) => x.eco.includes(e)).length;
+      return { nom: this.ecoNom[e], km2: this.fmt(a.km2), sp: nsp, ap: a.nom[13].toFixed(1), ape: a.est[13].toFixed(1), fu: (fu.reduce((t, v) => t + v, 0) / 14 / a.km2 * 1000).toFixed(1), fuN: fu.reduce((t, v) => t + v, 0) / a.km2,
+        serie: fu.map((v) => ({ estilo: 'display: block; height: ' + Math.max(2, Math.round(v / mxf * 100)) + '%; background: ' + C.B + ';' })), pick: () => this.setState({ eco: e, sp: '', sp2: '' }) };
+    }).sort((x, y) => y.fuN - x.fuN);
+    const mbTabla = !PR ? [] : Object.keys(PR.mbEco).map((e) => {
+      const g = PR.mbEco[e], db = g.bos[13] - g.bos[0], mxb = Math.max(1, ...g.bos), mnb = Math.min(...g.bos);
+      return { nom: e, b0: this.fmt(g.bos[0]), db: (db > 0 ? '+' : '') + this.fmt(db), dbN: db, dn: (g.nat[13] - g.nat[0] > 0 ? '+' : '') + this.fmt(g.nat[13] - g.nat[0]), da: (g.agro[13] - g.agro[0] > 0 ? '+' : '') + this.fmt(g.agro[13] - g.agro[0]),
+        estB: 'padding: 6px 8px; text-align: right; font-family: ' + (p.fDatos ?? 'IBM Plex Mono') + ', monospace; color: ' + (db < -50 ? C.A : C.tinta) + '; font-weight: ' + (db < -50 ? 600 : 400) + ';',
+        serie: g.bos.map((v) => ({ estilo: 'display: block; height: ' + (mxb === mnb ? 50 : Math.max(4, Math.round((v - mnb) / (mxb - mnb) * 100))) + '%; background: ' + C.tinta2 + ';' })) };
+    }).sort((x, y) => x.dbN - y.dbN);
+    const tabs = [['catalogo', 'Catálogo'], ['vacias', 'Sin huellas'], ['matriz', 'Nacional vs. global'], ['presiones', 'Presiones'], ['fuentes', 'Fuentes y método']].map(([v, l]) => ({ label: l, on: s.tab === v, estilo: this.pill(s.tab === v, C), pick: () => this.setState({ tab: v }) }));
+    return Object.assign({}, base, {
+      cargando: !s.mapa, k, opciones, grupos, catsUI, modos, capasUI, pendientes: pend,
+      sp: s.sp, sp2: s.sp2, anio: s.anio, anioA: s.anioA, anioB: s.anioB,
+      onSp: (ev) => { const v = ev.target.value; this.setState({ sp: v, sp2: v === s.sp2 ? '' : s.sp2, eco: null, panel: v ? 'ficha' : s.panel }); },
+      onSp2: (ev) => { const v = ev.target.value; this.setState({ sp2: v === s.sp ? '' : v }); },
+      onAnio: (ev) => this.setState({ anio: +ev.target.value }),
+      onAnioA: (ev) => this.setState({ anioA: +ev.target.value }),
+      onAnioB: (ev) => this.setState({ anioB: +ev.target.value }),
+      togglePlay: () => {
+        if (this.timer) { clearInterval(this.timer); this.timer = null; this.setState({ playing: false }); return; }
+        this.setState({ playing: true, anio: s.anio >= 2025 ? 2012 : s.anio });
+        this.timer = setInterval(() => { const a = this.state.anio; if (a >= 2025) { clearInterval(this.timer); this.timer = null; this.setState({ playing: false }); } else this.setState({ anio: a + 1 }); }, 900);
+      },
+      noComparar: !esComparar, esComparar, playing: s.playing, noPlaying: !s.playing, playLabel: s.playing ? 'Pausar' : 'Reproducir',
+      textoAnio: (s.modo === 'anio' ? 'Año: ' : 'Hasta: ') + s.anio + (s.anio === 2025 ? ' (parcial)' : ''),
+      leyenda, ventanaTxt: this.ventanaTxt(), ficha, serie, estado: this.estadoTxt(),
+      limpiarSp: () => this.setState({ sp: '', sp2: '' }), limpiarEco: () => this.setState({ eco: null }),
+      tabs, formaUI: [['punto', 'Puntos'], ['hex', 'Hexágonos']].map(([v, l]) => ({ label: l, on: s.forma === v, estilo: this.pill(s.forma === v, C), pick: () => this.setState({ forma: v }) })),
+      formaNota: s.pres !== 'ninguna' ? 'Con presión de fondo, las especies se dibujan siempre como puntos.' : '',
+      panelUI: [['buscar', 'Especies'], ['tiempo', 'Tiempo'], ['laminas', 'Láminas'], ['ficha', 'Ficha']].map(([v, l]) => ({ label: l, on: s.panel === v, estilo: this.pill(s.panel === v, C) + ' flex: 1;', pick: () => this.setState({ panel: v }) })),
+      pan: { buscar: s.panel === 'buscar', tiempo: s.panel === 'tiempo', laminas: s.panel === 'laminas', ficha: s.panel === 'ficha' },
+      umbralUI: [[10, '≥ 10 %'], [30, '≥ 30 %'], [50, '≥ 50 %']].map(([v, l]) => ({ label: l, on: s.apUmbral === v, estilo: this.pill(s.apUmbral === v, C), pick: () => this.setState({ apUmbral: v }) })),
+      vaciosUI: [[false, 'Todas las celdas'], [true, 'Solo los vacíos']].map(([v, l]) => ({ label: l, on: s.soloVacios === v, estilo: this.pill(s.soloVacios === v, C), pick: () => this.setState({ soloVacios: v }) })),
+      gapLista: gap && gap.nunca ? gap.nuncaNom.sort((a, b) => ({ CR: 0, EN: 1, VU: 2 })[a.nac] - ({ CR: 0, EN: 1, VU: 2 })[b.nac] || b.n - a.n).slice(0, 40).map((e) => ({ t: e.com + ' (' + e.nac + ')', pick: () => this.setState({ sp: e.id, panel: 'ficha' }) })) : [],
+      gapTitulo: gap ? gap.nunca + ' especies sin registros dentro de celdas protegidas' : '', hayGap: !!(gap && gap.nunca),
+      snTabla: !PR ? [] : Object.keys(PR.snmf).map((pv) => { const a = PR.snmf[pv], t = a.reduce((x, v) => x + (v || 0), 0), mx = Math.max(1, ...a.map((v) => v || 0)); return { nom: pv, tot: this.fmt(t), totN: t, u25: a[13] === null ? 's/d' : this.fmt(a[13]), pico: this.Y[a.indexOf(Math.max(...a.map((v) => v || 0)))], serie: a.map((v) => ({ estilo: 'display: block; height: ' + (v === null ? 2 : Math.max(2, Math.round(v / mx * 100))) + '%; background: ' + (v === null ? C.linea : C.F) + ';' })) }; }).sort((x, y) => y.totN - x.totN),
+      indice: [['sec-mensaje', 'Mensaje'], ['sec-mapa', 'Mapa'], ['sec-ficha', 'Ficha y años'], ['sec-tablas', 'Catálogo', 'catalogo'], ['sec-tablas', 'Sin huellas', 'vacias'], ['sec-tablas', 'Nacional vs. global', 'matriz'], ['sec-tablas', 'Presiones', 'presiones'], ['sec-tablas', 'Fuentes', 'fuentes']].map(([id, l, tab], i) => ({ n: String(i).padStart(2, '0'), label: l, pick: () => this.irA(id, tab) })),
+      msg: (() => { const m = this.mensaje(); return { texto: m ? 'El ' + m.pct + ' % de los lugares donde se registraron especies amenazadas queda fuera de las áreas protegidas. Y de ' + m.mamTot + ' mamíferos amenazados, ' + m.mamSin + ' no tienen ni un registro en 14 años.' : 'Cargando…', ver: () => { this.setState({ pres: 'ap', soloVacios: true, sp: '', sp2: '', eco: null, panel: 'laminas' }); this.irA('sec-mapa'); } }; })(),
+      presUI, apTipoUI, presEsAP: s.pres === 'ap', presNota, leyP, presTabla, mbTabla, aplOn: !!s.capas.apl, aplToggle: () => this.setState({ capas: Object.assign({}, s.capas, { apl: !s.capas.apl }) }),
+      tab: { presiones: s.tab === 'presiones', catalogo: s.tab === 'catalogo', vacias: s.tab === 'vacias', matriz: s.tab === 'matriz', fuentes: s.tab === 'fuentes' },
+      ordenes, catalogo, catalogoN: catalogo.length, vacias, vaciasN: vacias.length, matriz
+    });
+  }
+}
+
+</script>
+<script>DC.mount(Component, {"papel":{"editor":"color","default":"#F3EDE0","section":"Colores"},"papel2":{"editor":"color","default":"#FBF8F1","section":"Colores"},"tinta":{"editor":"color","default":"#2B241D","section":"Colores"},"tinta2":{"editor":"color","default":"#6B5A48","section":"Colores"},"linea":{"editor":"color","default":"#B9A98F","section":"Colores"},"tintaA":{"editor":"color","default":"#9B3522","options":["#9B3522","#7A2E1F","#B4521E","#6E1F3A"],"section":"Colores"},"tintaB":{"editor":"color","default":"#2F5A7E","options":["#2F5A7E","#3B4F8C","#2E6B5E","#4A3B7A"],"section":"Colores"},"fTitulo":{"editor":"enum","default":"IM Fell English","options":["IM Fell English","Cormorant Garamond","EB Garamond","Libre Caslon Text"],"section":"Tipografía"},"fTexto":{"editor":"enum","default":"EB Garamond","options":["EB Garamond","Cormorant Garamond","Libre Caslon Text","IM Fell English"],"section":"Tipografía"},"fNotas":{"editor":"enum","default":"Caveat","options":["Caveat","Kalam"],"section":"Tipografía"},"fDatos":{"editor":"enum","default":"IBM Plex Mono","options":["IBM Plex Mono","Courier Prime"],"section":"Tipografía"},"opacidadRelieve":{"editor":"range","default":0.6,"min":0,"max":1,"step":0.05,"section":"Mapa"},"tintaAP":{"editor":"color","default":"#5E7D4B","options":["#5E7D4B","#4F6B5A","#6E7F3E","#3F6B6B"],"section":"Colores"},"tintaFuego":{"editor":"color","default":"#B0642A","options":["#B0642A","#C27C2C","#9A4E1F","#B5832E"],"section":"Colores"},"escalaDosTonos":{"editor":"boolean","default":false,"section":"Mapa"},"$preview":{"width":1440,"height":2900}}, 'dc-tpl', 'dc-root');</script>
+</body>
+</html>

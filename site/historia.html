@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Huellas en el mapa — historia visual</title>
+<style>body{background:#F3EDE0}#dc-root>div{margin:0 auto}</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Caveat:wght@500;600&amp;family=Kalam:wght@400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Courier+Prime&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#7a2e1f}a:hover{color:#4a1a10}
+</style>
+
+</head>
+<body>
+<div id="dc-root"></div>
+<template id="dc-tpl">
+
+<div style="width: 1080px; box-sizing: border-box; background: {{papel}}; color: {{tinta}}; font-family: {{fTexto}}; font-size: 17px; line-height: 1.45; padding: 72px 72px 64px; display: flex; flex-direction: column; gap: 88px">
+
+<header style="position: relative; display: flex; flex-direction: column; gap: 14px; border-bottom: 1px solid {{linea}}; padding-bottom: 36px">
+<svg aria-hidden="true" viewBox="0 0 600 120" style="position: absolute; right: -88px; top: -48px; width: 708px; height: 182px; opacity: 0.25; pointer-events: none; color: {{tinta}}" fill="currentColor"><g transform="translate(40.0 63.0) rotate(80)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(105.0 65.2) rotate(80)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(170.0 40.9) rotate(82)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(235.0 47.3) rotate(85)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(300.0 29.4) rotate(88)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(365.0 43.7) rotate(92)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(430.0 34.0) rotate(96)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(495.0 56.0) rotate(98)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(560.0 52.5) rotate(100)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(210.0 104.0) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(253.3 96.7) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(296.7 73.3) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(340.0 66.0) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(383.3 42.7) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(426.7 35.3) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(470.0 12.0) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g></svg>
+<div style="font-family: {{fDatos}}; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: {{tinta2}}">Atlas de huellas · Argentina · 2012–2025</div>
+<h1 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 96px; line-height: 0.95; letter-spacing: -0.01em">Huellas<br><span style="font-style: italic; color: {{tintaA}}">en el mapa</span></h1>
+<p style="margin: 8px 0 0; font-size: 24px; max-width: 760px; line-height: 1.3">Argentina tiene 205 mamíferos y aves en su lista roja oficial. Seguimos sus huellas en 162.717 registros de ciencia ciudadana y colecciones para preguntar dónde viven, dónde los miramos y de cuáles no sabemos casi nada.</p>
+<div style="font-family: {{fNotas}}; font-size: 26px; color: {{tintaA}}; transform: rotate(-1.5deg); transform-origin: left">Un mapa de lo que vemos y de lo que se nos escapa.</div>
+</header>
+
+<section style="display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">I.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">La lista</h2></div>
+<p style="margin: 0; max-width: 820px">Cada sello es una especie. Las resoluciones nacionales 316/2021 (mamíferos) y 795/2017 (aves) las clasifican en peligro crítico, en peligro o amenazadas. Los sellos punteados son especies sin un solo registro georreferenciado entre 2012 y 2025.</p>
+<template data-sc="for" list="{{unidades}}" as="g" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: {{tinta2}}">{{g.label}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 5px">
+<template data-sc="for" list="{{g.items}}" as="u" hint-placeholder-count="40">
+<span title="{{u.t}}" style="{{u.estilo}}"></span>
+</template>
+</div>
+</div>
+</template>
+<div style="display: flex; flex-wrap: wrap; gap: 22px; font-size: 14px; color: {{tinta2}}">
+<span style="display: flex; gap: 8px; align-items: center"><span style="{{muestra.CR}}"></span>En peligro crítico (25)</span>
+<span style="display: flex; gap: 8px; align-items: center"><span style="{{muestra.EN}}"></span>En peligro (66)</span>
+<span style="display: flex; gap: 8px; align-items: center"><span style="{{muestra.VU}}"></span>Amenazada ≈ VU (114)</span>
+<span style="display: flex; gap: 8px; align-items: center"><span style="{{muestra.vacia}}"></span>Sin registros 2012–2025 (65)</span>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: 460px minmax(0, 1fr); gap: 48px; align-items: start">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+<img src="img/m1_riqueza.jpg" alt="Mapa de Argentina en hexágonos: cantidad de especies amenazadas registradas entre 2012 y 2024; el máximo está en Misiones" style="width: 460px; height: auto; display: block; border: 1px solid {{linea}}">
+<figcaption style="font-size: 13px; color: {{tinta2}}">Especies amenazadas registradas por hexágono (H3 res. 4), 2012–2024. Solo registros en tierra.</figcaption>
+</figure>
+<div style="display: flex; flex-direction: column; gap: 18px; padding-top: 8px">
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">II.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">Dónde se las vio</h2></div>
+<p style="margin: 0">Entre 2012 y 2024 hubo registros de especies amenazadas en 2.015 celdas del territorio. La mayoría guarda una o dos especies; pocas concentran muchas.</p>
+<div style="border-left: 2px solid {{tintaA}}; padding-left: 16px; display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: {{fTitulo}}; font-size: 56px; line-height: 1; color: {{tintaA}}">34</div>
+<div>especies amenazadas registradas en una sola celda de la Selva Paranaense, en el norte de Misiones: el máximo del país.</div>
+</div>
+<p style="margin: 0">Las cinco celdas más ricas están en la Selva Paranaense, los bosques de araucaria y los Esteros del Iberá. Los Andes y la costa patagónica dibujan las otras dos franjas oscuras.</p>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px">
+<template data-sc="for" list="{{escala}}" as="e" hint-placeholder-count="4">
+<div style="display: flex; gap: 10px; align-items: center"><span style="{{e.muestra}}"></span><span>{{e.label}}</span></div>
+</template>
+</div>
+<div style="font-family: {{fNotas}}; font-size: 22px; color: {{tintaA}}; line-height: 1.2">Pero ¿es ahí donde viven… o donde hay más gente mirando?</div>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: minmax(0, 1fr) 460px; gap: 48px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 18px; padding-top: 8px">
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">III.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">Dónde se mira</h2></div>
+<p style="margin: 0">Un registro es alguien que vio un animal y lo anotó. Por eso los datos crecen con la cantidad de observadores, no con la de animales: de 2.832 registros en 2012 a 28.420 en 2024.</p>
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 4px; align-items: end; height: 150px">
+<template data-sc="for" list="{{anios}}" as="b" hint-placeholder-count="14">
+<div title="{{b.t}}" style="{{b.estilo}}"></div>
+</template>
+</div>
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 4px; font-family: {{fDatos}}; font-size: 10px; color: {{tinta2}}; text-align: center">
+<template data-sc="for" list="{{anios}}" as="b" hint-placeholder-count="14"><span>{{b.corto}}</span></template>
+</div>
+<div style="font-size: 13px; color: {{tinta2}}">Registros únicos por año. 2025 (punteado) todavía no está completo.</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<div style="border-top: 1px solid {{linea}}; padding-top: 8px"><div style="font-family: {{fTitulo}}; font-size: 44px; line-height: 1">81 %</div><div style="font-size: 15px">de los registros cae en el 10 % de las celdas más visitadas.</div></div>
+<div style="border-top: 1px solid {{linea}}; padding-top: 8px"><div style="font-family: {{fTitulo}}; font-size: 44px; line-height: 1">92 %</div><div style="font-size: 15px">de los registros viene de una sola plataforma de observadores de aves (eBird).</div></div>
+</div>
+</div>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+<img src="img/m2_esfuerzo.jpg" alt="Mapa de Argentina en hexágonos grises: cantidad de registros por celda en escala logarítmica" style="width: 460px; height: auto; display: block; border: 1px solid {{linea}}">
+<figcaption style="font-size: 13px; color: {{tinta2}}">Cantidad de registros por hexágono, 2012–2024 (escala logarítmica: más oscuro = muchos más registros).</figcaption>
+</figure>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">IV.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">La mirada crece</h2></div>
+<p style="margin: 0; max-width: 820px">Tres períodos, la misma pregunta. Cada vez hay más celdas con registros y más especies detectadas. No es que aparezcan animales: es que aparecen ojos.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<template data-sc="for" list="{{periodos}}" as="p" hint-placeholder-count="3">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div style="font-family: {{fNotas}}; font-size: 26px; color: {{tintaA}}">{{p.label}}</div>
+<img src="{{p.src}}" alt="{{p.alt}}" style="width: 100%; height: auto; display: block; border: 1px solid {{linea}}">
+<figcaption style="display: flex; justify-content: space-between; font-size: 14px"><span><b>{{p.celdas}}</b> celdas</span><span><b>{{p.sp}}</b> especies</span><span><b>{{p.rec}}</b> registros</span></figcaption>
+</figure>
+</template>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">V.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">Cuatro huellas</h2></div>
+<p style="margin: 0; max-width: 820px">Cada punto es un lugar (≈1 km) con al menos un registro entre 2012 y 2024; su tamaño crece con la cantidad. Detrás, en rosado, las celdas que ocupa.</p>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+<template data-sc="for" list="{{retratos}}" as="r" hint-placeholder-count="4">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+<img src="{{r.src}}" alt="{{r.alt}}" style="width: 100%; height: auto; display: block; border: 1px solid {{linea}}">
+<div style="background: {{papel2}}; border: 1px solid {{tinta}}; outline: 1px solid {{linea}}; outline-offset: 3px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: {{fDatos}}; font-size: 10px; color: {{tinta2}}">{{r.cat}}</div>
+<div style="font-family: {{fTitulo}}; font-size: 22px; line-height: 1.05">{{r.com}}</div>
+<div style="font-style: italic; font-size: 14px">{{r.cie}}</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="{{r.sello}}">{{r.nac}}</span><span style="{{r.selloU}}">{{r.uicn}}</span></div>
+<div style="font-size: 13px">{{r.datos}}</div>
+<div style="font-family: {{fNotas}}; font-size: 17px; color: {{tintaA}}; line-height: 1.15">{{r.nota}}</div>
+</div>
+</figure>
+</template>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">VI.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">Sin huellas</h2></div>
+<p style="margin: 0; max-width: 820px">Estas 65 especies están en la lista roja y no tienen ni un registro georreferenciado en 14 años. Son sobre todo roedores, murciélagos y marsupiales. Diez están en peligro crítico.</p>
+<div style="columns: 3; column-gap: 32px; font-size: 15px">
+<template data-sc="for" list="{{vacias}}" as="v" hint-placeholder-count="20">
+<div style="break-inside: avoid; display: flex; gap: 8px; align-items: baseline; padding: 3px 0; border-bottom: 1px dotted {{linea}}"><span style="{{v.sello}}">{{v.nac}}</span><span>{{v.com}} <i style="color: {{tinta2}}">{{v.cie}}</i></span></div>
+</template>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: minmax(0, 1fr) 520px; gap: 48px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">VII.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">Amenazadas acá</h2></div>
+<p style="margin: 0">69 de las 205 especies figuran como de «preocupación menor» en la lista roja mundial. En el mundo les va bien; en Argentina, no. Cuidarlas es una responsabilidad local.</p>
+<div style="font-size: 13px; color: {{tinta2}}">Categoría mundial: UICN, tomada de GBIF el 29/10/2026. A verificar en iucnredlist.org.</div>
+</div>
+<div>
+<table style="border-collapse: separate; border-spacing: 4px; font-size: 14px">
+<thead><tr><th></th><template data-sc="for" list="{{matriz.cols}}" as="c" hint-placeholder-count="8"><th style="font-family: {{fDatos}}; font-size: 11px; font-weight: 400">{{c}}</th></template></tr></thead>
+<tbody>
+<template data-sc="for" list="{{matriz.filas}}" as="f" hint-placeholder-count="3">
+<tr><th style="text-align: left; font-weight: 400; padding-right: 8px">{{f.label}}</th><template data-sc="for" list="{{f.celdas}}" as="c" hint-placeholder-count="8"><td style="{{c.estilo}}">{{c.n}}</td></template></tr>
+</template>
+</tbody>
+</table>
+<div style="margin-top: 12px; max-width: 520px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.4; color: {{tinta2}}">
+<div><b style="color: {{tinta}}">Cómo leerla.</b> Cada fila es la categoría en <b>Argentina</b> (CR: en peligro crítico · EN: en peligro · VU: amenazada). Cada columna es la categoría <b>mundial</b> de la UICN (CR, EN, VU; NT: casi amenazada · LC: preocupación menor · DD: datos insuficientes · NE: no evaluada · s/d: sin dato). El número es la cantidad de especies; «·» significa ninguna.</div>
+<div>El marco negro (columna LC) marca las 69 especies que a nivel mundial están en «preocupación menor» y en Argentina están amenazadas.</div>
+</div>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">VIII.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 36px; line-height: 1">Lo que le pasa a la casa</h2></div>
+<p style="margin: 0; max-width: 860px">Las ecorregiones con más especies amenazadas registradas no son las más protegidas. En la Pampa húmeda y el Espinal, menos del 4 % de la tierra está bajo alguna área protegida, y casi nada con protección estricta. Los focos de calor se concentran en el Delta, los bosques de araucaria, el Chaco húmedo y los esteros del Iberá.</p>
+<div style="display: grid; grid-template-columns: 250px 120px minmax(0, 1fr) minmax(0, 1fr); gap: 6px 14px; align-items: center; font-size: 14px">
+<div style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}; text-transform: uppercase">Ecorregión</div>
+<div style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}; text-transform: uppercase">Especies</div>
+<div style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}; text-transform: uppercase">% bajo área protegida · ■ estricta</div>
+<div style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}; text-transform: uppercase">Focos de calor / 1.000 km² / año</div>
+<template data-sc="for" list="{{cruce.filas}}" as="r" hint-placeholder-count="15">
+<div>{{r.nom}}</div>
+<div style="display: flex; gap: 6px; align-items: center"><span style="{{r.barSp}}"></span><span style="font-family: {{fDatos}}; font-size: 12px">{{r.sp}}</span></div>
+<div style="display: flex; gap: 6px; align-items: center"><span style="{{r.barAp}}"><span style="{{r.barApE}}"></span></span><span style="font-family: {{fDatos}}; font-size: 12px">{{r.ap}}</span></div>
+<div style="display: flex; gap: 6px; align-items: center"><span style="{{r.barFu}}"></span><span style="font-family: {{fDatos}}; font-size: 12px">{{r.fu}}</span></div>
+</template>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; border-top: 1px dotted {{linea}}; padding-top: 14px">
+<template data-sc="for" list="{{cruce.perd}}" as="q" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: {{fTitulo}}; font-size: 30px; color: {{tintaA}}; line-height: 1">{{q.d}}</span><span style="font-size: 13px">mil ha de bosque · {{q.nom}}</span><span style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}">{{q.pct}} del bosque de 2012</span></div>
+</template>
+</div>
+<div style="font-size: 12px; color: {{tinta2}}; max-width: 900px">Especies: amenazadas con al menos un registro GBIF 2012–2025 en la ecorregión. Áreas protegidas: Tomba (2025), estado a 2022, solo superficie terrestre. Focos: NASA FIRMS VIIRS 375 m, promedio 2012–2025; un foco es una detección térmica, no un incendio. Bosque: MapBiomas Argentina Col. 3, cambio 2012→2025 por ecorregión de Burkart. Falta la luz nocturna.</div>
+</section>
+
+<footer style="border-top: 1px solid {{linea}}; padding-top: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; font-size: 13px; color: {{tinta2}}; line-height: 1.4">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<b style="color: {{tinta}}">Fuentes</b>
+<span>Especies: Res. MAyDS 316/2021 (Anexo I) y Res. MAyDS 795/2017 (Anexos I y II).</span>
+<span>Registros: GBIF.org (29/10/2026) GBIF Occurrence Download doi:10.15468/dl.t87f4d.</span>
+<span>Categoría mundial: UICN vía GBIF. Ecorregiones: Dinerstein et al. 2017 (RESOLVE). Provincias: INDEC vía geoAr.</span>
+<span>Áreas protegidas: Tomba 2025, Mendeley Data doi:10.17632/wggsh3dszp.1. Focos de calor: NASA FIRMS (VIIRS S-NPP). Bosque nativo: MapBiomas Argentina Col. 3.</span>
+<span>Relieve: imagen de relieve sombreado del paquete basemap-data (provisoria).</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<b style="color: {{tinta}}">Método</b>
+<span>Registros 2012–2025 con coordenadas, sin problemas geoespaciales e incertidumbre ≤ 30 km; sin duplicados (misma especie, punto y fecha). Agregados en hexágonos H3 de resolución 4. Los mapas de los capítulos II a IV muestran solo celdas en tierra.</span>
+</div>
+</footer>
+</div>
+</template>
+
+<script src="assets/morphdom-umd.min.js"></script>
+<script src="assets/dc-mini.js"></script>
+<script>
+
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const C = { papel: p.papel ?? '#F3EDE0', papel2: p.papel2 ?? '#FBF8F1', tinta: p.tinta ?? '#2B241D', tinta2: p.tinta2 ?? '#6B5A48', linea: p.linea ?? '#B9A98F', A: p.tintaA ?? '#9B3522' };
+    const fD = "'" + (p.fDatos ?? 'IBM Plex Mono') + "', monospace";
+    const mix = (a, b, t) => { const h = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16)); const X = h(a), Y = h(b); return '#' + X.map((v, i) => Math.round(v + (Y[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+    const fmt = (n) => Number(n).toLocaleString('es-AR');
+    const cuadro = (cat, vacia) => {
+      const b = 'display: inline-block; width: 18px; height: 18px; box-sizing: border-box; border-radius: 1px; ';
+      if (vacia) return b + 'border: 1px dashed ' + C.tinta2 + '; background: transparent;';
+      if (cat === 'CR') return b + 'background: ' + C.A + '; border: 2px solid ' + C.A + ';';
+      if (cat === 'EN') return b + 'border: 4px solid ' + C.A + ';';
+      return b + 'border: 1.5px solid ' + C.A + ';';
+    };
+    const sello = (cat) => 'display: inline-block; font-family: ' + fD + '; font-size: 10px; letter-spacing: 0.06em; padding: 1px 5px; border-radius: 2px; ' + (cat === 'CR' ? 'background: ' + C.A + '; color: ' + C.papel2 + '; border: 1px solid ' + C.A + ';' : cat === 'EN' ? 'color: ' + C.A + '; border: 2.5px solid ' + C.A + ';' : cat === 'VU' ? 'color: ' + C.A + '; border: 1px solid ' + C.A + ';' : 'color: ' + C.tinta2 + '; border: 1px dashed ' + C.linea + ';');
+    const grupo = (label, counts) => ({ label, items: counts.flatMap(([cat, con, sin]) => Array.from({ length: con }, () => ({ t: cat + ' · con registros', estilo: cuadro(cat, false) })).concat(Array.from({ length: sin }, () => ({ t: cat + ' · sin registros', estilo: cuadro(cat, true) + ' outline: 1px solid ' + (cat === 'CR' ? C.A : 'transparent') + ';' })))) });
+    const unidades = [grupo('98 mamíferos', [['CR', 2, 5], ['EN', 15, 11], ['VU', 32, 33]]), grupo('107 aves', [['CR', 13, 5], ['EN', 33, 7], ['VU', 45, 4]])];
+    const sw = (c) => 'display: inline-block; width: 22px; height: 16px; background: ' + c + ';';
+    const escala = [{ muestra: sw(mix(C.papel, C.tinta, 0.22)), label: '1 a 3 especies' }, { muestra: sw(mix(C.papel, C.A, 0.45)), label: '4 a 9' }, { muestra: sw(mix(C.papel, C.A, 0.8)), label: '10 a 19' }, { muestra: sw(mix(C.A, C.tinta, 0.55)), label: '20 o más' }];
+    const reg = [2832, 2471, 3665, 5283, 6759, 8429, 11029, 12685, 12415, 16618, 22715, 26364, 28420, 2654];
+    const anios = reg.map((n, i) => ({ corto: "'" + String(12 + i).padStart(2, '0'), t: (2012 + i) + ': ' + fmt(n) + ' registros', estilo: 'height: ' + Math.max(2, Math.round(n / 28420 * 100)) + '%; background: ' + (i === 13 ? 'transparent' : mix(C.papel, C.tinta, 0.3 + 0.6 * (n / 28420))) + '; border: 1px ' + (i === 13 ? 'dashed ' + C.tinta2 : 'solid transparent') + ';' }));
+    const periodos = [
+      { label: '2012–2015', src: 'img/m3_p1.jpg', alt: 'Mapa de celdas con especies amenazadas registradas, 2012 a 2015', celdas: '990', sp: '112', rec: '14.290' },
+      { label: '2016–2019', src: 'img/m3_p2.jpg', alt: 'Mapa de celdas con especies amenazadas registradas, 2016 a 2019', celdas: '1.226', sp: '120', rec: '38.956' },
+      { label: '2020–2024', src: 'img/m3_p3.jpg', alt: 'Mapa de celdas con especies amenazadas registradas, 2020 a 2024', celdas: '1.732', sp: '132', rec: '106.694' }
+    ];
+    const ret = (src, cat, com, cie, nac, uicn, datos, nota) => ({ src, alt: 'Mapa de registros de ' + com, cat, com, cie, nac: 'Nac. ' + nac, uicn: 'UICN ' + uicn, sello: sello(nac), selloU: sello(['CR', 'EN', 'VU'].includes(uicn) ? uicn : 'x'), datos, nota });
+    const retratos = [
+      ret('img/sp_MAM034.jpg', 'LRA·MAM034', 'Yaguareté', 'Panthera onca', 'CR', 'NT', '347 registros · 9 celdas · 10 de 14 años', '322 de sus registros son de collares GPS: pocos animales, muy seguidos.'),
+      ret('img/sp_AVE071.jpg', 'LRA·AVE071', 'Loro vinoso', 'Amazona vinacea', 'CR', 'EN', '64 registros · 2 celdas · 12 de 14 años', 'Todo su mapa entra en un rincón de Misiones.'),
+      ret('img/sp_AVE020.jpg', 'LRA·AVE020', 'Macá tobiano', 'Podiceps gallardoi', 'CR', 'CR', '1.851 registros · 38 celdas · 14 de 14 años', 'Muchos registros, concentrados en el oeste de Santa Cruz.'),
+      ret('img/sp_AVE104.jpg', 'LRA·AVE104', 'Cardenal amarillo', 'Gubernatrix cristata', 'EN', 'EN', '436 registros · 89 celdas · 14 de 14 años', 'Disperso en el monte y el espinal, de a pocos.')
+    ];
+    const V = [["Aguila Monera","Morphnus guianensis","CR"],["Charao","Amazona pretrei","CR"],["Guanay","Phalacrocorax bougainvillii","CR"],["Maracaná Lomo Rojo","Primolius maracana","CR"],["Pato Serrucho","Mergus octosetaceus","CR"],["Rata nutria del Atuel","Holochilus lagigliai","CR"],["Rata vizcacha de Los Chalchaleros","Tympanoctomys loschalchalerosorum","CR"],["Rata vizcacha dorada","Tympanoctomys aureus","CR"],["Tuco-tuco de Roig","Ctenomys roigi","CR"],["Tuco-tuco de d'Orbigny","Ctenomys dorbignyi","CR"],["Cachilo de Antifaz","Coryphaspiza melanotis","EN"],["Halcón Negro Grande","Falco deiroleucus","EN"],["Inambu Enano","Taoniscus nanus","EN"],["Matamico Grande","Phalcoboenus australis","EN"],["Mosqueta Oreja Negra","Phylloscartes paulista","EN"],["Playero Esquimal","Numenius borealis","EN"],["Yetapá Chico","Alectrurus tricolor","EN"],["Chinchilla del altiplano","Chinchilla chinchilla","EN"],["Murciélago común de orejas largas","Micronycteris microtis","EN"],["Ratón de hocico rosado","Bibimys torresi","EN"],["Ratón jesuita","Akodon philipmyersi","EN"],["Tatú carreta","Priodontes maximus","EN"],["Tuco-tuco acanelado","Ctenomys porteousi","EN"],["Tuco-tuco chaqueño","Ctenomys bonettoi","EN"],["Tuco-tuco chico","Ctenomys pundti","EN"],["Tuco-tuco colonial","Ctenomys sociabilis","EN"],["Tuco-tuco de Pearson","Ctenomys pearsoni","EN"],["Tuco-tuco oculto","Ctenomys occultus","EN"],["Cormorán antártico","Phalacrocorax bransfieldensis","VU"],["Pato Crestudo","Sarkidiornis melanotos","VU"],["Picaflor Amatista","Calliphlox amethystina","VU"],["Ratona Malvinera","Troglodytes cobbi","VU"],["Coendú de espinas negras","Coendou bicolor","VU"],["Coendú grande","Coendou prehensilis","VU"],["Comadreja de cuatro ojos","Philander quica","VU"],["Comadrejita de pies chicos","Gracilinanus microtarsus","VU"],["Cuica de agua","Chironectes minimus","VU"],["Degú de los matorrales","Octodon ricardojeda","VU"],["Gato huiña","Leopardus guigna","VU"],["Laucha de las salinas","Salinomys delicatus","VU"],["Murcielaguito de patas peludas","Myotis keaysi","VU"],["Murcielaguito hocicudo","Anoura caudifer","VU"],["Murciélago de orejas amarillas","Vampyressa pusilla","VU"],["Murciélago frutero grande","Sturnira oporaphilum","VU"],["Murciélago patas largas","Macrophyllum macrophyllum","VU"],["Rata chinchilla de Famatina","Abrocoma famatina","VU"],["Rata chinchilla","Abrocoma schistacea","VU"],["Rata chinchilla de Budín","Abrocoma budini","VU"],["Rata chinchilla de Uspallata","Abrocoma uspallata","VU"],["Rata chinchilla mendocina","Abrocoma vaccarum","VU"],["Rata vizcacha","Octomys mimax","VU"],["Rata vizcacha de Kirchner","Tympanoctomys kirchnerorum","VU"],["Rata vizcacha menor","Aconaemys sagei","VU"],["Ratón arborícola colorado","Juliomys pictipes","VU"],["Ratón de Tapecua","Tapecomys primus","VU"],["Ratón de los Franciscos","Oecomys franciscorum","VU"],["Ratón espinoso","Abrawayaomys ruschii","VU"],["Ratón hocicudo de barranco","Oxymycterus wayku","VU"],["Ratón listado","Delomys dorsalis","VU"],["Ratón paranaense","Castoria angustidens","VU"],["Tigrina","Leopardus tigrinus","VU"],["Tuco-tuco de Goya","Ctenomys perrensi","VU"],["Tuco-tuco de las dunas","Ctenomys emilianus","VU"],["Tuco-tuco moteado","Ctenomys latro","VU"],["Yupatí","Metachirus nudicaudatus","VU"]];
+    const vacias = V.map(([com, cie, nac]) => ({ com, cie, nac, sello: sello(nac) }));
+    const cols = ['CR', 'EN', 'VU', 'NT', 'LC', 'DD', 'NE', 's/d'];
+    const M = { CR: [6, 3, 4, 5, 4, 0, 3, 0], EN: [3, 18, 18, 12, 11, 2, 2, 0], VU: [0, 2, 20, 21, 54, 10, 5, 2] };
+    const lab = { CR: 'En peligro crítico', EN: 'En peligro', VU: 'Amenazada' };
+    const matriz = { cols, filas: ['CR', 'EN', 'VU'].map((r) => ({ label: lab[r], celdas: M[r].map((n, i) => ({ n: n || '·', estilo: 'width: 46px; height: 40px; text-align: center; font-family: ' + fD + '; border: 1px solid ' + C.linea + '; background: ' + (n ? mix(C.papel2, C.A, 0.1 + 0.8 * n / 54) : C.papel2) + '; color: ' + (n / 54 > 0.55 ? C.papel2 : C.tinta) + ';' + (cols[i] === 'LC' ? ' outline: 2px solid ' + C.tinta + ';' : '') })) })) };
+    const muestra = { CR: cuadro('CR', false), EN: cuadro('EN', false), VU: cuadro('VU', false), vacia: cuadro('VU', true) };
+    const fq = (f) => "'" + f + "', Georgia, serif";
+    const CRU = {"filas": [["Selva paranaense (Bosque Atlántico)", 51, 18.1, 7.5, 141.3], ["Pampa húmeda", 40, 3.4, 0.2, 15.2], ["Chaco seco", 38, 8.1, 1.2, 117.9], ["Chaco húmedo", 36, 10.1, 1.6, 285.0], ["Estepa patagónica", 35, 8.6, 1.8, 3.2], ["Espinal", 35, 3.6, 0.0, 64.7], ["Yungas", 34, 29.8, 7.0, 166.1], ["Bosques de araucaria (Misiones)", 32, 20.8, 8.8, 329.3], ["Sabana mesopotámica (Esteros del Iberá)", 30, 2.7, 0.6, 274.1], ["Delta e islas del Paraná", 26, 39.9, 0.8, 421.2], ["Monte de llanuras", 25, 6.8, 1.1, 27.1], ["Puna", 24, 34.0, 5.4, 3.2], ["Bosques subpolares magallánicos", 24, 34.4, 19.2, 4.6], ["Monte de sierras", 21, 15.5, 4.5, 16.7], ["Bosques templados valdivianos", 14, 51.2, 23.8, 36.1], ["Estepa andina del sur", 13, 35.9, 18.4, 3.5], ["Puna seca", 9, 37.1, 0.0, 0.9]], "perd": [["Chaco Seco", 27189, -2618], ["Chaco Húmedo", 5589, -191], ["Espinal", 6020, -179], ["Bosques Patagónicos", 2471, -171]]};
+    const mxS = Math.max(...CRU.filas.map((r) => r[1])), mxF = Math.max(...CRU.filas.map((r) => r[4]));
+    const cruce = { filas: CRU.filas.map((r) => ({ nom: r[0], sp: r[1], ap: fmt(r[2]) + ' %', fu: fmt(r[4]),
+      barSp: 'display: inline-block; height: 12px; width: ' + Math.round(r[1] / mxS * 80) + 'px; background: ' + C.A + ';',
+      barAp: 'position: relative; display: inline-block; height: 12px; width: ' + Math.max(1, Math.round(r[2] * 2)) + 'px; background: ' + mix(C.papel, C.tinta, 0.3) + ';',
+      barApE: 'position: absolute; left: 0; top: 0; bottom: 0; width: ' + Math.round(r[3] * 2) + 'px; background: ' + C.tinta + ';',
+      barFu: 'display: inline-block; height: 12px; width: ' + Math.max(1, Math.round(r[4] / mxF * 200)) + 'px; background: ' + mix(C.A, C.tinta, 0.35) + ';' })),
+      perd: CRU.perd.map((q) => ({ nom: q[0], d: fmt(q[2]), pct: fmt((q[2] / q[1] * 100).toFixed(1)) + ' %' })) };
+    return { papel: C.papel, papel2: C.papel2, tinta: C.tinta, tinta2: C.tinta2, linea: C.linea, tintaA: C.A, fTitulo: fq(p.fTitulo ?? 'IM Fell English'), fTexto: fq(p.fTexto ?? 'EB Garamond'), fNotas: "'" + (p.fNotas ?? 'Caveat') + "', cursive", fDatos: fD, unidades, escala, anios, periodos, retratos, vacias, matriz, muestra, cruce };
+  }
+}
+
+</script>
+<script>DC.mount(Component, {"papel":{"editor":"color","default":"#F3EDE0","section":"Colores"},"papel2":{"editor":"color","default":"#FBF8F1","section":"Colores"},"tinta":{"editor":"color","default":"#2B241D","section":"Colores"},"tinta2":{"editor":"color","default":"#6B5A48","section":"Colores"},"linea":{"editor":"color","default":"#B9A98F","section":"Colores"},"tintaA":{"editor":"color","default":"#9B3522","options":["#9B3522","#7A2E1F","#B4521E","#6E1F3A"],"section":"Colores"},"fTitulo":{"editor":"enum","default":"IM Fell English","options":["IM Fell English","Cormorant Garamond","EB Garamond","Libre Caslon Text"],"section":"Tipografía"},"fTexto":{"editor":"enum","default":"EB Garamond","options":["EB Garamond","Cormorant Garamond","Libre Caslon Text","IM Fell English"],"section":"Tipografía"},"fNotas":{"editor":"enum","default":"Caveat","options":["Caveat","Kalam"],"section":"Tipografía"},"fDatos":{"editor":"enum","default":"IBM Plex Mono","options":["IBM Plex Mono","Courier Prime"],"section":"Tipografía"},"$preview":{"width":1080,"height":6600}}, 'dc-tpl', 'dc-root');</script>
+</body>
+</html>

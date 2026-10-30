@@ -1,0 +1,21 @@
+eco_id,nombre,nombre_es,bioma,reino,area_km2
+E01,Patagonian steppe,Estepa patagónica,"Temperate Grasslands, Savannas & Shrublands",Neotropic,546602.7
+E02,Dry Chaco,Chaco seco,"Tropical & Subtropical Grasslands, Savannas & Shrublands",Neotropic,489230.4
+E03,Humid Pampas,Pampa húmeda,"Temperate Grasslands, Savannas & Shrublands",Neotropic,398301.6
+E04,Low Monte,Monte de llanuras,"Temperate Grasslands, Savannas & Shrublands",Neotropic,353545.0
+E05,Espinal,Espinal,"Temperate Grasslands, Savannas & Shrublands",Neotropic,298513.6
+E06,Humid Chaco,Chaco húmedo,"Tropical & Subtropical Grasslands, Savannas & Shrublands",Neotropic,161876.7
+E07,High Monte,Monte de sierras,Montane Grasslands & Shrublands,Neotropic,116566.1
+E08,Southern Andean steppe,Estepa andina del sur,Montane Grasslands & Shrublands,Neotropic,96366.1
+E09,Central Andean puna,Puna,Montane Grasslands & Shrublands,Neotropic,87491.3
+E10,Southern Andean Yungas,Yungas,Tropical & Subtropical Moist Broadleaf Forests,Neotropic,47595.9
+E11,Valdivian temperate forests,Bosques templados valdivianos,Temperate Broadleaf & Mixed Forests,Neotropic,44896.7
+E12,Paraná flooded savanna,Delta e islas del Paraná,Flooded Grasslands & Savannas,Neotropic,36983.4
+E13,Central Andean dry puna,Puna seca,Montane Grasslands & Shrublands,Neotropic,30955.1
+E14,Magellanic subpolar forests,Bosques subpolares magallánicos,Temperate Broadleaf & Mixed Forests,Neotropic,28724.9
+E15,Southern Cone Mesopotamian savanna,Sabana mesopotámica (Esteros del Iberá),Flooded Grasslands & Savannas,Neotropic,26754.1
+E16,Alto Paraná Atlantic forests,Selva paranaense (Bosque Atlántico),Tropical & Subtropical Moist Broadleaf Forests,Neotropic,22363.9
+E17,Araucaria moist forests,Bosques de araucaria (Misiones),Tropical & Subtropical Moist Broadleaf Forests,Neotropic,4535.8
+E18,Rock and Ice,Roca y hielo,N/A,N/A,2017.2
+E19,Uruguayan savanna,Sabana uruguaya,"Tropical & Subtropical Grasslands, Savannas & Shrublands",Neotropic,272.4
+E20,Chilean Matorral,Matorral chileno,"Mediterranean Forests, Woodlands & Scrub",Neotropic,9.0
