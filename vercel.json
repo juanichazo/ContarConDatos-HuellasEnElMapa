@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": null,
+  "buildCommand": null,
+  "outputDirectory": "site",
+  "headers": [
+    {
+      "source": "/(assets|img)/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
+  ]
+}

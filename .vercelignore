@@ -1,0 +1,17 @@
+# Solo se publica site/. Lo demás no hace falta subirlo al hacer `vercel deploy`.
+raw/
+gbif/
+gbif_doi/
+presiones/
+web_data/
+reports/
+entregables/
+scripts/
+tools/
+src/
+*.gpkg
+*.geojson
+*.csv
+*.png
+*.sha256
+.venv/
