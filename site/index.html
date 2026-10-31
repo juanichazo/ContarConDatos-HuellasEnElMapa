@@ -17,6 +17,14 @@ select,button,input{font:inherit;color:inherit}
 .maplibregl-ctrl-attrib{background:rgba(251,248,241,.85) !important;font-size:10px}
 .maplibregl-ctrl-group{background:#fbf8f1;border:1px solid #b9a98f;border-radius:2px;box-shadow:none}
 input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
+.tarjeta-mapa{position:absolute;pointer-events:auto;box-sizing:border-box;background:rgba(251,248,241,.96);border:1px solid var(--linea);outline:1px solid rgba(185,169,143,.5);outline-offset:2px;box-shadow:0 2px 0 rgba(43,36,29,.15)}
+.tarjeta-guia{top:10px;right:10px;width:min(420px,calc(100% - 20px))}
+.tarjeta-ficha{top:10px;right:10px;width:min(330px,calc(100% - 20px));max-height:calc(100% - 20px);overflow:auto}
+.tarjeta-cab{display:flex;align-items:center;justify-content:space-between;gap:10px;flex:1;min-width:0;min-height:38px;padding:6px 10px;background:none;border:0;cursor:pointer;text-align:left;color:inherit}
+.tarjeta-signo{flex:0 0 auto;font-family:var(--fDatos);font-size:15px;color:var(--tinta2)}
+.tarjeta-x{flex:0 0 auto;min-width:38px;background:none;border:0;border-left:1px solid var(--linea);cursor:pointer;font-size:14px;color:var(--tinta2)}
+@media (max-width:759px){.tarjeta-ficha{top:auto;bottom:10px;left:10px;right:56px;width:auto;max-height:60%}}
+.tabla-fija thead th{position:sticky;top:0;z-index:3;background:var(--papel2);box-shadow:inset 0 -1px 0 var(--linea)}
 </style>
 
 </head>
@@ -49,18 +57,8 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 <button type="button" onClick="{{msg.ver}}" style="min-height: 40px; padding: 6px 14px; border: 1px solid var(--tinta); background: var(--tinta); color: var(--papel2); border-radius: 2px; cursor: pointer; font-size: 14px">Ver los vacíos en el mapa</button>
 </section>
 <div id="sec-mapa" style="display: flex; align-items: center; gap: 12px; margin-top: 8px; scroll-margin-top: 56px; font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tinta2)"><span style="color: var(--tintaA)">01</span><span>El mapa</span><span style="flex: 1; height: 1px; background: var(--linea)"></span></div>
-<section aria-labelledby="guia-titulo" style="display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: baseline; padding: 14px 18px; border: 1px solid var(--linea); background: var(--papel2)">
-<h2 id="guia-titulo" style="margin: 0; flex: 0 0 auto; font-family: var(--fTitulo); font-weight: 400; font-size: 24px">Cómo leer este mapa</h2>
-<ol style="margin: 0; padding-left: 20px; flex: 1 1 640px; display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 6px 26px; font-size: 15px">
-<li>Cada punto es una celda del territorio (~1.800 km²): cuanto más grande y oscuro, más especies amenazadas registradas ahí en la ventana de tiempo elegida.</li>
-<li>Buscá una especie por nombre para ver su ficha y dónde fue registrada; sumá una segunda para comparar en dos tintas.</li>
-<li>Mové el año o tocá ▶ para ver cómo cambian los registros; con «Ver acumulado» se suman desde 2012.</li>
-<li>En «Presión de fondo» pintá áreas protegidas o focos de calor debajo de los registros. Clic en una ecorregión: su ficha.</li>
-<li>Los registros miden dónde se miró, no cuántos animales hay. Los vacíos también son un dato.</li>
-</ol>
-</section>
 <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
-<aside style="flex: 1 1 260px; max-width: 300px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<aside style="flex: 0 0 390px; max-width: 100%; min-width: 0; display: flex; flex-direction: column; gap: 20px">
 <section style="display: flex; flex-direction: column; gap: 8px">
 <div style="font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tinta2)">Buscar especie</div>
 <div class="combo" style="position: relative">
@@ -123,9 +121,65 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 </section>
 </aside>
 <main style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column">
-<div style="position: relative; border: 1px solid var(--linea); background: var(--papel2); height: 760px">
+<div style="position: relative; border: 1px solid var(--linea); background: var(--papel2); height: 680px">
 <div ref="{{mapRef}}" style="position: absolute; inset: 0"></div>
 <template data-sc="if" value="{{cargando}}" hint-placeholder-val="{{ true }}"><div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--fNotas); font-size: 24px; color: var(--tinta2)">Siguiendo huellas…</div></template>
+<div style="position: absolute; inset: 0; pointer-events: none; z-index: 4">
+<template data-sc="if" value="{{guia.visible}}" hint-placeholder-val="{{ true }}">
+<section class="tarjeta-mapa tarjeta-guia" aria-labelledby="guia-titulo">
+<button type="button" class="tarjeta-cab" style="width: 100%" onClick="{{toggleGuia}}" aria-expanded="{{guia.abierta}}" aria-controls="guia-cuerpo" title="Mostrar u ocultar la guía">
+<span id="guia-titulo" style="font-family: var(--fTitulo); font-size: 19px; line-height: 1.1">Cómo leer este mapa</span>
+<span class="tarjeta-signo" aria-hidden="true">{{guia.signo}}</span>
+</button>
+<template data-sc="if" value="{{guia.abierta}}" hint-placeholder-val="{{ true }}">
+<ol id="guia-cuerpo" style="margin: 0; padding: 8px 14px 12px 32px; border-top: 1px dotted var(--linea); display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.35">
+<li>Cada punto es una celda del territorio (~1.800 km²): cuanto más grande y oscuro, más especies amenazadas registradas ahí en la ventana de tiempo elegida.</li>
+<li>Buscá una especie por nombre para ver su ficha y dónde fue registrada; sumá una segunda para comparar en dos tintas.</li>
+<li>Mové el año o tocá ▶ para ver cómo cambian los registros; con «Ver acumulado» se suman desde 2012.</li>
+<li>En «Presión de fondo» pintá áreas protegidas o focos de calor debajo de los registros. Clic en una ecorregión: su ficha.</li>
+<li>Los registros miden dónde se miró, no cuántos animales hay. Los vacíos también son un dato.</li>
+</ol>
+</template>
+</section>
+</template>
+<template data-sc="if" value="{{ficha.esEspecie}}" hint-placeholder-val="{{ false }}">
+<article class="tarjeta-mapa tarjeta-ficha" aria-label="Ficha de la especie elegida">
+<div style="display: flex; align-items: stretch">
+<button type="button" class="tarjeta-cab" onClick="{{toggleFicha}}" aria-expanded="{{fichaCard.abierta}}" title="Mostrar u ocultar la ficha">
+<span style="min-width: 0"><span style="display: block; font-family: var(--fDatos); font-size: 10px; letter-spacing: 0.04em; color: var(--tinta2)">LISTA ROJA · {{ficha.catalogo}}</span><span style="display: block; font-family: var(--fTitulo); font-size: 21px; line-height: 1.1">{{ficha.comun}}</span></span>
+<span class="tarjeta-signo" aria-hidden="true">{{fichaCard.signo}}</span>
+</button>
+<button type="button" class="tarjeta-x" onClick="{{limpiarSp}}" aria-label="Volver al conjunto" title="Volver al conjunto">✕</button>
+</div>
+<template data-sc="if" value="{{fichaCard.abierta}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 8px 12px 12px; border-top: 1px dotted var(--linea)">
+<div style="font-style: italic; font-size: 16px">{{ficha.cientifico}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span data-style="{{ficha.selloNac}}">{{ficha.nacTxt}}</span>
+<span data-style="{{ficha.selloUicn}}">{{ficha.uicnTxt}}</span>
+</div>
+<div style="font-size: 13px; color: var(--tinta2)">{{ficha.grupo}}{{ficha.marino}}</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; border-top: 1px dotted var(--linea); padding-top: 8px">
+<div><div style="font-family: var(--fTitulo); font-size: 22px; line-height: 1.1">{{ficha.n}}</div><div style="font-size: 12px; color: var(--tinta2)">registros 2012–2025</div></div>
+<div><div style="font-family: var(--fTitulo); font-size: 22px; line-height: 1.1">{{ficha.nh}}</div><div style="font-size: 12px; color: var(--tinta2)">hexágonos con registro</div></div>
+</div>
+<div>
+<div style="font-size: 12px; color: var(--tinta2); margin-bottom: 4px">Detectada por año (2012 → 2025)</div>
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 2px; height: 26px">
+<template data-sc="for" list="{{ficha.barras}}" as="b" hint-placeholder-count="14">
+<span title="{{b.t}}" data-style="{{b.estilo}}"></span>
+</template>
+</div>
+</div>
+<div style="font-size: 13px"><b>Ecorregiones:</b> {{ficha.ecos}}</div>
+<div style="font-size: 12px; color: var(--tinta2)">{{ficha.rango}}</div>
+<div style="font-family: var(--fNotas); font-size: 17px; color: var(--tintaA); line-height: 1.2">{{ficha.nota}}</div>
+<button type="button" onClick="{{limpiarSp}}" style="align-self: flex-start; min-height: 36px; padding: 4px 12px; border: 1px solid var(--linea); background: var(--papel); border-radius: 2px; cursor: pointer">Volver al conjunto</button>
+</div>
+</template>
+</article>
+</template>
+</div>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 14px 36px; align-items: flex-start; border: 1px solid var(--linea); border-top: 0; background: var(--papel2); padding: 10px 14px; font-size: 13px">
 <div style="display: flex; flex-direction: column; gap: 5px; min-width: 220px">
@@ -149,34 +203,6 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 </div>
 <div id="sec-ficha" style="display: flex; align-items: center; gap: 12px; margin-top: 8px; scroll-margin-top: 56px; font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tinta2)"><span style="color: var(--tintaA)">02</span><span>Ficha y años</span><span style="flex: 1; height: 1px; background: var(--linea)"></span></div><div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
 <div style="flex: 1 1 340px; max-width: 440px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 14px">
-<template data-sc="if" value="{{ficha.esEspecie}}" hint-placeholder-val="{{ false }}">
-<article style="background: var(--papel2); border: 1px solid var(--tinta); outline: 1px solid var(--linea); outline-offset: 3px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
-<div style="display: flex; justify-content: space-between; font-family: var(--fDatos); font-size: 11px; color: var(--tinta2)"><span>LISTA ROJA · ARGENTINA</span><span>{{ficha.catalogo}}</span></div>
-<h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 30px; line-height: 1.05">{{ficha.comun}}</h2>
-<div style="font-style: italic; font-size: 18px">{{ficha.cientifico}}</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-<span data-style="{{ficha.selloNac}}">{{ficha.nacTxt}}</span>
-<span data-style="{{ficha.selloUicn}}">{{ficha.uicnTxt}}</span>
-</div>
-<div style="font-size: 14px; color: var(--tinta2)">{{ficha.grupo}}{{ficha.marino}}</div>
-<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; border-top: 1px dotted var(--linea); padding-top: 8px">
-<div><div style="font-family: var(--fTitulo); font-size: 26px">{{ficha.n}}</div><div style="font-size: 12px; color: var(--tinta2)">registros 2012–2025</div></div>
-<div><div style="font-family: var(--fTitulo); font-size: 26px">{{ficha.nh}}</div><div style="font-size: 12px; color: var(--tinta2)">hexágonos con registro</div></div>
-</div>
-<div>
-<div style="font-size: 12px; color: var(--tinta2); margin-bottom: 4px">Detectada por año (2012 → 2025)</div>
-<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 2px; height: 26px">
-<template data-sc="for" list="{{ficha.barras}}" as="b" hint-placeholder-count="14">
-<span title="{{b.t}}" data-style="{{b.estilo}}"></span>
-</template>
-</div>
-</div>
-<div style="font-size: 14px"><b>Ecorregiones:</b> {{ficha.ecos}}</div>
-<div style="font-size: 13px; color: var(--tinta2)">{{ficha.rango}}</div>
-<div style="font-family: var(--fNotas); font-size: 18px; color: var(--tintaA); line-height: 1.2">{{ficha.nota}}</div>
-<button type="button" onClick="{{limpiarSp}}" style="align-self: flex-start; min-height: 40px; padding: 6px 12px; border: 1px solid var(--linea); background: var(--papel); border-radius: 2px; cursor: pointer">Volver al conjunto</button>
-</article>
-</template>
 <template data-sc="if" value="{{ficha.esEco}}" hint-placeholder-val="{{ false }}">
 <article style="background: var(--papel2); border: 1px solid var(--tinta); outline: 1px solid var(--linea); outline-offset: 3px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
 <div style="font-family: var(--fDatos); font-size: 11px; color: var(--tinta2)">ECORREGIÓN · {{ficha.ecoId}}</div>
@@ -208,10 +234,10 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 <button type="button" onClick="{{limpiarEco}}" style="align-self: flex-start; min-height: 40px; padding: 6px 12px; border: 1px solid var(--linea); background: var(--papel); border-radius: 2px; cursor: pointer">Cerrar ficha</button>
 </article>
 </template>
-<template data-sc="if" value="{{ficha.esGuia}}" hint-placeholder-val="{{ true }}">
+<template data-sc="if" value="{{ficha.noEco}}" hint-placeholder-val="{{ true }}">
 <article style="border: 1px dashed var(--linea); padding: 16px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; color: var(--tinta2)">
-<div style="font-family: var(--fTitulo); font-size: 22px; color: var(--tinta)">Ficha</div>
-<div>Elegí una especie en el buscador o hacé clic en una ecorregión del mapa para ver su ficha acá.</div>
+<div style="font-family: var(--fTitulo); font-size: 22px; color: var(--tinta)">Ficha de ecorregión</div>
+<div>Hacé clic en una ecorregión del mapa para ver su ficha acá. La ficha de cada especie aparece sobre el mapa, al elegirla en el buscador.</div>
 </article>
 </template>
 </div></div>
@@ -252,8 +278,8 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 <span style="color: var(--tinta2)">· {{catalogoN}} especies con los filtros actuales · clic en una fila para abrir su ficha</span>
 </div>
 <div style="max-height: 460px; overflow: auto; border: 1px solid var(--linea)">
-<table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 760px">
-<thead><tr style="position: sticky; top: 0; background: var(--papel2); text-align: left; font-family: var(--fDatos); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase">
+<table class="tabla-fija" style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 760px">
+<thead><tr style="text-align: left; font-family: var(--fDatos); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase">
 <th style="padding: 8px">N.º</th><th style="padding: 8px">Especie</th><th style="padding: 8px">Grupo</th><th style="padding: 8px">Nacional</th><th style="padding: 8px">UICN global</th><th style="padding: 8px; text-align: right">Registros</th><th style="padding: 8px; text-align: right">Ecorregiones</th><th style="padding: 8px">2012 → 2025</th>
 </tr></thead>
 <tbody>
@@ -545,7 +571,7 @@ class Component extends DCLogic {
     const map = new ml.Map({ container: this.mapEl, style: { version: 8, sources: {}, layers: [{ id: 'fondo', type: 'background', paint: { 'background-color': C.papel } }] }, center: [-64.5, -39.5], zoom: 3.3, minZoom: 2.8, maxZoom: 9, maxBounds: [[-100, -64], [-28, -14]], dragRotate: false, pitchWithRotate: false, attributionControl: false });
     this.map = map;
     map.touchZoomRotate.disableRotation();
-    map.addControl(new ml.NavigationControl({ showCompass: false }), 'top-right');
+    map.addControl(new ml.NavigationControl({ showCompass: false }), 'bottom-right');
     map.addControl(new ml.AttributionControl({ compact: true, customAttribution: 'Registros: GBIF.org doi:10.15468/dl.t87f4d · AP: Tomba 2025 · Focos: NASA FIRMS · Ecorregiones: RESOLVE 2017 · Provincias: INDEC · Relieve: NOAA ETOPO 2022' }), 'bottom-right');
     map.on('load', () => {
       map.addSource('ecor', { type: 'geojson', data: D.ecor });
@@ -698,10 +724,31 @@ class Component extends DCLogic {
     this.nPts = feats.reduce((a, f) => a + f.properties.n, 0);
     m.setLayoutProperty('pts', 'visibility', s.capas.pts && s.sp ? 'visible' : 'none');
   }
+  // Reserva espacio a los costados del mapa (para las tarjetas) sin mover lo que se está viendo.
+  // Después, easeTo y fitBounds encuadran dentro del espacio que quedó libre.
+  reservar(izq, der) {
+    const m = this.map, cont = m.getContainer();
+    const centro = m.unproject([cont.clientWidth / 2 + (izq - der) / 2, cont.clientHeight / 2]);
+    m.jumpTo({ center: centro, padding: { top: 0, bottom: 0, left: izq, right: der } });
+  }
+  // Tarjetas flotantes del mapa. Si la persona no las tocó, se abren según el ancho del mapa y si hay una especie elegida.
+  // También devuelve cuánto espacio del mapa se reserva a cada lado, para que las tarjetas no tapen los registros.
+  tarjetas() {
+    const s = this.state;
+    const ancho = this.mapEl ? this.mapEl.clientWidth : window.innerWidth;
+    const hayEsp = !!(s.sp && this.sp && this.sp[s.sp]);
+    const ficha = s.fichaAbierta === undefined ? ancho >= 760 : s.fichaAbierta;
+    const guia = !hayEsp && (s.guiaAbierta === undefined ? ancho >= 900 : s.guiaAbierta);
+    // la guía y la ficha comparten el lado derecho: aparece una o la otra
+    const der = ancho < 760 ? 0 : hayEsp ? (ficha ? 350 : 0) : (guia ? 440 : 0);
+    return { guia, ficha, izq: 0, der, ancho, hayEsp };
+  }
   encuadre() {
     const s = this.state, m = this.map, P = this.P || {};
-    const key = s.sp + '|' + s.sp2 + '|' + s.eco;
+    const tj = this.tarjetas();
+    const key = s.sp + '|' + s.sp2 + '|' + s.eco + '|' + tj.izq + '|' + tj.der;
     if (key === this._fit) return; this._fit = key;
+    this.reservar(tj.izq, tj.der);
     let pts = [];
     if (s.sp) { pts = (P[s.sp] || []).concat(s.sp2 ? (P[s.sp2] || []) : []).map((q) => [q[0], q[1]]); if (!pts.length && this.PR) { const f = (this.PR.rangos.features || []).find((x) => x.properties.id === s.sp); if (f) { const walk = (c) => { if (typeof c[0] === 'number') pts.push(c); else c.forEach(walk); }; walk(f.geometry.coordinates); } } }
     else if (s.eco) { const f = this.D.ecor.features.find((x) => x.properties.eco_id === s.eco); if (f) { const walk = (c) => { if (typeof c[0] === 'number') pts.push(c); else c.forEach(walk); }; walk(f.geometry.coordinates); } }
@@ -742,10 +789,10 @@ class Component extends DCLogic {
     const base = { papel: C.papel, papel2: C.papel2, tinta: C.tinta, tinta2: C.tinta2, linea: C.linea, tintaA: C.A, tintaB: C.B, fTitulo: fq(p.fTitulo ?? 'IM Fell English'), fTexto: fq(p.fTexto ?? 'EB Garamond'), fNotas: "'" + (p.fNotas ?? 'Caveat') + "', cursive", fDatos: "'" + (p.fDatos ?? 'IBM Plex Mono') + "', monospace", mapRef: this.mapRef };
     base.cssVars = { papel: base.papel, papel2: base.papel2, tinta: base.tinta, tinta2: base.tinta2, linea: base.linea, tintaA: base.tintaA, tintaB: base.tintaB, fTitulo: base.fTitulo, fTexto: base.fTexto, fNotas: base.fNotas, fDatos: base.fDatos };
     const catTxt = { CR: 'En peligro crítico', EN: 'En peligro', VU: 'Amenazada' };
-    const vacio = Object.assign({}, base, { indice: [], msg: { texto: 'Cargando…', ver: () => {} }, umbralUI: [], vaciosUI: [], gapLista: [], gapTitulo: '', hayGap: false, formaUI: [], formaNota: '', panelUI: [], pan: { buscar: true }, presUI: [], apTipoUI: [], presEsAP: false, presNota: '', aplOn: false, aplToggle: () => {}, leyP: { on: false, items: [] }, presTabla: [], mbTabla: [], cargando: true, k: { especies: '205', registros: '—', vacias: '—' }, opciones: [], grupos: [], catsUI: [], capasUI: [], sp: '', sp2: '', cb1: { ph: 'Cargando…', items: [] }, cb2: { ph: 'Cargando…', items: [] }, anio: 2024, acum: true, playing: false, noPlaying: true, playLabel: 'Reproducir', textoAnio: '', leyenda: { titulo: '', items: [], nota: '' }, ventanaTxt: '', ficha: { esGuia: true }, serie: { titulo: 'Registros por año', barras: [] }, tabs: [], tab: { catalogo: true }, ordenes: [], catalogo: [], catalogoN: 0, vacias: [], vaciasN: 0 });
+    const vacio = Object.assign({}, base, { indice: [], msg: { texto: 'Cargando…', ver: () => {} }, umbralUI: [], vaciosUI: [], gapLista: [], gapTitulo: '', hayGap: false, formaUI: [], formaNota: '', panelUI: [], pan: { buscar: true }, presUI: [], apTipoUI: [], presEsAP: false, presNota: '', aplOn: false, aplToggle: () => {}, leyP: { on: false, items: [] }, presTabla: [], mbTabla: [], cargando: true, k: { especies: '205', registros: '—', vacias: '—' }, opciones: [], grupos: [], catsUI: [], capasUI: [], sp: '', sp2: '', cb1: { ph: 'Cargando…', items: [] }, cb2: { ph: 'Cargando…', items: [] }, anio: 2024, acum: true, playing: false, noPlaying: true, playLabel: 'Reproducir', textoAnio: '', leyenda: { titulo: '', items: [], nota: '' }, ventanaTxt: '', ficha: { esGuia: true, noEco: true }, guia: { visible: true, abierta: false, signo: '+' }, fichaCard: { abierta: false, signo: '+' }, toggleGuia: () => {}, toggleFicha: () => {}, serie: { titulo: 'Registros por año', barras: [] }, tabs: [], tab: { catalogo: true }, ordenes: [], catalogo: [], catalogoN: 0, vacias: [], vaciasN: 0 });
     if (!this.D) return vacio;
     const D = this.D;
-    const clave = JSON.stringify([s.sp, s.sp2, s.grupo, s.cats, s.modo, s.anio, s.capas, s.eco, C, p.opacidadRelieve, s.pres, s.apTipo, s.forma, s.apUmbral, s.soloVacios, p.escalaDosTonos, !!this.P, !!this.PR, !!this.listoMapa]);
+    const clave = JSON.stringify([s.sp, s.sp2, s.grupo, s.cats, s.modo, s.anio, s.capas, s.eco, C, p.opacidadRelieve, s.pres, s.apTipo, s.forma, s.apUmbral, s.soloVacios, p.escalaDosTonos, !!this.P, !!this.PR, !!this.listoMapa, this.tarjetas()]);
     if (clave !== this._k && this.listoMapa) { this._k = clave; setTimeout(() => this.sync(), 0); }
     const all = D.especies;
     const k = { especies: this.fmt(all.length), registros: this.fmt(all.reduce((a, e) => a + e.n, 0)), vacias: this.fmt(all.filter((e) => e.n === 0).length) };
@@ -812,6 +859,8 @@ class Component extends DCLogic {
       const esp = this.filtradas().filter((e) => e.eco.includes(s.eco));
       ficha = { esGuia: false, esEspecie: false, esEco: true, ecoId: s.eco, ecoNombre: this.ecoNom[s.eco], ecoOrig: this.ecoOrig[s.eco], ecoArea: this.fmt(Math.round(this.ecoArea[s.eco])), ecoCR: esp.filter((e) => e.nac === 'CR').length, ecoEN: esp.filter((e) => e.nac === 'EN').length, ecoVU: esp.filter((e) => e.nac === 'VU').length, ecoSerie: serie, ecoEspecies: esp.length ? esp.sort((a, b) => ord[a.nac] - ord[b.nac] || b.n - a.n).map((e) => e.com + ' (' + e.nac + ')').join(', ') : 'ninguna con los filtros actuales' };
     }
+    ficha.noEco = !ficha.esEco;
+    const tj = this.tarjetas();
     // serie
     const fl = s.sp ? [this.sp[s.sp]] : this.filtradas();
     const tot = this.Y.map((_, i) => fl.reduce((a, e) => a + e.y[i], 0));
@@ -875,7 +924,9 @@ class Component extends DCLogic {
       playing: s.playing, noPlaying: !s.playing, playLabel: s.playing ? 'Pausar' : 'Reproducir',
       textoAnio: (s.modo === 'anio' ? 'Año: ' : 'Hasta: ') + s.anio + (s.anio === 2025 ? ' (parcial)' : ''),
       leyenda, ventanaTxt: this.ventanaTxt(), ficha, serie, estado: this.estadoTxt(),
-      limpiarSp: () => this.setState({ sp: '', sp2: '' }), limpiarEco: () => this.setState({ eco: null }),
+      limpiarSp: () => this.setState({ sp: '', sp2: '', fichaAbierta: undefined }),
+      guia: { visible: !tj.hayEsp, abierta: tj.guia, signo: tj.guia ? '−' : '+' }, fichaCard: { abierta: tj.ficha, signo: tj.ficha ? '−' : '+' },
+      toggleGuia: () => this.setState({ guiaAbierta: !tj.guia }), toggleFicha: () => this.setState({ fichaAbierta: !tj.ficha }), limpiarEco: () => this.setState({ eco: null }),
       tabs, formaUI: [['punto', 'Puntos'], ['hex', 'Hexágonos']].map(([v, l]) => ({ label: l, on: s.forma === v, estilo: this.pill(s.forma === v, C), pick: () => this.setState({ forma: v }) })),
       formaNota: s.pres !== 'ninguna' ? 'Con presión de fondo, las especies se dibujan siempre como puntos.' : '',
       panelUI: [['buscar', 'Especies'], ['tiempo', 'Tiempo'], ['laminas', 'Láminas'], ['ficha', 'Ficha']].map(([v, l]) => ({ label: l, on: s.panel === v, estilo: this.pill(s.panel === v, C) + ' flex: 1;', pick: () => this.setState({ panel: v }) })),
