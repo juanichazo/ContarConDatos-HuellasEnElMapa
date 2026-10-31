@@ -153,30 +153,8 @@ a{color:#7a2e1f}a:hover{color:#4a1a10}
 </div>
 </section>
 
-<section class="h-2col" style="display: grid; grid-template-columns: minmax(0, 1fr) 520px; gap: 48px; align-items: start">
-<div style="display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">VII.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 44px; line-height: 1">Amenazadas acá</h2></div>
-<p style="margin: 0">69 de las 205 especies figuran como de «preocupación menor» en la lista roja mundial. En el mundo les va bien; en Argentina, no. Cuidarlas es una responsabilidad local.</p>
-<div style="font-size: 13px; color: var(--tinta2)">Categoría mundial: UICN, tomada de GBIF el 29/10/2026. A verificar en iucnredlist.org.</div>
-</div>
-<div class="h-scroll">
-<table style="border-collapse: separate; border-spacing: 4px; font-size: 14px">
-<thead><tr><th></th><template data-sc="for" list="{{matriz.cols}}" as="c" hint-placeholder-count="8"><th style="font-family: var(--fDatos); font-size: 11px; font-weight: 400">{{c}}</th></template></tr></thead>
-<tbody>
-<template data-sc="for" list="{{matriz.filas}}" as="f" hint-placeholder-count="3">
-<tr><th style="text-align: left; font-weight: 400; padding-right: 8px">{{f.label}}</th><template data-sc="for" list="{{f.celdas}}" as="c" hint-placeholder-count="8"><td data-style="{{c.estilo}}">{{c.n}}</td></template></tr>
-</template>
-</tbody>
-</table>
-<div style="margin-top: 12px; max-width: 520px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.4; color: var(--tinta2)">
-<div><b style="color: var(--tinta)">Cómo leerla.</b> Cada fila es la categoría en <b>Argentina</b> (CR: en peligro crítico · EN: en peligro · VU: amenazada). Cada columna es la categoría <b>mundial</b> de la UICN (CR, EN, VU; NT: casi amenazada · LC: preocupación menor · DD: datos insuficientes · NE: no evaluada · s/d: sin dato). El número es la cantidad de especies; «·» significa ninguna.</div>
-<div>El marco negro (columna LC) marca las 69 especies que a nivel mundial están en «preocupación menor» y en Argentina están amenazadas.</div>
-</div>
-</div>
-</section>
-
 <section style="display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">VIII.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 36px; line-height: 1">Lo que le pasa a la casa</h2></div>
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">VII.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 36px; line-height: 1">Lo que le pasa a la casa</h2></div>
 <p style="margin: 0; max-width: 860px">Las ecorregiones con más especies amenazadas registradas no son las más protegidas. En la Pampa húmeda y el Espinal, menos del 4 % de la tierra está bajo alguna área protegida, y casi nada con protección estricta. Los focos de calor se concentran en el Delta, los bosques de araucaria, el Chaco húmedo y los esteros del Iberá.</p>
 <div class="h-scroll"><div style="min-width: 760px; display: grid; grid-template-columns: 250px 120px minmax(0, 1fr) minmax(0, 1fr); gap: 6px 14px; align-items: center; font-size: 14px">
 <div style="font-family: var(--fDatos); font-size: 11px; color: var(--tinta2); text-transform: uppercase">Ecorregión</div>
@@ -195,7 +173,7 @@ a{color:#7a2e1f}a:hover{color:#4a1a10}
 <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: var(--fTitulo); font-size: 30px; color: var(--tintaA); line-height: 1">{{q.d}}</span><span style="font-size: 13px">mil ha de bosque · {{q.nom}}</span><span style="font-family: var(--fDatos); font-size: 11px; color: var(--tinta2)">{{q.pct}} del bosque de 2012</span></div>
 </template>
 </div>
-<div style="font-size: 12px; color: var(--tinta2); max-width: 900px">Especies: amenazadas con al menos un registro GBIF 2012–2025 en la ecorregión. Áreas protegidas: Tomba (2025), estado a 2022, solo superficie terrestre. Focos: NASA FIRMS VIIRS 375 m, promedio 2012–2025; un foco es una detección térmica, no un incendio. Bosque: MapBiomas Argentina Col. 3, cambio 2012→2025 por ecorregión de Burkart. Falta la luz nocturna.</div>
+<div style="font-size: 12px; color: var(--tinta2); max-width: 900px">Especies: amenazadas con al menos un registro GBIF 2012–2025 en la ecorregión. Áreas protegidas: Tomba (2025), estado a 2022, solo superficie terrestre. Focos: NASA FIRMS VIIRS 375 m, promedio 2012–2025; un foco es una detección térmica, no un incendio. Bosque: MapBiomas Argentina Col. 3, cambio 2012→2025 por ecorregión de Burkart.</div>
 </section>
 
 <footer class="h-g2" style="border-top: 1px solid var(--linea); padding-top: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; font-size: 13px; color: var(--tinta2); line-height: 1.4">
@@ -205,7 +183,7 @@ a{color:#7a2e1f}a:hover{color:#4a1a10}
 <span>Registros: GBIF.org (29/10/2026) GBIF Occurrence Download doi:10.15468/dl.t87f4d.</span>
 <span>Categoría mundial: UICN vía GBIF. Ecorregiones: Dinerstein et al. 2017 (RESOLVE). Provincias: INDEC vía geoAr.</span>
 <span>Áreas protegidas: Tomba 2025, Mendeley Data doi:10.17632/wggsh3dszp.1. Focos de calor: NASA FIRMS (VIIRS S-NPP). Bosque nativo: MapBiomas Argentina Col. 3.</span>
-<span>Relieve: imagen de relieve sombreado del paquete basemap-data (provisoria).</span>
+<span>Relieve: NOAA NCEI, ETOPO 2022 15 Arc-Second Global Relief Model, doi:10.25921/fd45-gt74 (versión de 30″, dominio público).</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 6px">
 <b style="color: var(--tinta)">Método</b>
@@ -254,10 +232,6 @@ class Component extends DCLogic {
     ];
     const V = [["Aguila Monera","Morphnus guianensis","CR"],["Charao","Amazona pretrei","CR"],["Guanay","Phalacrocorax bougainvillii","CR"],["Maracaná Lomo Rojo","Primolius maracana","CR"],["Pato Serrucho","Mergus octosetaceus","CR"],["Rata nutria del Atuel","Holochilus lagigliai","CR"],["Rata vizcacha de Los Chalchaleros","Tympanoctomys loschalchalerosorum","CR"],["Rata vizcacha dorada","Tympanoctomys aureus","CR"],["Tuco-tuco de Roig","Ctenomys roigi","CR"],["Tuco-tuco de d'Orbigny","Ctenomys dorbignyi","CR"],["Cachilo de Antifaz","Coryphaspiza melanotis","EN"],["Halcón Negro Grande","Falco deiroleucus","EN"],["Inambu Enano","Taoniscus nanus","EN"],["Matamico Grande","Phalcoboenus australis","EN"],["Mosqueta Oreja Negra","Phylloscartes paulista","EN"],["Playero Esquimal","Numenius borealis","EN"],["Yetapá Chico","Alectrurus tricolor","EN"],["Chinchilla del altiplano","Chinchilla chinchilla","EN"],["Murciélago común de orejas largas","Micronycteris microtis","EN"],["Ratón de hocico rosado","Bibimys torresi","EN"],["Ratón jesuita","Akodon philipmyersi","EN"],["Tatú carreta","Priodontes maximus","EN"],["Tuco-tuco acanelado","Ctenomys porteousi","EN"],["Tuco-tuco chaqueño","Ctenomys bonettoi","EN"],["Tuco-tuco chico","Ctenomys pundti","EN"],["Tuco-tuco colonial","Ctenomys sociabilis","EN"],["Tuco-tuco de Pearson","Ctenomys pearsoni","EN"],["Tuco-tuco oculto","Ctenomys occultus","EN"],["Cormorán antártico","Phalacrocorax bransfieldensis","VU"],["Pato Crestudo","Sarkidiornis melanotos","VU"],["Picaflor Amatista","Calliphlox amethystina","VU"],["Ratona Malvinera","Troglodytes cobbi","VU"],["Coendú de espinas negras","Coendou bicolor","VU"],["Coendú grande","Coendou prehensilis","VU"],["Comadreja de cuatro ojos","Philander quica","VU"],["Comadrejita de pies chicos","Gracilinanus microtarsus","VU"],["Cuica de agua","Chironectes minimus","VU"],["Degú de los matorrales","Octodon ricardojeda","VU"],["Gato huiña","Leopardus guigna","VU"],["Laucha de las salinas","Salinomys delicatus","VU"],["Murcielaguito de patas peludas","Myotis keaysi","VU"],["Murcielaguito hocicudo","Anoura caudifer","VU"],["Murciélago de orejas amarillas","Vampyressa pusilla","VU"],["Murciélago frutero grande","Sturnira oporaphilum","VU"],["Murciélago patas largas","Macrophyllum macrophyllum","VU"],["Rata chinchilla de Famatina","Abrocoma famatina","VU"],["Rata chinchilla","Abrocoma schistacea","VU"],["Rata chinchilla de Budín","Abrocoma budini","VU"],["Rata chinchilla de Uspallata","Abrocoma uspallata","VU"],["Rata chinchilla mendocina","Abrocoma vaccarum","VU"],["Rata vizcacha","Octomys mimax","VU"],["Rata vizcacha de Kirchner","Tympanoctomys kirchnerorum","VU"],["Rata vizcacha menor","Aconaemys sagei","VU"],["Ratón arborícola colorado","Juliomys pictipes","VU"],["Ratón de Tapecua","Tapecomys primus","VU"],["Ratón de los Franciscos","Oecomys franciscorum","VU"],["Ratón espinoso","Abrawayaomys ruschii","VU"],["Ratón hocicudo de barranco","Oxymycterus wayku","VU"],["Ratón listado","Delomys dorsalis","VU"],["Ratón paranaense","Castoria angustidens","VU"],["Tigrina","Leopardus tigrinus","VU"],["Tuco-tuco de Goya","Ctenomys perrensi","VU"],["Tuco-tuco de las dunas","Ctenomys emilianus","VU"],["Tuco-tuco moteado","Ctenomys latro","VU"],["Yupatí","Metachirus nudicaudatus","VU"]];
     const vacias = V.map(([com, cie, nac]) => ({ com, cie, nac, sello: sello(nac) }));
-    const cols = ['CR', 'EN', 'VU', 'NT', 'LC', 'DD', 'NE', 's/d'];
-    const M = { CR: [6, 3, 4, 5, 4, 0, 3, 0], EN: [3, 18, 18, 12, 11, 2, 2, 0], VU: [0, 2, 20, 21, 54, 10, 5, 2] };
-    const lab = { CR: 'En peligro crítico', EN: 'En peligro', VU: 'Amenazada' };
-    const matriz = { cols, filas: ['CR', 'EN', 'VU'].map((r) => ({ label: lab[r], celdas: M[r].map((n, i) => ({ n: n || '·', estilo: 'width: 46px; height: 40px; text-align: center; font-family: ' + fD + '; border: 1px solid ' + C.linea + '; background: ' + (n ? mix(C.papel2, C.A, 0.1 + 0.8 * n / 54) : C.papel2) + '; color: ' + (n / 54 > 0.55 ? C.papel2 : C.tinta) + ';' + (cols[i] === 'LC' ? ' outline: 2px solid ' + C.tinta + ';' : '') })) })) };
     const muestra = { CR: cuadro('CR', false), EN: cuadro('EN', false), VU: cuadro('VU', false), vacia: cuadro('VU', true) };
     const fq = (f) => "'" + f + "', Georgia, serif";
     const CRU = {"filas": [["Selva paranaense (Bosque Atlántico)", 51, 18.1, 7.5, 141.3], ["Pampa húmeda", 40, 3.4, 0.2, 15.2], ["Chaco seco", 38, 8.1, 1.2, 117.9], ["Chaco húmedo", 36, 10.1, 1.6, 285.0], ["Estepa patagónica", 35, 8.6, 1.8, 3.2], ["Espinal", 35, 3.6, 0.0, 64.7], ["Yungas", 34, 29.8, 7.0, 166.1], ["Bosques de araucaria (Misiones)", 32, 20.8, 8.8, 329.3], ["Sabana mesopotámica (Esteros del Iberá)", 30, 2.7, 0.6, 274.1], ["Delta e islas del Paraná", 26, 39.9, 0.8, 421.2], ["Monte de llanuras", 25, 6.8, 1.1, 27.1], ["Puna", 24, 34.0, 5.4, 3.2], ["Bosques subpolares magallánicos", 24, 34.4, 19.2, 4.6], ["Monte de sierras", 21, 15.5, 4.5, 16.7], ["Bosques templados valdivianos", 14, 51.2, 23.8, 36.1], ["Estepa andina del sur", 13, 35.9, 18.4, 3.5], ["Puna seca", 9, 37.1, 0.0, 0.9]], "perd": [["Chaco Seco", 27189, -2618], ["Chaco Húmedo", 5589, -191], ["Espinal", 6020, -179], ["Bosques Patagónicos", 2471, -171]]};
@@ -269,7 +243,7 @@ class Component extends DCLogic {
       barFu: 'display: inline-block; height: 12px; width: ' + Math.max(1, Math.round(r[4] / mxF * 200)) + 'px; background: ' + mix(C.A, C.tinta, 0.35) + ';' })),
       perd: CRU.perd.map((q) => ({ nom: q[0], d: fmt(q[2]), pct: fmt((q[2] / q[1] * 100).toFixed(1)) + ' %' })) };
     const cssVars = { papel: C.papel, papel2: C.papel2, tinta: C.tinta, tinta2: C.tinta2, linea: C.linea, tintaA: C.A, fTitulo: fq(p.fTitulo ?? 'IM Fell English'), fTexto: fq(p.fTexto ?? 'EB Garamond'), fNotas: "'" + (p.fNotas ?? 'Caveat') + "', cursive", fDatos: fD };
-    return { cssVars, papel: C.papel, papel2: C.papel2, tinta: C.tinta, tinta2: C.tinta2, linea: C.linea, tintaA: C.A, fTitulo: fq(p.fTitulo ?? 'IM Fell English'), fTexto: fq(p.fTexto ?? 'EB Garamond'), fNotas: "'" + (p.fNotas ?? 'Caveat') + "', cursive", fDatos: fD, unidades, escala, anios, periodos, retratos, vacias, matriz, muestra, cruce };
+    return { cssVars, papel: C.papel, papel2: C.papel2, tinta: C.tinta, tinta2: C.tinta2, linea: C.linea, tintaA: C.A, fTitulo: fq(p.fTitulo ?? 'IM Fell English'), fTexto: fq(p.fTexto ?? 'EB Garamond'), fNotas: "'" + (p.fNotas ?? 'Caveat') + "', cursive", fDatos: fD, unidades, escala, anios, periodos, retratos, vacias, muestra, cruce };
   }
 }
 

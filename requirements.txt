@@ -12,4 +12,5 @@ matplotlib==3.11.2
 openpyxl==3.1.5
 pdfplumber            # solo script 11
 rdata                 # solo script 01
+scipy==1.18.1          # solo script 22
 # playwright==1.63.0  # opcional, solo para sacar capturas de prueba

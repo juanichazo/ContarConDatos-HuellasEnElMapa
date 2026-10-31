@@ -1,6 +1,7 @@
 # Descargas crudas grandes (se obtienen desde la fuente)
 raw/gbif_descarga/*.csv
 raw/resolve2017_rgeodata/*.rda
+raw/etopo2022/*.tif
 
 # Exportaciones para la entrega
 entregables/

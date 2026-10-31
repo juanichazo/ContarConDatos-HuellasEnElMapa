@@ -1,7 +1,7 @@
 /* dc-mini.js — runtime mínimo (≈150 líneas) de plantillas para las páginas del sitio. Cubre solo lo que usan Main y Historia:
  *   · «{{a.b.c}}» en texto y atributos (búsqueda con puntos; no hay expresiones)
  *   · <sc-for list="{{lista}}" as="x">, <sc-if value="{{v}}">
- *   · onClick / onChange con funciones, ref="{{fn}}" (se llama una vez por elemento nuevo)
+ *   · onClick / onChange / onInput / onKeydown con funciones, ref="{{fn}}" (se llama una vez por elemento nuevo)
  *   · data-style="{{estilo}}" se dibuja como style (así el editor no valida la marca como CSS)
  *   · renderVals().cssVars = { tinta: '#…' } define --tinta en la raíz, para usar var(--tinta) en los style
  *   · class Component extends DCLogic { constructor, componentDidMount, renderVals, setState, forceUpdate }
@@ -39,7 +39,7 @@
         const h = this.handlers[+el.getAttribute(attr)]; if (h) h(e);
       });
       on('click', 'data-dc-click');
-      on('input', 'data-dc-input'); on('change', 'data-dc-change');
+      on('input', 'data-dc-input'); on('change', 'data-dc-change'); on('keydown', 'data-dc-keydown');
       this.render();
       this.mounted = true;
       if (this.inst.componentDidMount) this.inst.componentDidMount();
@@ -78,7 +78,7 @@
         const name = a.name;
         if (name.startsWith('hint-placeholder') || name === 'data-sc') return;
         const whole = a.value.match(WHOLE);
-        if (/^on(click|change|input)$/i.test(name) && whole) {
+        if (/^on(click|change|input|keydown)$/i.test(name) && whole) {
           const f = lookup(scope, whole[1]); if (typeof f !== 'function') return;
           const ev = name.slice(2).toLowerCase(); let kind = ev;
           if (ev === 'change' && n.tagName === 'INPUT' && n.getAttribute('type') === 'range') kind = 'input';

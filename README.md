@@ -2,7 +2,7 @@
 
 ¿Dónde viven las especies amenazadas de Argentina y qué le pasa al territorio que habitan?
 
-Cruce de las **205 especies de mamíferos y aves nacionalmente amenazadas** (Res. 316/2021 y Res. 795/2017) con **162.717 registros de GBIF (2012–2025)**, ecorregiones y presiones sobre el territorio (áreas protegidas, focos de calor, vegetación nativa, incendios).
+Cruce de las **205 especies de mamíferos y aves nacionalmente amenazadas** (Res. 316/2021 y Res. 795/2017) con **162.717 registros de GBIF (2012–2025)**, ecorregiones y presiones sobre el territorio (áreas protegidas, focos de calor, vegetación nativa).
 
 - **Explorador interactivo:** [`site/index.html`](site/index.html)
 - **Historia visual:** [`site/historia.html`](site/historia.html)
@@ -11,12 +11,16 @@ Presentado al Concurso Nacional de Visualización de Datos «Contar con Datos» 
 
 ## Verlo localmente
 
+Abrir `site/index.html` con doble clic alcanza: los datos van en `site/data/*.js`, que el navegador carga también desde el disco. Con conexión a internet se ven las tipografías; sin ella, el sitio funciona con tipografías de reemplazo.
+
+También se puede servir la carpeta:
+
 ```
 cd site
 python -m http.server 8000
 ```
 
-Abrir http://localhost:8000/ (no funciona con doble clic: el navegador bloquea la lectura de los `.json` desde `file://`).
+y abrir http://localhost:8000/.
 
 ## Estructura
 
@@ -28,7 +32,7 @@ presiones/   capas de presión procesadas
 gbif/, gbif_doi/, web_data/   resultados intermedios
 ```
 
-Para rehacer los datos del sitio: `pip install -r requirements.txt`, ubicar la descarga GBIF en `raw/gbif_descarga/` y correr, desde la raíz, `python scripts/20_armar_datos_web.py` y `python scripts/21_registros_dentro_ap.py`.
+Para rehacer los datos del sitio: `pip install -r requirements.txt`, ubicar la descarga GBIF en `raw/gbif_descarga/` y correr, desde la raíz, `python scripts/20_armar_datos_web.py` y `python scripts/21_registros_dentro_ap.py`. El relieve del mapa sale de `python scripts/22_relieve_etopo.py` (baja solo el recorte de ETOPO 2022 si falta) y las imágenes de la historia, de `python scripts/23_imagenes_historia.py`. Al final, `python scripts/24_datos_js.py` copia los JSON y el relieve a los `.js` que lee la página.
 
 ## Fuentes
 
@@ -43,9 +47,8 @@ Para rehacer los datos del sitio: `pip install -r requirements.txt`, ubicar la d
 | Áreas protegidas | Tomba, A. (2025). Mendeley Data, V1. https://doi.org/10.17632/wggsh3dszp.1 | CC BY 4.0 |
 | Focos de calor | NASA FIRMS, VIIRS S-NPP y MODIS C6.1. https://firms.modaps.eosdis.nasa.gov/country/ | Libre con cita |
 | Vegetación nativa | MapBiomas Argentina, Colección 3. https://argentina.mapbiomas.org/descargas/estadisticas/ | CC BY 4.0 |
-| Incendios reportados | Servicio Nacional de Manejo del Fuego. https://datos.gob.ar/dataset/ambiente-incendios-forestales | Datos abiertos |
 | Rangos de mamíferos | Marsh et al. (2022), *J. Biogeography* 49(5). https://doi.org/10.1111/jbi.14330 · https://zenodo.org/records/6644198 | CC BY 4.0 |
-| Relieve del mapa base | Natural Earth (dominio público) — a confirmar | Dominio público |
+| Relieve del mapa base | NOAA National Centers for Environmental Information (2022). ETOPO 2022 15 Arc-Second Global Relief Model. https://doi.org/10.25921/fd45-gt74 (se usa la versión de 30″) | Dominio público |
 | Mapas web | MapLibre GL JS 5.24.0. https://maplibre.org | BSD-3 |
 
-La descarga GBIF original (142 MB) no está en el repositorio por tamaño; se obtiene desde el DOI. Los datos derivados de GBIF son de uso **no comercial** (CC BY-NC 4.0).
+La descarga GBIF original (142 MB) y el recorte de ETOPO 2022 (87 MB) no están en el repositorio por tamaño; se obtienen desde sus DOI (el script 22 baja ETOPO solo). Los datos derivados de GBIF son de uso **no comercial** (CC BY-NC 4.0).
