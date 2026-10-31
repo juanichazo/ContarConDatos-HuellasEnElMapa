@@ -2,6 +2,8 @@
  *   · «{{a.b.c}}» en texto y atributos (búsqueda con puntos; no hay expresiones)
  *   · <sc-for list="{{lista}}" as="x">, <sc-if value="{{v}}">
  *   · onClick / onChange con funciones, ref="{{fn}}" (se llama una vez por elemento nuevo)
+ *   · data-style="{{estilo}}" se dibuja como style (así el editor no valida la marca como CSS)
+ *   · renderVals().cssVars = { tinta: '#…' } define --tinta en la raíz, para usar var(--tinta) en los style
  *   · class Component extends DCLogic { constructor, componentDidMount, renderVals, setState, forceUpdate }
  * Redibuja con morphdom (se carga antes) para no destruir el mapa, los sliders ni el foco.
  * Licencia: MIT (este archivo). morphdom: MIT, https://github.com/patrick-steele-idem/morphdom
@@ -45,6 +47,7 @@
     schedule() { if (this.pending) return; this.pending = true; requestAnimationFrame(() => { this.pending = false; this.render(); }); }
     render() {
       const vals = this.inst.renderVals ? this.inst.renderVals() : {};
+      if (vals.cssVars) Object.keys(vals.cssVars).forEach((k) => this.root.style.setProperty('--' + k, vals.cssVars[k]));
       this.handlers = []; this.refs = [];
       const html = this.node(this.tpl.content, [vals]);
       const next = document.createElement('div'); next.id = this.root.id; next.className = this.root.className; next.innerHTML = html;
@@ -84,6 +87,7 @@
         if (name === 'ref' && whole) { attrs += ' data-dc-ref="' + this.refs.length + '"'; this.refs.push(lookup(scope, whole[1])); return; }
         if (whole) {
           const v = lookup(scope, whole[1]);
+          if (name === 'data-style') { if (v != null && v !== false) attrs += ' style="' + escA(v) + '"'; return; }
           if (name === 'value') { attrs += ' data-dc-value="' + escA(v == null ? '' : v) + '" value="' + escA(v == null ? '' : v) + '"'; return; }
           if (typeof v === 'boolean') { if (/^(aria|data)-/.test(name)) attrs += ' ' + name + '="' + v + '"'; else if (v) attrs += ' ' + name + '=""'; return; }
           if (v == null) return;

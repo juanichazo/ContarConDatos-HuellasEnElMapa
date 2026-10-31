@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>Huellas en el mapa — historia visual</title>
 <style>body{background:#F3EDE0}#dc-root>div{margin:0 auto}</style>
 
@@ -10,6 +11,20 @@
 <style>
 body{margin:0}
 a{color:#7a2e1f}a:hover{color:#4a1a10}
+/* pantallas angostas: el diseño base es de 1080 px; los estilos en línea se pisan con !important */
+.h-scroll{overflow-x:auto}
+@media (max-width: 900px){
+  .h-wrap{padding:40px 20px 48px !important;gap:56px !important}
+  .h-h1{font-size:64px !important}
+  .h-2col,.h-g2{grid-template-columns:minmax(0,1fr) !important;gap:24px !important}
+  .h-g3{grid-template-columns:minmax(0,1fr) !important}
+  .h-g4{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  .h-cols{columns:2 !important}
+}
+@media (max-width: 560px){
+  .h-h1{font-size:52px !important}
+  .h-cols{columns:1 !important}
+}
 </style>
 
 </head>
@@ -17,91 +32,91 @@ a{color:#7a2e1f}a:hover{color:#4a1a10}
 <div id="dc-root"></div>
 <template id="dc-tpl">
 
-<div style="width: 1080px; box-sizing: border-box; background: {{papel}}; color: {{tinta}}; font-family: {{fTexto}}; font-size: 17px; line-height: 1.45; padding: 72px 72px 64px; display: flex; flex-direction: column; gap: 88px">
+<div class="h-wrap" style="width: 100%; max-width: 1080px; overflow: hidden; box-sizing: border-box; background: var(--papel); color: var(--tinta); font-family: var(--fTexto); font-size: 17px; line-height: 1.45; padding: 72px 72px 64px; display: flex; flex-direction: column; gap: 88px">
 
-<header style="position: relative; display: flex; flex-direction: column; gap: 14px; border-bottom: 1px solid {{linea}}; padding-bottom: 36px">
-<svg aria-hidden="true" viewBox="0 0 600 120" style="position: absolute; right: -88px; top: -48px; width: 708px; height: 182px; opacity: 0.25; pointer-events: none; color: {{tinta}}" fill="currentColor"><g transform="translate(40.0 63.0) rotate(80)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(105.0 65.2) rotate(80)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(170.0 40.9) rotate(82)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(235.0 47.3) rotate(85)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(300.0 29.4) rotate(88)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(365.0 43.7) rotate(92)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(430.0 34.0) rotate(96)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(495.0 56.0) rotate(98)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(560.0 52.5) rotate(100)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(210.0 104.0) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(253.3 96.7) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(296.7 73.3) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(340.0 66.0) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(383.3 42.7) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(426.7 35.3) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(470.0 12.0) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g></svg>
-<div style="font-family: {{fDatos}}; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: {{tinta2}}">Atlas de huellas · Argentina · 2012–2025</div>
-<h1 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 96px; line-height: 0.95; letter-spacing: -0.01em">Huellas<br><span style="font-style: italic; color: {{tintaA}}">en el mapa</span></h1>
+<header style="position: relative; display: flex; flex-direction: column; gap: 14px; border-bottom: 1px solid var(--linea); padding-bottom: 36px">
+<svg aria-hidden="true" viewBox="0 0 600 120" style="position: absolute; right: -88px; top: -48px; width: 708px; height: 182px; opacity: 0.25; pointer-events: none; color: var(--tinta)" fill="currentColor"><g transform="translate(40.0 63.0) rotate(80)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(105.0 65.2) rotate(80)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(170.0 40.9) rotate(82)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(235.0 47.3) rotate(85)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(300.0 29.4) rotate(88)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(365.0 43.7) rotate(92)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(430.0 34.0) rotate(96)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(495.0 56.0) rotate(98)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(560.0 52.5) rotate(100)"><ellipse cx="0" cy="5" rx="5.2" ry="4.3"></ellipse><ellipse cx="-5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse><ellipse cx="-2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="2" cy="-5.6" rx="1.9" ry="2.5"></ellipse><ellipse cx="5.6" cy="-2.2" rx="1.9" ry="2.4"></ellipse></g><g transform="translate(210.0 104.0) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(253.3 96.7) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(296.7 73.3) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(340.0 66.0) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(383.3 42.7) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(426.7 35.3) rotate(42)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g><g transform="translate(470.0 12.0) rotate(18)" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M0 6 L0 -4 M0 2 L-5 -6 M0 2 L5 -6"></path></g></svg>
+<div style="font-family: var(--fDatos); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tinta2)">Atlas de huellas · Argentina · 2012–2025</div>
+<h1 class="h-h1" style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 96px; line-height: 0.95; letter-spacing: -0.01em">Huellas<br><span style="font-style: italic; color: var(--tintaA)">en el mapa</span></h1>
 <p style="margin: 8px 0 0; font-size: 24px; max-width: 760px; line-height: 1.3">Argentina tiene 205 mamíferos y aves en su lista roja oficial. Seguimos sus huellas en 162.717 registros de ciencia ciudadana y colecciones para preguntar dónde viven, dónde los miramos y de cuáles no sabemos casi nada.</p>
-<div style="font-family: {{fNotas}}; font-size: 26px; color: {{tintaA}}; transform: rotate(-1.5deg); transform-origin: left">Un mapa de lo que vemos y de lo que se nos escapa.</div>
+<div style="font-family: var(--fNotas); font-size: 26px; color: var(--tintaA); transform: rotate(-1.5deg); transform-origin: left">Un mapa de lo que vemos y de lo que se nos escapa.</div>
 </header>
 
 <section style="display: flex; flex-direction: column; gap: 22px">
-<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">I.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">La lista</h2></div>
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">I.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 44px; line-height: 1">La lista</h2></div>
 <p style="margin: 0; max-width: 820px">Cada sello es una especie. Las resoluciones nacionales 316/2021 (mamíferos) y 795/2017 (aves) las clasifican en peligro crítico, en peligro o amenazadas. Los sellos punteados son especies sin un solo registro georreferenciado entre 2012 y 2025.</p>
 <template data-sc="for" list="{{unidades}}" as="g" hint-placeholder-count="2">
 <div style="display: flex; flex-direction: column; gap: 8px">
-<div style="font-family: {{fDatos}}; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: {{tinta2}}">{{g.label}}</div>
+<div style="font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tinta2)">{{g.label}}</div>
 <div style="display: flex; flex-wrap: wrap; gap: 5px">
 <template data-sc="for" list="{{g.items}}" as="u" hint-placeholder-count="40">
-<span title="{{u.t}}" style="{{u.estilo}}"></span>
+<span title="{{u.t}}" data-style="{{u.estilo}}"></span>
 </template>
 </div>
 </div>
 </template>
-<div style="display: flex; flex-wrap: wrap; gap: 22px; font-size: 14px; color: {{tinta2}}">
-<span style="display: flex; gap: 8px; align-items: center"><span style="{{muestra.CR}}"></span>En peligro crítico (25)</span>
-<span style="display: flex; gap: 8px; align-items: center"><span style="{{muestra.EN}}"></span>En peligro (66)</span>
-<span style="display: flex; gap: 8px; align-items: center"><span style="{{muestra.VU}}"></span>Amenazada ≈ VU (114)</span>
-<span style="display: flex; gap: 8px; align-items: center"><span style="{{muestra.vacia}}"></span>Sin registros 2012–2025 (65)</span>
+<div style="display: flex; flex-wrap: wrap; gap: 22px; font-size: 14px; color: var(--tinta2)">
+<span style="display: flex; gap: 8px; align-items: center"><span data-style="{{muestra.CR}}"></span>En peligro crítico (25)</span>
+<span style="display: flex; gap: 8px; align-items: center"><span data-style="{{muestra.EN}}"></span>En peligro (66)</span>
+<span style="display: flex; gap: 8px; align-items: center"><span data-style="{{muestra.VU}}"></span>Amenazada ≈ VU (114)</span>
+<span style="display: flex; gap: 8px; align-items: center"><span data-style="{{muestra.vacia}}"></span>Sin registros 2012–2025 (65)</span>
 </div>
 </section>
 
-<section style="display: grid; grid-template-columns: 460px minmax(0, 1fr); gap: 48px; align-items: start">
+<section class="h-2col" style="display: grid; grid-template-columns: 460px minmax(0, 1fr); gap: 48px; align-items: start">
 <figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
-<img src="img/m1_riqueza.jpg" alt="Mapa de Argentina en hexágonos: cantidad de especies amenazadas registradas entre 2012 y 2024; el máximo está en Misiones" style="width: 460px; height: auto; display: block; border: 1px solid {{linea}}">
-<figcaption style="font-size: 13px; color: {{tinta2}}">Especies amenazadas registradas por hexágono (H3 res. 4), 2012–2024. Solo registros en tierra.</figcaption>
+<img src="img/m1_riqueza.jpg" alt="Mapa de Argentina en hexágonos: cantidad de especies amenazadas registradas entre 2012 y 2024; el máximo está en Misiones" style="width: 460px; max-width: 100%; height: auto; display: block; border: 1px solid var(--linea)">
+<figcaption style="font-size: 13px; color: var(--tinta2)">Especies amenazadas registradas por hexágono (H3 res. 4), 2012–2024. Solo registros en tierra.</figcaption>
 </figure>
 <div style="display: flex; flex-direction: column; gap: 18px; padding-top: 8px">
-<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">II.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">Dónde se las vio</h2></div>
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">II.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 44px; line-height: 1">Dónde se las vio</h2></div>
 <p style="margin: 0">Entre 2012 y 2024 hubo registros de especies amenazadas en 2.015 celdas del territorio. La mayoría guarda una o dos especies; pocas concentran muchas.</p>
-<div style="border-left: 2px solid {{tintaA}}; padding-left: 16px; display: flex; flex-direction: column; gap: 4px">
-<div style="font-family: {{fTitulo}}; font-size: 56px; line-height: 1; color: {{tintaA}}">34</div>
+<div style="border-left: 2px solid var(--tintaA); padding-left: 16px; display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: var(--fTitulo); font-size: 56px; line-height: 1; color: var(--tintaA)">34</div>
 <div>especies amenazadas registradas en una sola celda de la Selva Paranaense, en el norte de Misiones: el máximo del país.</div>
 </div>
 <p style="margin: 0">Las cinco celdas más ricas están en la Selva Paranaense, los bosques de araucaria y los Esteros del Iberá. Los Andes y la costa patagónica dibujan las otras dos franjas oscuras.</p>
 <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px">
 <template data-sc="for" list="{{escala}}" as="e" hint-placeholder-count="4">
-<div style="display: flex; gap: 10px; align-items: center"><span style="{{e.muestra}}"></span><span>{{e.label}}</span></div>
+<div style="display: flex; gap: 10px; align-items: center"><span data-style="{{e.muestra}}"></span><span>{{e.label}}</span></div>
 </template>
 </div>
-<div style="font-family: {{fNotas}}; font-size: 22px; color: {{tintaA}}; line-height: 1.2">Pero ¿es ahí donde viven… o donde hay más gente mirando?</div>
+<div style="font-family: var(--fNotas); font-size: 22px; color: var(--tintaA); line-height: 1.2">Pero ¿es ahí donde viven… o donde hay más gente mirando?</div>
 </div>
 </section>
 
-<section style="display: grid; grid-template-columns: minmax(0, 1fr) 460px; gap: 48px; align-items: start">
+<section class="h-2col" style="display: grid; grid-template-columns: minmax(0, 1fr) 460px; gap: 48px; align-items: start">
 <div style="display: flex; flex-direction: column; gap: 18px; padding-top: 8px">
-<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">III.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">Dónde se mira</h2></div>
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">III.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 44px; line-height: 1">Dónde se mira</h2></div>
 <p style="margin: 0">Un registro es alguien que vio un animal y lo anotó. Por eso los datos crecen con la cantidad de observadores, no con la de animales: de 2.832 registros en 2012 a 28.420 en 2024.</p>
 <div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 4px; align-items: end; height: 150px">
 <template data-sc="for" list="{{anios}}" as="b" hint-placeholder-count="14">
-<div title="{{b.t}}" style="{{b.estilo}}"></div>
+<div title="{{b.t}}" data-style="{{b.estilo}}"></div>
 </template>
 </div>
-<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 4px; font-family: {{fDatos}}; font-size: 10px; color: {{tinta2}}; text-align: center">
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 4px; font-family: var(--fDatos); font-size: 10px; color: var(--tinta2); text-align: center">
 <template data-sc="for" list="{{anios}}" as="b" hint-placeholder-count="14"><span>{{b.corto}}</span></template>
 </div>
-<div style="font-size: 13px; color: {{tinta2}}">Registros únicos por año. 2025 (punteado) todavía no está completo.</div>
+<div style="font-size: 13px; color: var(--tinta2)">Registros únicos por año. 2025 (punteado) todavía no está completo.</div>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
-<div style="border-top: 1px solid {{linea}}; padding-top: 8px"><div style="font-family: {{fTitulo}}; font-size: 44px; line-height: 1">81 %</div><div style="font-size: 15px">de los registros cae en el 10 % de las celdas más visitadas.</div></div>
-<div style="border-top: 1px solid {{linea}}; padding-top: 8px"><div style="font-family: {{fTitulo}}; font-size: 44px; line-height: 1">92 %</div><div style="font-size: 15px">de los registros viene de una sola plataforma de observadores de aves (eBird).</div></div>
+<div style="border-top: 1px solid var(--linea); padding-top: 8px"><div style="font-family: var(--fTitulo); font-size: 44px; line-height: 1">81 %</div><div style="font-size: 15px">de los registros cae en el 10 % de las celdas más visitadas.</div></div>
+<div style="border-top: 1px solid var(--linea); padding-top: 8px"><div style="font-family: var(--fTitulo); font-size: 44px; line-height: 1">92 %</div><div style="font-size: 15px">de los registros viene de una sola plataforma de observadores de aves (eBird).</div></div>
 </div>
 </div>
 <figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
-<img src="img/m2_esfuerzo.jpg" alt="Mapa de Argentina en hexágonos grises: cantidad de registros por celda en escala logarítmica" style="width: 460px; height: auto; display: block; border: 1px solid {{linea}}">
-<figcaption style="font-size: 13px; color: {{tinta2}}">Cantidad de registros por hexágono, 2012–2024 (escala logarítmica: más oscuro = muchos más registros).</figcaption>
+<img src="img/m2_esfuerzo.jpg" alt="Mapa de Argentina en hexágonos grises: cantidad de registros por celda en escala logarítmica" style="width: 460px; max-width: 100%; height: auto; display: block; border: 1px solid var(--linea)">
+<figcaption style="font-size: 13px; color: var(--tinta2)">Cantidad de registros por hexágono, 2012–2024 (escala logarítmica: más oscuro = muchos más registros).</figcaption>
 </figure>
 </section>
 
 <section style="display: flex; flex-direction: column; gap: 22px">
-<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">IV.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">La mirada crece</h2></div>
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">IV.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 44px; line-height: 1">La mirada crece</h2></div>
 <p style="margin: 0; max-width: 820px">Tres períodos, la misma pregunta. Cada vez hay más celdas con registros y más especies detectadas. No es que aparezcan animales: es que aparecen ojos.</p>
-<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<div class="h-g3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
 <template data-sc="for" list="{{periodos}}" as="p" hint-placeholder-count="3">
 <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
-<div style="font-family: {{fNotas}}; font-size: 26px; color: {{tintaA}}">{{p.label}}</div>
-<img src="{{p.src}}" alt="{{p.alt}}" style="width: 100%; height: auto; display: block; border: 1px solid {{linea}}">
+<div style="font-family: var(--fNotas); font-size: 26px; color: var(--tintaA)">{{p.label}}</div>
+<img src="{{p.src}}" alt="{{p.alt}}" style="width: 100%; height: auto; display: block; border: 1px solid var(--linea)">
 <figcaption style="display: flex; justify-content: space-between; font-size: 14px"><span><b>{{p.celdas}}</b> celdas</span><span><b>{{p.sp}}</b> especies</span><span><b>{{p.rec}}</b> registros</span></figcaption>
 </figure>
 </template>
@@ -109,19 +124,19 @@ a{color:#7a2e1f}a:hover{color:#4a1a10}
 </section>
 
 <section style="display: flex; flex-direction: column; gap: 22px">
-<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">V.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">Cuatro huellas</h2></div>
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">V.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 44px; line-height: 1">Cuatro huellas</h2></div>
 <p style="margin: 0; max-width: 820px">Cada punto es un lugar (≈1 km) con al menos un registro entre 2012 y 2024; su tamaño crece con la cantidad. Detrás, en rosado, las celdas que ocupa.</p>
-<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+<div class="h-g4" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
 <template data-sc="for" list="{{retratos}}" as="r" hint-placeholder-count="4">
 <figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
-<img src="{{r.src}}" alt="{{r.alt}}" style="width: 100%; height: auto; display: block; border: 1px solid {{linea}}">
-<div style="background: {{papel2}}; border: 1px solid {{tinta}}; outline: 1px solid {{linea}}; outline-offset: 3px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px">
-<div style="font-family: {{fDatos}}; font-size: 10px; color: {{tinta2}}">{{r.cat}}</div>
-<div style="font-family: {{fTitulo}}; font-size: 22px; line-height: 1.05">{{r.com}}</div>
+<img src="{{r.src}}" alt="{{r.alt}}" style="width: 100%; height: auto; display: block; border: 1px solid var(--linea)">
+<div style="background: var(--papel2); border: 1px solid var(--tinta); outline: 1px solid var(--linea); outline-offset: 3px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: var(--fDatos); font-size: 10px; color: var(--tinta2)">{{r.cat}}</div>
+<div style="font-family: var(--fTitulo); font-size: 22px; line-height: 1.05">{{r.com}}</div>
 <div style="font-style: italic; font-size: 14px">{{r.cie}}</div>
-<div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="{{r.sello}}">{{r.nac}}</span><span style="{{r.selloU}}">{{r.uicn}}</span></div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><span data-style="{{r.sello}}">{{r.nac}}</span><span data-style="{{r.selloU}}">{{r.uicn}}</span></div>
 <div style="font-size: 13px">{{r.datos}}</div>
-<div style="font-family: {{fNotas}}; font-size: 17px; color: {{tintaA}}; line-height: 1.15">{{r.nota}}</div>
+<div style="font-family: var(--fNotas); font-size: 17px; color: var(--tintaA); line-height: 1.15">{{r.nota}}</div>
 </div>
 </figure>
 </template>
@@ -129,63 +144,63 @@ a{color:#7a2e1f}a:hover{color:#4a1a10}
 </section>
 
 <section style="display: flex; flex-direction: column; gap: 22px">
-<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">VI.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">Sin huellas</h2></div>
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">VI.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 44px; line-height: 1">Sin huellas</h2></div>
 <p style="margin: 0; max-width: 820px">Estas 65 especies están en la lista roja y no tienen ni un registro georreferenciado en 14 años. Son sobre todo roedores, murciélagos y marsupiales. Diez están en peligro crítico.</p>
-<div style="columns: 3; column-gap: 32px; font-size: 15px">
+<div class="h-cols" style="columns: 3; column-gap: 32px; font-size: 15px">
 <template data-sc="for" list="{{vacias}}" as="v" hint-placeholder-count="20">
-<div style="break-inside: avoid; display: flex; gap: 8px; align-items: baseline; padding: 3px 0; border-bottom: 1px dotted {{linea}}"><span style="{{v.sello}}">{{v.nac}}</span><span>{{v.com}} <i style="color: {{tinta2}}">{{v.cie}}</i></span></div>
+<div style="break-inside: avoid; display: flex; gap: 8px; align-items: baseline; padding: 3px 0; border-bottom: 1px dotted var(--linea)"><span data-style="{{v.sello}}">{{v.nac}}</span><span>{{v.com}} <i style="color: var(--tinta2)">{{v.cie}}</i></span></div>
 </template>
 </div>
 </section>
 
-<section style="display: grid; grid-template-columns: minmax(0, 1fr) 520px; gap: 48px; align-items: start">
+<section class="h-2col" style="display: grid; grid-template-columns: minmax(0, 1fr) 520px; gap: 48px; align-items: start">
 <div style="display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">VII.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 44px; line-height: 1">Amenazadas acá</h2></div>
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">VII.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 44px; line-height: 1">Amenazadas acá</h2></div>
 <p style="margin: 0">69 de las 205 especies figuran como de «preocupación menor» en la lista roja mundial. En el mundo les va bien; en Argentina, no. Cuidarlas es una responsabilidad local.</p>
-<div style="font-size: 13px; color: {{tinta2}}">Categoría mundial: UICN, tomada de GBIF el 29/10/2026. A verificar en iucnredlist.org.</div>
+<div style="font-size: 13px; color: var(--tinta2)">Categoría mundial: UICN, tomada de GBIF el 29/10/2026. A verificar en iucnredlist.org.</div>
 </div>
-<div>
+<div class="h-scroll">
 <table style="border-collapse: separate; border-spacing: 4px; font-size: 14px">
-<thead><tr><th></th><template data-sc="for" list="{{matriz.cols}}" as="c" hint-placeholder-count="8"><th style="font-family: {{fDatos}}; font-size: 11px; font-weight: 400">{{c}}</th></template></tr></thead>
+<thead><tr><th></th><template data-sc="for" list="{{matriz.cols}}" as="c" hint-placeholder-count="8"><th style="font-family: var(--fDatos); font-size: 11px; font-weight: 400">{{c}}</th></template></tr></thead>
 <tbody>
 <template data-sc="for" list="{{matriz.filas}}" as="f" hint-placeholder-count="3">
-<tr><th style="text-align: left; font-weight: 400; padding-right: 8px">{{f.label}}</th><template data-sc="for" list="{{f.celdas}}" as="c" hint-placeholder-count="8"><td style="{{c.estilo}}">{{c.n}}</td></template></tr>
+<tr><th style="text-align: left; font-weight: 400; padding-right: 8px">{{f.label}}</th><template data-sc="for" list="{{f.celdas}}" as="c" hint-placeholder-count="8"><td data-style="{{c.estilo}}">{{c.n}}</td></template></tr>
 </template>
 </tbody>
 </table>
-<div style="margin-top: 12px; max-width: 520px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.4; color: {{tinta2}}">
-<div><b style="color: {{tinta}}">Cómo leerla.</b> Cada fila es la categoría en <b>Argentina</b> (CR: en peligro crítico · EN: en peligro · VU: amenazada). Cada columna es la categoría <b>mundial</b> de la UICN (CR, EN, VU; NT: casi amenazada · LC: preocupación menor · DD: datos insuficientes · NE: no evaluada · s/d: sin dato). El número es la cantidad de especies; «·» significa ninguna.</div>
+<div style="margin-top: 12px; max-width: 520px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.4; color: var(--tinta2)">
+<div><b style="color: var(--tinta)">Cómo leerla.</b> Cada fila es la categoría en <b>Argentina</b> (CR: en peligro crítico · EN: en peligro · VU: amenazada). Cada columna es la categoría <b>mundial</b> de la UICN (CR, EN, VU; NT: casi amenazada · LC: preocupación menor · DD: datos insuficientes · NE: no evaluada · s/d: sin dato). El número es la cantidad de especies; «·» significa ninguna.</div>
 <div>El marco negro (columna LC) marca las 69 especies que a nivel mundial están en «preocupación menor» y en Argentina están amenazadas.</div>
 </div>
 </div>
 </section>
 
 <section style="display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: {{fDatos}}; font-size: 14px; color: {{tintaA}}">VIII.</span><h2 style="margin: 0; font-family: {{fTitulo}}; font-weight: 400; font-size: 36px; line-height: 1">Lo que le pasa a la casa</h2></div>
+<div style="display: flex; gap: 18px; align-items: baseline"><span style="font-family: var(--fDatos); font-size: 14px; color: var(--tintaA)">VIII.</span><h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 36px; line-height: 1">Lo que le pasa a la casa</h2></div>
 <p style="margin: 0; max-width: 860px">Las ecorregiones con más especies amenazadas registradas no son las más protegidas. En la Pampa húmeda y el Espinal, menos del 4 % de la tierra está bajo alguna área protegida, y casi nada con protección estricta. Los focos de calor se concentran en el Delta, los bosques de araucaria, el Chaco húmedo y los esteros del Iberá.</p>
-<div style="display: grid; grid-template-columns: 250px 120px minmax(0, 1fr) minmax(0, 1fr); gap: 6px 14px; align-items: center; font-size: 14px">
-<div style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}; text-transform: uppercase">Ecorregión</div>
-<div style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}; text-transform: uppercase">Especies</div>
-<div style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}; text-transform: uppercase">% bajo área protegida · ■ estricta</div>
-<div style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}; text-transform: uppercase">Focos de calor / 1.000 km² / año</div>
+<div class="h-scroll"><div style="min-width: 760px; display: grid; grid-template-columns: 250px 120px minmax(0, 1fr) minmax(0, 1fr); gap: 6px 14px; align-items: center; font-size: 14px">
+<div style="font-family: var(--fDatos); font-size: 11px; color: var(--tinta2); text-transform: uppercase">Ecorregión</div>
+<div style="font-family: var(--fDatos); font-size: 11px; color: var(--tinta2); text-transform: uppercase">Especies</div>
+<div style="font-family: var(--fDatos); font-size: 11px; color: var(--tinta2); text-transform: uppercase">% bajo área protegida · ■ estricta</div>
+<div style="font-family: var(--fDatos); font-size: 11px; color: var(--tinta2); text-transform: uppercase">Focos de calor / 1.000 km² / año</div>
 <template data-sc="for" list="{{cruce.filas}}" as="r" hint-placeholder-count="15">
 <div>{{r.nom}}</div>
-<div style="display: flex; gap: 6px; align-items: center"><span style="{{r.barSp}}"></span><span style="font-family: {{fDatos}}; font-size: 12px">{{r.sp}}</span></div>
-<div style="display: flex; gap: 6px; align-items: center"><span style="{{r.barAp}}"><span style="{{r.barApE}}"></span></span><span style="font-family: {{fDatos}}; font-size: 12px">{{r.ap}}</span></div>
-<div style="display: flex; gap: 6px; align-items: center"><span style="{{r.barFu}}"></span><span style="font-family: {{fDatos}}; font-size: 12px">{{r.fu}}</span></div>
+<div style="display: flex; gap: 6px; align-items: center"><span data-style="{{r.barSp}}"></span><span style="font-family: var(--fDatos); font-size: 12px">{{r.sp}}</span></div>
+<div style="display: flex; gap: 6px; align-items: center"><span data-style="{{r.barAp}}"><span data-style="{{r.barApE}}"></span></span><span style="font-family: var(--fDatos); font-size: 12px">{{r.ap}}</span></div>
+<div style="display: flex; gap: 6px; align-items: center"><span data-style="{{r.barFu}}"></span><span style="font-family: var(--fDatos); font-size: 12px">{{r.fu}}</span></div>
 </template>
-</div>
-<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; border-top: 1px dotted {{linea}}; padding-top: 14px">
+</div></div>
+<div class="h-g4" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; border-top: 1px dotted var(--linea); padding-top: 14px">
 <template data-sc="for" list="{{cruce.perd}}" as="q" hint-placeholder-count="4">
-<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: {{fTitulo}}; font-size: 30px; color: {{tintaA}}; line-height: 1">{{q.d}}</span><span style="font-size: 13px">mil ha de bosque · {{q.nom}}</span><span style="font-family: {{fDatos}}; font-size: 11px; color: {{tinta2}}">{{q.pct}} del bosque de 2012</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: var(--fTitulo); font-size: 30px; color: var(--tintaA); line-height: 1">{{q.d}}</span><span style="font-size: 13px">mil ha de bosque · {{q.nom}}</span><span style="font-family: var(--fDatos); font-size: 11px; color: var(--tinta2)">{{q.pct}} del bosque de 2012</span></div>
 </template>
 </div>
-<div style="font-size: 12px; color: {{tinta2}}; max-width: 900px">Especies: amenazadas con al menos un registro GBIF 2012–2025 en la ecorregión. Áreas protegidas: Tomba (2025), estado a 2022, solo superficie terrestre. Focos: NASA FIRMS VIIRS 375 m, promedio 2012–2025; un foco es una detección térmica, no un incendio. Bosque: MapBiomas Argentina Col. 3, cambio 2012→2025 por ecorregión de Burkart. Falta la luz nocturna.</div>
+<div style="font-size: 12px; color: var(--tinta2); max-width: 900px">Especies: amenazadas con al menos un registro GBIF 2012–2025 en la ecorregión. Áreas protegidas: Tomba (2025), estado a 2022, solo superficie terrestre. Focos: NASA FIRMS VIIRS 375 m, promedio 2012–2025; un foco es una detección térmica, no un incendio. Bosque: MapBiomas Argentina Col. 3, cambio 2012→2025 por ecorregión de Burkart. Falta la luz nocturna.</div>
 </section>
 
-<footer style="border-top: 1px solid {{linea}}; padding-top: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; font-size: 13px; color: {{tinta2}}; line-height: 1.4">
+<footer class="h-g2" style="border-top: 1px solid var(--linea); padding-top: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; font-size: 13px; color: var(--tinta2); line-height: 1.4">
 <div style="display: flex; flex-direction: column; gap: 6px">
-<b style="color: {{tinta}}">Fuentes</b>
+<b style="color: var(--tinta)">Fuentes</b>
 <span>Especies: Res. MAyDS 316/2021 (Anexo I) y Res. MAyDS 795/2017 (Anexos I y II).</span>
 <span>Registros: GBIF.org (29/10/2026) GBIF Occurrence Download doi:10.15468/dl.t87f4d.</span>
 <span>Categoría mundial: UICN vía GBIF. Ecorregiones: Dinerstein et al. 2017 (RESOLVE). Provincias: INDEC vía geoAr.</span>
@@ -193,7 +208,7 @@ a{color:#7a2e1f}a:hover{color:#4a1a10}
 <span>Relieve: imagen de relieve sombreado del paquete basemap-data (provisoria).</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 6px">
-<b style="color: {{tinta}}">Método</b>
+<b style="color: var(--tinta)">Método</b>
 <span>Registros 2012–2025 con coordenadas, sin problemas geoespaciales e incertidumbre ≤ 30 km; sin duplicados (misma especie, punto y fecha). Agregados en hexágonos H3 de resolución 4. Los mapas de los capítulos II a IV muestran solo celdas en tierra.</span>
 </div>
 </footer>
@@ -253,7 +268,8 @@ class Component extends DCLogic {
       barApE: 'position: absolute; left: 0; top: 0; bottom: 0; width: ' + Math.round(r[3] * 2) + 'px; background: ' + C.tinta + ';',
       barFu: 'display: inline-block; height: 12px; width: ' + Math.max(1, Math.round(r[4] / mxF * 200)) + 'px; background: ' + mix(C.A, C.tinta, 0.35) + ';' })),
       perd: CRU.perd.map((q) => ({ nom: q[0], d: fmt(q[2]), pct: fmt((q[2] / q[1] * 100).toFixed(1)) + ' %' })) };
-    return { papel: C.papel, papel2: C.papel2, tinta: C.tinta, tinta2: C.tinta2, linea: C.linea, tintaA: C.A, fTitulo: fq(p.fTitulo ?? 'IM Fell English'), fTexto: fq(p.fTexto ?? 'EB Garamond'), fNotas: "'" + (p.fNotas ?? 'Caveat') + "', cursive", fDatos: fD, unidades, escala, anios, periodos, retratos, vacias, matriz, muestra, cruce };
+    const cssVars = { papel: C.papel, papel2: C.papel2, tinta: C.tinta, tinta2: C.tinta2, linea: C.linea, tintaA: C.A, fTitulo: fq(p.fTitulo ?? 'IM Fell English'), fTexto: fq(p.fTexto ?? 'EB Garamond'), fNotas: "'" + (p.fNotas ?? 'Caveat') + "', cursive", fDatos: fD };
+    return { cssVars, papel: C.papel, papel2: C.papel2, tinta: C.tinta, tinta2: C.tinta2, linea: C.linea, tintaA: C.A, fTitulo: fq(p.fTitulo ?? 'IM Fell English'), fTexto: fq(p.fTexto ?? 'EB Garamond'), fNotas: "'" + (p.fNotas ?? 'Caveat') + "', cursive", fDatos: fD, unidades, escala, anios, periodos, retratos, vacias, matriz, muestra, cruce };
   }
 }
 
