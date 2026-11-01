@@ -34,13 +34,15 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 
 
 <div style="min-height: 100vh; overflow-x: clip; background: var(--papel); color: var(--tinta); font-family: var(--fTexto); font-size: 16px; line-height: 1.45">
-<div style="max-width: 1560px; margin: 0 auto; padding: 28px 32px 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 22px; position: relative">
+<div style="max-width: 1560px; margin: 0 auto; padding: 14px 32px 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; position: relative">
 <header style="position: relative; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid var(--linea); padding-bottom: 14px">
 
 <div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 4px">
-<div style="font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta2)">Atlas de huellas · Argentina · 2012–2025</div>
-<h1 style="position: relative; margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 52px; line-height: 1.0; letter-spacing: -0.01em">Huellas <span style="font-style: italic; color: var(--tintaA)">en el mapa</span></h1>
-<p style="margin: 4px 0 0; font-size: 19px; max-width: 760px">¿Dónde viven las especies amenazadas de Argentina y qué le pasa al territorio que habitan?</p>
+<nav aria-label="Índice" style="display: flex; flex-wrap: wrap; align-items: center; gap: 0 2px">
+<template data-sc="for" list="{{indice}}" as="i" hint-placeholder-count="8"><button type="button" onClick="{{i.pick}}" style="background: none; border: 0; padding: 2px 8px 2px 0; min-height: 24px; cursor: pointer; font-size: 14px; color: var(--tinta)"><span style="font-family: var(--fDatos); font-size: 11px; color: var(--tintaA); margin-right: 4px">{{i.n}}</span>{{i.label}}</button></template>
+</nav>
+<h1 style="position: relative; margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 40px; line-height: 1.0; letter-spacing: -0.01em">Huellas <span style="font-style: italic; color: var(--tintaA)">en el mapa</span></h1>
+<p style="margin: 2px 0 0; font-size: 16px; max-width: 760px">¿Dónde viven las especies amenazadas de Argentina y qué le pasa al territorio que habitan?</p>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 10px">
 <div style="border-left: 2px solid var(--tinta); padding: 2px 12px"><div style="font-family: var(--fTitulo); font-size: 30px; line-height: 1">{{k.especies}}</div><div style="font-size: 12px; color: var(--tinta2)">especies amenazadas</div></div>
@@ -48,13 +50,8 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 <div style="border-left: 2px dashed var(--tintaA); padding: 2px 12px"><div style="font-family: var(--fTitulo); font-size: 30px; line-height: 1; color: var(--tintaA)">{{k.vacias}}</div><div style="font-size: 12px; color: var(--tinta2)">sin ningún registro</div></div>
 </div>
 </header>
-<nav aria-label="Índice" style="position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 4px; padding: 6px 0; background: var(--papel); border-bottom: 1px solid var(--linea)">
-<span style="font-family: var(--fDatos); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tinta2); margin-right: 8px">Índice</span>
-<template data-sc="for" list="{{indice}}" as="i" hint-placeholder-count="8"><button type="button" onClick="{{i.pick}}" style="background: none; border: 0; padding: 6px 8px; min-height: 34px; cursor: pointer; font-size: 14px; color: var(--tinta)"><span style="font-family: var(--fDatos); font-size: 11px; color: var(--tintaA); margin-right: 4px">{{i.n}}</span>{{i.label}}</button></template>
-</nav>
-<section id="sec-mensaje" style="scroll-margin-top: 56px; display: flex; flex-wrap: wrap; gap: 14px 32px; align-items: center; padding: 20px 24px; border-left: 3px solid var(--tintaA); background: var(--papel2)">
-<p style="margin: 0; flex: 1 1 600px; font-family: var(--fTitulo); font-size: 27px; line-height: 1.25">{{msg.texto}}</p>
-<button type="button" onClick="{{msg.ver}}" style="min-height: 40px; padding: 6px 14px; border: 1px solid var(--tinta); background: var(--tinta); color: var(--papel2); border-radius: 2px; cursor: pointer; font-size: 14px">Ver los vacíos en el mapa</button>
+<section id="sec-mensaje" style="scroll-margin-top: 56px; display: flex; flex-wrap: wrap; gap: 14px 32px; align-items: center; padding: 8px 16px; border-left: 3px solid var(--tintaA); background: var(--papel2)">
+<p style="margin: 0; flex: 1 1 600px; font-family: var(--fTitulo); font-size: 18px; line-height: 1.25">{{msg.texto}}</p>
 </section>
 <div id="sec-mapa" style="display: flex; align-items: center; gap: 12px; margin-top: 8px; scroll-margin-top: 56px; font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tinta2)"><span style="color: var(--tintaA)">01</span><span>El mapa</span><span style="flex: 1; height: 1px; background: var(--linea)"></span></div>
 <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
@@ -84,8 +81,8 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 <div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{catsUI}}" as="c" hint-placeholder-count="3"><button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" data-style="{{c.estilo}}">{{c.label}}</button></template></div>
 </section>
 <section style="display: flex; flex-direction: column; gap: 8px">
-<div style="font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tinta2)">Tiempo</div>
-<label for="rng-anio" style="font-size: 14px">{{textoAnio}}</label>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><div style="font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tinta2)">Evolución en el tiempo</div>
+<label for="rng-anio" style="font-size: 14px">{{textoAnio}}</label></div>
 <div style="display: flex; gap: 8px; align-items: center">
 <button type="button" onClick="{{togglePlay}}" aria-label="{{playLabel}}" style="min-width: 40px; min-height: 40px; border: 1px solid var(--linea); background: var(--papel2); border-radius: 2px; cursor: pointer">
 <template data-sc="if" value="{{playing}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" fill="currentColor"></rect><rect x="9.5" y="2" width="3.5" height="12" fill="currentColor"></rect></svg></template>
@@ -93,7 +90,6 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 </button>
 <input id="rng-anio" type="range" min="2012" max="2025" step="1" value="{{anio}}" onChange="{{onAnio}}" style="flex: 1; min-width: 0">
 </div>
-<label style="display: flex; gap: 8px; align-items: center; min-height: 30px; font-size: 14px"><input type="checkbox" checked="{{acum}}" onChange="{{toggleAcum}}" style="width: 17px; height: 17px"><span>Ver acumulado (desde 2012)</span></label>
 <div style="font-family: var(--fNotas); font-size: 16px; color: var(--tintaA); line-height: 1.2">Más registros = más gente mirando, no más animales. 2025 está incompleto.</div>
 </section>
 <section style="display: flex; flex-direction: column; gap: 8px">
@@ -103,7 +99,6 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 <div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{apTipoUI}}" as="b" hint-placeholder-count="2"><button type="button" onClick="{{b.pick}}" aria-pressed="{{b.on}}" data-style="{{b.estilo}}">{{b.label}}</button></template></div>
 <div style="font-size: 13px; color: var(--tinta2)">Una celda cuenta como protegida si tiene:</div>
 <div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{umbralUI}}" as="b" hint-placeholder-count="3"><button type="button" onClick="{{b.pick}}" aria-pressed="{{b.on}}" data-style="{{b.estilo}}">{{b.label}}</button></template></div>
-<div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{vaciosUI}}" as="b" hint-placeholder-count="2"><button type="button" onClick="{{b.pick}}" aria-pressed="{{b.on}}" data-style="{{b.estilo}}">{{b.label}}</button></template></div>
 <template data-sc="if" value="{{hayGap}}" hint-placeholder-val="{{ false }}"><details style="font-size: 14px"><summary style="cursor: pointer; color: var(--tintaA)">{{gapTitulo}}</summary>
 <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; max-height: 200px; overflow: auto"><template data-sc="for" list="{{gapLista}}" as="g" hint-placeholder-count="6"><button type="button" onClick="{{g.pick}}" style="font-size: 12px; padding: 3px 7px; border: 1px solid var(--linea); background: var(--papel); border-radius: 2px; cursor: pointer">{{g.t}}</button></template></div>
 </details></template>
@@ -114,10 +109,6 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 <div style="font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tinta2)">Celdas</div>
 <div style="display: flex; flex-wrap: wrap; gap: 6px"><template data-sc="for" list="{{formaUI}}" as="b" hint-placeholder-count="2"><button type="button" onClick="{{b.pick}}" aria-pressed="{{b.on}}" data-style="{{b.estilo}}">{{b.label}}</button></template></div>
 <div style="font-size: 13px; color: var(--tinta2)">{{formaNota}}</div>
-<div style="font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tinta2); margin-top: 6px">Láminas</div>
-<template data-sc="for" list="{{capasUI}}" as="c" hint-placeholder-count="6">
-<label style="display: flex; gap: 8px; align-items: center; min-height: 30px; font-size: 14px"><input type="checkbox" checked="{{c.on}}" onChange="{{c.toggle}}" style="width: 17px; height: 17px"><span>{{c.label}}</span></label>
-</template>
 </section>
 </aside>
 <main style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column">
@@ -199,48 +190,56 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 <span>Clic en una ecorregión: su ficha · cursor: detalle · rueda o pellizco: zoom</span>
 </div>
 </div>
-</main>
-</div>
-<div id="sec-ficha" style="display: flex; align-items: center; gap: 12px; margin-top: 8px; scroll-margin-top: 56px; font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tinta2)"><span style="color: var(--tintaA)">02</span><span>Ficha y años</span><span style="flex: 1; height: 1px; background: var(--linea)"></span></div><div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
-<div style="flex: 1 1 340px; max-width: 440px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 14px">
-<template data-sc="if" value="{{ficha.esEco}}" hint-placeholder-val="{{ false }}">
-<article style="background: var(--papel2); border: 1px solid var(--tinta); outline: 1px solid var(--linea); outline-offset: 3px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
-<div style="font-family: var(--fDatos); font-size: 11px; color: var(--tinta2)">ECORREGIÓN · {{ficha.ecoId}}</div>
-<h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 28px; line-height: 1.05">{{ficha.ecoNombre}}</h2>
-<div style="font-size: 14px; color: var(--tinta2)">{{ficha.ecoArea}} km² · RESOLVE: {{ficha.ecoOrig}}</div>
-<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; border-top: 1px dotted var(--linea); padding-top: 8px; text-align: center">
-<div><div style="font-family: var(--fTitulo); font-size: 26px">{{ficha.ecoCR}}</div><div style="font-size: 12px">en peligro crítico</div></div>
-<div><div style="font-family: var(--fTitulo); font-size: 26px">{{ficha.ecoEN}}</div><div style="font-size: 12px">en peligro</div></div>
-<div><div style="font-family: var(--fTitulo); font-size: 26px">{{ficha.ecoVU}}</div><div style="font-size: 12px">amenazadas</div></div>
-</div>
-<div style="font-size: 12px; color: var(--tinta2)">Especies detectadas cada año (todas las amenazadas)</div>
-<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 3px; align-items: end; height: 70px">
-<template data-sc="for" list="{{ficha.ecoSerie}}" as="b" hint-placeholder-count="14">
-<span title="{{b.t}}" data-style="{{b.estilo}}"></span>
-</template>
-</div>
-<div style="font-size: 14px; max-height: 180px; overflow: auto"><b>Con registros (según filtros):</b> {{ficha.ecoEspecies}}</div>
-<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; border-top: 1px dotted var(--linea); padding-top: 8px">
-<div><div style="font-family: var(--fTitulo); font-size: 24px">{{ficha.ecoAP}}</div><div style="font-size: 12px; color: var(--tinta2)">bajo área protegida en {{ficha.ecoAnio}} ({{ficha.ecoAPe}} estricta)</div></div>
-<div><div style="font-family: var(--fTitulo); font-size: 24px">{{ficha.ecoFu}}</div><div style="font-size: 12px; color: var(--tinta2)">focos de calor VIIRS por 1.000 km² y año ({{ficha.ecoVent}})</div></div>
-</div>
-<div style="font-size: 12px; color: var(--tinta2)">Focos de calor por año, 2012 → 2025</div>
-<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 3px; align-items: end; height: 48px">
-<template data-sc="for" list="{{ficha.ecoFuSerie}}" as="b" hint-placeholder-count="14">
-<span title="{{b.t}}" data-style="{{b.estilo}}"></span>
-</template>
-</div>
-<div style="font-size: 12px; color: var(--tinta2)">Desmonte (MapBiomas) usa otro mapa de ecorregiones (Burkart): ver la pestaña «Presiones».</div>
-<button type="button" onClick="{{limpiarEco}}" style="align-self: flex-start; min-height: 40px; padding: 6px 12px; border: 1px solid var(--linea); background: var(--papel); border-radius: 2px; cursor: pointer">Cerrar ficha</button>
-</article>
-</template>
+<div style="display: flex; flex-direction: column; gap: 14px; margin-top: 14px">
 <template data-sc="if" value="{{ficha.noEco}}" hint-placeholder-val="{{ true }}">
-<article style="border: 1px dashed var(--linea); padding: 16px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; color: var(--tinta2)">
+<article style="border: 1px dashed var(--linea); padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font-size: 14px; color: var(--tinta2)">
 <div style="font-family: var(--fTitulo); font-size: 22px; color: var(--tinta)">Ficha de ecorregión</div>
 <div>Hacé clic en una ecorregión del mapa para ver su ficha acá. La ficha de cada especie aparece sobre el mapa, al elegirla en el buscador.</div>
 </article>
 </template>
-</div></div>
+</div>
+</main>
+</div>
+<template data-sc="if" value="{{ficha.esEco}}" hint-placeholder-val="{{ false }}">
+<article style="background: var(--papel2); border: 1px solid var(--tinta); outline: 1px solid var(--linea); outline-offset: 3px; padding: 14px 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px 24px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="font-family: var(--fDatos); font-size: 11px; color: var(--tinta2)">ECORREGIÓN · {{ficha.ecoId}}</div>
+<h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 26px; line-height: 1.05">{{ficha.ecoNombre}}</h2>
+<div style="font-size: 13px; color: var(--tinta2)">{{ficha.ecoArea}} km² · RESOLVE: {{ficha.ecoOrig}}</div>
+<button type="button" onClick="{{limpiarEco}}" style="align-self: flex-start; min-height: 34px; padding: 4px 12px; border: 1px solid var(--linea); background: var(--papel); border-radius: 2px; cursor: pointer">Cerrar ficha</button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: center">
+<div><div style="font-family: var(--fTitulo); font-size: 24px; line-height: 1.1">{{ficha.ecoCR}}</div><div style="font-size: 11px">en peligro crítico</div></div>
+<div><div style="font-family: var(--fTitulo); font-size: 24px; line-height: 1.1">{{ficha.ecoEN}}</div><div style="font-size: 11px">en peligro</div></div>
+<div><div style="font-family: var(--fTitulo); font-size: 24px; line-height: 1.1">{{ficha.ecoVU}}</div><div style="font-size: 11px">amenazadas</div></div>
+</div>
+<div style="font-size: 12px; color: var(--tinta2)">Especies detectadas cada año (todas las amenazadas)</div>
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 3px; align-items: end; height: 52px">
+<template data-sc="for" list="{{ficha.ecoSerie}}" as="b" hint-placeholder-count="14">
+<span title="{{b.t}}" data-style="{{b.estilo}}"></span>
+</template>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="font-size: 13px; max-height: 130px; overflow: auto"><b>Con registros (según filtros):</b> {{ficha.ecoEspecies}}</div>
+<div style="font-size: 11px; color: var(--tinta2)">Desmonte (MapBiomas) usa otro mapa de ecorregiones (Burkart): ver la pestaña «Presiones».</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div><div style="font-family: var(--fTitulo); font-size: 22px; line-height: 1.1">{{ficha.ecoAP}}</div><div style="font-size: 11px; color: var(--tinta2)">bajo área protegida en {{ficha.ecoAnio}} ({{ficha.ecoAPe}} estricta)</div></div>
+<div><div style="font-family: var(--fTitulo); font-size: 22px; line-height: 1.1">{{ficha.ecoFu}}</div><div style="font-size: 11px; color: var(--tinta2)">focos de calor VIIRS por 1.000 km² y año ({{ficha.ecoVent}})</div></div>
+</div>
+<div style="font-size: 12px; color: var(--tinta2)">Focos de calor por año, 2012 → 2025</div>
+<div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 3px; align-items: end; height: 36px">
+<template data-sc="for" list="{{ficha.ecoFuSerie}}" as="b" hint-placeholder-count="14">
+<span title="{{b.t}}" data-style="{{b.estilo}}"></span>
+</template>
+</div>
+</div>
+</article>
+</template>
+<div id="sec-ficha" style="display: flex; align-items: center; gap: 12px; margin-top: 8px; scroll-margin-top: 56px; font-family: var(--fDatos); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tinta2)"><span style="color: var(--tintaA)">02</span><span>Ficha y años</span><span style="flex: 1; height: 1px; background: var(--linea)"></span></div><div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
 <div style="flex: 3 1 560px; min-width: 0"><section style="display: flex; flex-direction: column; gap: 10px">
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline">
 <h2 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 28px">{{serie.titulo}}</h2>
@@ -396,7 +395,7 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.D = null; this.map = null; this.mapEl = null; this.timer = null; this.vals = {};
-    this.state = { listo: false, sp: '', sp2: '', grupo: 'todos', cats: { CR: true, EN: true, VU: true }, modo: 'acum', anio: 2024, playing: false, q1: '', q2: '', abierto1: false, abierto2: false, act1: 0, act2: 0, capas: { ecor: true, hex: true, pts: true, apl: false, rango: true }, pres: 'ninguna', apTipo: 'nom', forma: 'punto', panel: 'buscar', apUmbral: 10, soloVacios: true, eco: null, tab: 'catalogo', orden: 'cat' };
+    this.state = { listo: false, sp: '', sp2: '', grupo: 'todos', cats: { CR: true, EN: true, VU: true }, modo: 'acum', anio: 2024, playing: false, q1: '', q2: '', abierto1: false, abierto2: false, act1: 0, act2: 0, capas: { ecor: true, hex: true, pts: true, apl: false, rango: true }, pres: 'ninguna', apTipo: 'nom', forma: 'punto', panel: 'buscar', apUmbral: 10, soloVacios: false, eco: null, tab: 'catalogo', orden: 'cat' };
     this.mapRef = (el) => { this.mapEl = el; if (el && this.D && !this.map) this.initMap(); };
     this.Y = [2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
   }
