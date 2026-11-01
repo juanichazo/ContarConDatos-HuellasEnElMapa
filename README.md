@@ -8,7 +8,7 @@ Cruce de las **205 especies de mamíferos y aves nacionalmente amenazadas** (Res
 - **Historia visual:** [`site/historia.html`](site/historia.html)
 
 Presentado al Concurso Nacional de Visualización de Datos «Contar con Datos» 2026.
-
+   
 ## Verlo localmente
 
 Abrir `site/index.html` con doble clic alcanza: los datos van en `site/data/*.js`, que el navegador carga también desde el disco. Con conexión a internet se ven las tipografías; sin ella, el sitio funciona con tipografías de reemplazo.

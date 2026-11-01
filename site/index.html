@@ -126,8 +126,8 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 <ol id="guia-cuerpo" style="margin: 0; padding: 8px 14px 12px 32px; border-top: 1px dotted var(--linea); display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.35">
 <li>Cada punto es una celda del territorio (~1.800 km²): cuanto más grande y oscuro, más especies amenazadas registradas ahí en la ventana de tiempo elegida.</li>
 <li>Buscá una especie por nombre para ver su ficha y dónde fue registrada; sumá una segunda para comparar en dos tintas.</li>
-<li>Mové el año o tocá ▶ para ver cómo cambian los registros; con «Ver acumulado» se suman desde 2012.</li>
-<li>En «Presión de fondo» pintá áreas protegidas o focos de calor debajo de los registros. Clic en una ecorregión: su ficha.</li>
+<li>Mové el año o tocá ▶ para ver cómo cambian los registros. Con "Ver acumulado" se suman desde 2012.</li>
+<li>En "Presión de fondo" pintá áreas protegidas o focos de calor debajo de los registros. Clic en una ecorregión: su ficha.</li>
 <li>Los registros miden dónde se miró, no cuántos animales hay. Los vacíos también son un dato.</li>
 </ol>
 </template>
@@ -348,7 +348,7 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 </tbody>
 </table>
 </div>
-<div style="font-size: 13px; color: var(--tinta2); max-width: 900px">Un foco de calor es una detección satelital de una anomalía térmica, no un incendio ni una superficie quemada; los incendios de bosque andino-patagónico ocupan poca superficie y casi no se notan en focos por km². MapBiomas: el salto 2024→2025 y la ganancia de vegetación «natural» en la Pampa pueden reflejar cambios de clasificación entre pasturas y pastizales; leer con cautela. Áreas protegidas: Tomba (2025) no incluye áreas creadas después de 2022.</div>
+<div style="font-size: 13px; color: var(--tinta2); max-width: 900px"> MapBiomas: el salto de 2024 a 2025 y la ganancia de vegetación natural en la Pampa pueden reflejar cambios de clasificación entre pasturas y pastizales (leer con cuidado). Áreas protegidas: Tomba (2025) no incluye áreas creadas después de 2022.</div>
 </template>
 
 <template data-sc="if" value="{{tab.fuentes}}" hint-placeholder-val="{{ false }}">
@@ -369,8 +369,8 @@ input[type=range],input[type=checkbox]{accent-color:#7a2e1f}
 <p style="margin: 0">Mapa: MapLibre GL JS 5.24.0 (BSD-3).</p>
 </div>
 <div style="display: flex; flex-direction: column; gap: 8px">
-<h3 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 22px">Método, en corto</h3>
-<p style="margin: 0">205 especies amenazadas según las listas nacionales: en peligro crítico, en peligro y «amenazada» (equivale a VU de UICN). La «vulnerable» nacional (≈ NT) no se incluye.</p>
+<h3 style="margin: 0; font-family: var(--fTitulo); font-weight: 400; font-size: 22px">Método, en resumen</h3>
+<p style="margin: 0">205 especies amenazadas según las listas nacionales: en peligro crítico, en peligro y "amenazada" (equivale a VU de UICN). La "vulnerable" nacional (≈ NT) no se incluye.</p>
 <p style="margin: 0">Registros GBIF 2012–2025 con coordenadas, sin problemas geoespaciales, con incertidumbre ≤ 30 km. Se quitan duplicados (misma especie, punto y fecha): quedan {{k.registros}}.</p>
 <p style="margin: 0">Agregación en hexágonos H3 de resolución 4 y en ecorregiones RESOLVE recortadas a Argentina.</p>
 <p style="margin: 0">Un registro es una detección, no un individuo. El crecimiento anual refleja más observadores (eBird aporta ~92 %). 2025 está incompleto.</p>
@@ -788,7 +788,7 @@ class Component extends DCLogic {
     const base = { papel: C.papel, papel2: C.papel2, tinta: C.tinta, tinta2: C.tinta2, linea: C.linea, tintaA: C.A, tintaB: C.B, fTitulo: fq(p.fTitulo ?? 'IM Fell English'), fTexto: fq(p.fTexto ?? 'EB Garamond'), fNotas: "'" + (p.fNotas ?? 'Caveat') + "', cursive", fDatos: "'" + (p.fDatos ?? 'IBM Plex Mono') + "', monospace", mapRef: this.mapRef };
     base.cssVars = { papel: base.papel, papel2: base.papel2, tinta: base.tinta, tinta2: base.tinta2, linea: base.linea, tintaA: base.tintaA, tintaB: base.tintaB, fTitulo: base.fTitulo, fTexto: base.fTexto, fNotas: base.fNotas, fDatos: base.fDatos };
     const catTxt = { CR: 'En peligro crítico', EN: 'En peligro', VU: 'Amenazada' };
-    const vacio = Object.assign({}, base, { indice: [], msg: { texto: 'Cargando…', ver: () => {} }, umbralUI: [], vaciosUI: [], gapLista: [], gapTitulo: '', hayGap: false, formaUI: [], formaNota: '', panelUI: [], pan: { buscar: true }, presUI: [], apTipoUI: [], presEsAP: false, presNota: '', aplOn: false, aplToggle: () => {}, leyP: { on: false, items: [] }, presTabla: [], mbTabla: [], cargando: true, k: { especies: '205', registros: '—', vacias: '—' }, opciones: [], grupos: [], catsUI: [], capasUI: [], sp: '', sp2: '', cb1: { ph: 'Cargando…', items: [] }, cb2: { ph: 'Cargando…', items: [] }, anio: 2024, acum: true, playing: false, noPlaying: true, playLabel: 'Reproducir', textoAnio: '', leyenda: { titulo: '', items: [], nota: '' }, ventanaTxt: '', ficha: { esGuia: true, noEco: true }, guia: { visible: true, abierta: false, signo: '+' }, fichaCard: { abierta: false, signo: '+' }, toggleGuia: () => {}, toggleFicha: () => {}, serie: { titulo: 'Registros por año', barras: [] }, tabs: [], tab: { catalogo: true }, ordenes: [], catalogo: [], catalogoN: 0, vacias: [], vaciasN: 0 });
+    const vacio = Object.assign({}, base, { indice: [], msg: { texto: 'Cargando…' }, umbralUI: [], vaciosUI: [], gapLista: [], gapTitulo: '', hayGap: false, formaUI: [], formaNota: '', panelUI: [], pan: { buscar: true }, presUI: [], apTipoUI: [], presEsAP: false, presNota: '', aplOn: false, aplToggle: () => {}, leyP: { on: false, items: [] }, presTabla: [], mbTabla: [], cargando: true, k: { especies: '205', registros: '—', vacias: '—' }, opciones: [], grupos: [], catsUI: [], capasUI: [], sp: '', sp2: '', cb1: { ph: 'Cargando…', items: [] }, cb2: { ph: 'Cargando…', items: [] }, anio: 2024, acum: true, playing: false, noPlaying: true, playLabel: 'Reproducir', textoAnio: '', leyenda: { titulo: '', items: [], nota: '' }, ventanaTxt: '', ficha: { esGuia: true, noEco: true }, guia: { visible: true, abierta: false, signo: '+' }, fichaCard: { abierta: false, signo: '+' }, toggleGuia: () => {}, toggleFicha: () => {}, serie: { titulo: 'Registros por año', barras: [] }, tabs: [], tab: { catalogo: true }, ordenes: [], catalogo: [], catalogoN: 0, vacias: [], vaciasN: 0 });
     if (!this.D) return vacio;
     const D = this.D;
     const clave = JSON.stringify([s.sp, s.sp2, s.grupo, s.cats, s.modo, s.anio, s.capas, s.eco, C, p.opacidadRelieve, s.pres, s.apTipo, s.forma, s.apUmbral, s.soloVacios, p.escalaDosTonos, !!this.P, !!this.PR, !!this.listoMapa, this.tarjetas()]);
@@ -878,7 +878,7 @@ class Component extends DCLogic {
     const AZ_ = C.B /*AZUL*/;
     const presUI = [['ninguna', 'Ninguna'], ['ap', 'Áreas protegidas'], ['dentro', 'Registros dentro de AP'], ['fuego', 'Focos de calor']].map(([v, l]) => ({ label: l, on: s.pres === v, estilo: this.pill(s.pres === v, C), pick: () => this.setState({ pres: v }) }));
     const apTipoUI = [['nom', 'Cualquier categoría'], ['est', 'Estricta (UICN I–IV)']].map(([v, l]) => ({ label: l, on: s.apTipo === v, estilo: this.pill(s.apTipo === v, C), pick: () => this.setState({ apTipo: v }) }));
-    const presNota = !PR ? 'Cargando láminas de presión…' : s.pres === 'dentro' ? 'Hexágonos azules: hay registros dentro de un área protegida (límites Tomba 2025, estado 2022); más oscuro, más registros dentro. Hexágonos rojos: los registros de esa celda están todos fuera; más oscuro, más registros. Un registro es «dentro» si su punto (≈1 km) cae en el polígono.' : s.pres === 'ap' ? 'Polígonos verdes: áreas protegidas creadas hasta el año elegido (Tomba 2025). Puntos llenos: celdas con especies y menos del ' + s.apUmbral + ' % protegido. Anillos: celdas protegidas.' : s.pres === 'fuego' ? 'Focos de calor VIIRS por 1.000 km² y por año (NASA FIRMS). Detecta fuego activo, no superficie quemada.' : 'Elegí una presión para pintarla debajo de los registros.';
+    const presNota = !PR ? 'Cargando láminas de presión…' : s.pres === 'dentro' ? 'Hexágonos azules: hay registros dentro de un área protegida (límites Tomba 2025, estado 2022); más oscuro, más registros dentro. Hexágonos rojos: los registros de esa celda están todos fuera. Más oscuro significa más registros. Un registro es adentro si su punto (≈1 km) cae en el polígono.' : s.pres === 'ap' ? 'Polígonos verdes: áreas protegidas creadas hasta el año elegido (Tomba 2025). Puntos llenos: celdas con especies y menos del ' + s.apUmbral + ' % protegido. Anillos: celdas protegidas.' : s.pres === 'fuego' ? 'Focos de calor VIIRS por 1.000 km² y por año (NASA FIRMS). Detecta fuego activo, no superficie quemada.' : 'Elegí una presión para pintarla debajo de los registros.';
     let leyP = { on: false, items: [] }, gap = null;
     const rF = [this.mix(C.papel, C.F, 0.12), this.mix(C.papel, C.F, 0.32), this.mix(C.papel, C.F, 0.55), this.mix(C.papel, C.F, 0.8), C.F];
     const barra = (c) => 'display: block; height: 12px; background: ' + c + ';';
@@ -935,7 +935,7 @@ class Component extends DCLogic {
       gapLista: gap && gap.nunca ? gap.nuncaNom.sort((a, b) => ({ CR: 0, EN: 1, VU: 2 })[a.nac] - ({ CR: 0, EN: 1, VU: 2 })[b.nac] || b.n - a.n).slice(0, 40).map((e) => ({ t: e.com + ' (' + e.nac + ')', pick: () => this.setState({ sp: e.id, panel: 'ficha' }) })) : [],
       gapTitulo: gap ? gap.nunca + ' especies sin registros dentro de celdas protegidas' : '', hayGap: !!(gap && gap.nunca),
       indice: [['sec-mensaje', 'Mensaje'], ['sec-mapa', 'Mapa'], ['sec-ficha', 'Ficha y años'], ['sec-tablas', 'Catálogo', 'catalogo'], ['sec-tablas', 'Sin huellas', 'vacias'], ['sec-tablas', 'Presiones', 'presiones'], ['sec-tablas', 'Fuentes', 'fuentes']].map(([id, l, tab], i) => ({ n: String(i).padStart(2, '0'), label: l, pick: () => this.irA(id, tab) })),
-      msg: (() => { const m = this.mensaje(); return { texto: m ? 'El ' + m.pct + ' % de los lugares donde se registraron especies amenazadas queda fuera de las áreas protegidas. Y de ' + m.mamTot + ' mamíferos amenazados, ' + m.mamSin + ' no tienen ni un registro en 14 años.' : 'Cargando…', ver: () => { this.setState({ pres: 'ap', soloVacios: true, sp: '', sp2: '', eco: null, panel: 'laminas' }); this.irA('sec-mapa'); } }; })(),
+      msg: (() => { const m = this.mensaje(); return { texto: m ? 'El ' + m.pct + ' % de los lugares donde se registraron especies amenazadas queda fuera de las áreas protegidas. Y de ' + m.mamTot + ' mamíferos amenazados, ' + m.mamSin + ' no tienen ni un registro en 14 años.' : 'Cargando…' }; })(),
       presUI, apTipoUI, presEsAP: s.pres === 'ap', presNota, leyP, presTabla, mbTabla, aplOn: !!s.capas.apl, aplToggle: () => this.setState({ capas: Object.assign({}, s.capas, { apl: !s.capas.apl }) }),
       tab: { presiones: s.tab === 'presiones', catalogo: s.tab === 'catalogo', vacias: s.tab === 'vacias', fuentes: s.tab === 'fuentes' },
       ordenes, catalogo, catalogoN: catalogo.length, vacias, vaciasN: vacias.length
